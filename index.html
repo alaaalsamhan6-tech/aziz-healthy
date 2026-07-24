@@ -1,0 +1,72 @@
+create table if not exists weeks (
+  id uuid default gen_random_uuid() primary key,
+  title text not null,
+  start_date text,
+  end_date text,
+  status text default 'نشط',
+  created_at timestamp default now()
+);
+
+create table if not exists week_publishing (
+  id uuid default gen_random_uuid() primary key,
+  week_id uuid references weeks(id) on delete cascade,
+  platform text,
+  posts_count int default 1,
+  content_title text,
+  publish_date text,
+  assigned_to text,
+  status text default 'لم يبدأ',
+  notes text default '',
+  created_at timestamp default now()
+);
+
+create table if not exists week_ideas (
+  id uuid default gen_random_uuid() primary key,
+  week_id uuid references weeks(id) on delete cascade,
+  title text,
+  hook text,
+  details text,
+  assigned_to text,
+  status text default 'لم يبدأ',
+  notes text default '',
+  created_at timestamp default now()
+);
+
+create table if not exists week_ads (
+  id uuid default gen_random_uuid() primary key,
+  week_id uuid references weeks(id) on delete cascade,
+  brand text,
+  brief_status text default 'لم يبدأ',
+  script_status text default 'لم يبدأ',
+  shoot_type text default 'في الموقع',
+  shoot_date text,
+  publish_date text,
+  assigned_to text,
+  general_status text default 'لم يبدأ',
+  notes text default '',
+  created_at timestamp default now()
+);
+
+create table if not exists week_tasks (
+  id uuid default gen_random_uuid() primary key,
+  week_id uuid references weeks(id) on delete cascade,
+  title text,
+  assigned_to text,
+  deadline text,
+  status text default 'لم يبدأ',
+  related_to text,
+  notes text default '',
+  created_at timestamp default now()
+);
+
+alter table weeks enable row level security;
+alter table week_publishing enable row level security;
+alter table week_ideas enable row level security;
+alter table week_ads enable row level security;
+alter table week_tasks enable row level security;
+
+create policy "allow all" on weeks for all using (true) with check (true);
+create policy "allow all" on week_publishing for all using (true) with check (true);
+create policy "allow all" on week_ideas for all using (true) with check (true);
+create policy "allow all" on week_ads for all using (true) with check (true);
+create policy "allow all" on week_tasks for all using (true) with check (true);
