@@ -4,133 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>عزيز هيلثي — الإعلانات</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --d1:#2C2C2C;--d2:#5F6F52;--d3:#8A9A72;
   --g1:#5F6F52;--g2:#8A9A72;--g3:#C5C0A5;--g4:#E8E2D2;
-  --white:#FFFFFF;--surface:#F5F3EE;--border:#D6D0C0;
-  --red:#C0392B;--red2:#FADBD8;--blue:#1F618D;--blue2:#D6EAF8;
-  --gold:#8A9A72;
+  --white:#FFFFFF;--surface:#F5F3EE;--border:#D6D0C0;--ink:#2C2C2C;--ink2:#5F6F52;--ink3:#9A9A80;
+  --red:#C0392B;--red2:#FADBD8;--blue:#1F618D;--blue2:#D6EAF8;--gold:#856404;--gold2:#FFF3CD;
 }
-body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--d1);min-height:100vh}
+body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh}
 .nav{background:var(--g1);height:56px;display:flex;align-items:center;padding:0 2rem;gap:2rem;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--g3)}
-.nav-brand{color:var(--white);font-size:17px;font-weight:700}
+.nav-brand{color:#fff;font-size:17px;font-weight:700}
 .nav-tabs{display:flex;gap:2px;margin-right:auto;flex-wrap:wrap}
 .ntab{background:none;border:none;color:rgba(255,255,255,.6);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;transition:.15s}
 .ntab:hover{color:#fff;background:rgba(255,255,255,.1)}
 .ntab.active{color:#fff;background:rgba(255,255,255,.2);border-bottom:2px solid var(--g4)}
-.sync-indicator{font-size:11px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:5px}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50}
-.sync-dot.syncing{background:#FFC107;animation:pulse 1s infinite}
+.sync-bar{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.6)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;flex-shrink:0}
+.sync-dot.loading{background:#FFC107;animation:pulse 1s infinite}
+.sync-dot.error{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .page{display:none;padding:2rem;max-width:1400px;margin:0 auto}.page.active{display:block}
+/* KPI */
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:2rem}
-.kpi{background:var(--white);border-radius:12px;padding:1.1rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden}
-.kpi-label{font-size:11px;font-weight:600;color:var(--d2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.kpi-val{font-size:26px;font-weight:700;line-height:1;color:var(--d1)}
-.kpi-sub{font-size:11px;color:var(--d3);margin-top:6px}
+.kpi{background:#fff;border-radius:12px;padding:1.1rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden}
+.kpi-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.kpi-val{font-size:26px;font-weight:700;line-height:1;color:var(--ink)}
+.kpi-sub{font-size:11px;color:var(--ink3);margin-top:6px}
 .kpi-accent{position:absolute;top:0;right:0;width:4px;height:100%}
-.card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;padding:1.25rem}
+/* CARD */
+.card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;padding:1.25rem}
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px}
-.sh h2{font-size:15px;font-weight:700;color:var(--d1);margin:0}
-.cnt{font-size:11px;color:var(--d2);background:var(--surface);padding:2px 8px;border-radius:20px;border:1px solid var(--border)}
+.sh h2{font-size:15px;font-weight:700;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px}
+.cnt{font-size:11px;color:var(--ink3);background:var(--surface);padding:2px 8px;border-radius:20px;border:1px solid var(--border)}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:var(--surface);padding:10px 14px;text-align:right;font-weight:600;color:var(--ink3);border-bottom:1px solid var(--border);white-space:nowrap;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
+.tbl td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--ink);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--surface)}
+/* CLIENT CARDS */
 .clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.client-card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;transition:.2s}
+.client-card{background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden;transition:.2s}
 .client-card:hover{box-shadow:0 4px 20px rgba(95,111,82,.12)}
 .client-card.has-active{border-top:3px solid var(--g2)}
 .client-card.is-repeat:not(.has-active){border-top:3px solid var(--g3)}
 .cc-head{padding:14px 16px 8px}
-.cc-name{font-size:14px;font-weight:700;color:var(--d1)}
-.cc-meta{font-size:11px;color:var(--d3);margin-top:3px}
+.cc-name{font-size:14px;font-weight:700;color:var(--ink)}
+.cc-meta{font-size:11px;color:var(--ink3);margin-top:3px}
 .cc-badges{margin-top:8px;display:flex;gap:4px;flex-wrap:wrap}
 .cc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .cc-stat{padding:10px 12px;text-align:center}
 .cc-stat:not(:last-child){border-left:1px solid var(--border)}
-.cc-stat-val{font-size:16px;font-weight:700;color:var(--d1);line-height:1}
-.cc-stat-lbl{font-size:10px;color:var(--d3);margin-top:3px}
-.status-sel{font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;border:none;background:none;outline:none;cursor:pointer;text-align:center;width:100%}
+.cc-stat-val{font-size:16px;font-weight:700;color:var(--ink);line-height:1}
+.cc-stat-lbl{font-size:10px;color:var(--ink3);margin-top:3px}
 .cc-ads{padding:10px 16px}
 .cc-ad-row{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--surface);border-radius:8px;margin-bottom:6px;border:1px solid var(--border)}
-.ad-num{width:20px;height:20px;border-radius:50%;background:var(--g1);color:var(--white);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ad-num{width:20px;height:20px;border-radius:50%;background:var(--g1);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ad-info{flex:1;min-width:0}
-.ad-title{font-size:12px;font-weight:600;color:var(--d1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ad-sub{font-size:10px;color:var(--d3);margin-top:1px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.ad-title{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ad-sub{font-size:10px;color:var(--ink3);margin-top:1px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .ad-amount{font-size:12px;font-weight:700;color:var(--g1);white-space:nowrap}
-.ad-btn{background:none;border:none;cursor:pointer;color:var(--d3);font-size:12px;padding:3px;transition:.15s;flex-shrink:0}
-.ad-btn:hover{color:var(--g1)}
-.add-ad-btn{width:100%;background:none;border:1px dashed var(--border);border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;color:var(--d3);cursor:pointer;transition:.15s}
-.add-ad-btn:hover{border-color:var(--g1);color:var(--g1);background:var(--g4)}
+/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
-.b-green{background:#E8F5E9;color:#2E7D32}.b-olive{background:#E8EDE0;color:#5F6F52}
-.b-blue{background:var(--blue2);color:var(--blue)}.b-gray{background:#F0F0F0;color:#666}
-.b-sand{background:var(--g4);color:var(--g1)}.b-red{background:var(--red2);color:var(--red)}
+.b-green{background:#D5F5E3;color:#1A7A4A}
+.b-olive{background:#E8EDE0;color:var(--g1)}
+.b-blue{background:var(--blue2);color:var(--blue)}
+.b-gold{background:var(--gold2);color:var(--gold)}
+.b-red{background:var(--red2);color:var(--red)}
+.b-gray{background:#F0F0F0;color:#666}
+.b-sand{background:var(--g4);color:var(--g1)}
 .ptag{display:inline-flex;align-items:center;padding:1px 7px;border-radius:5px;font-size:9px;font-weight:700}
-.p-tiktok{background:#1A1A1A;color:#fff}.p-snap{background:#FFFC00;color:#1A1A1A}
+.p-tiktok{background:#1A1A1A;color:#fff}
+.p-snap{background:#FFFC00;color:#1A1A1A}
 .p-insta{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);color:#fff}
 .p-all{background:var(--g2);color:#fff}
+.p-x{background:#000;color:#fff}
+.p-yt{background:#FF0000;color:#fff}
+/* FILTERS */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
-.fb{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--d2);transition:.15s}
+.fb{background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--ink2);transition:.15s}
 .fb.active{background:var(--g1);color:#fff;border-color:var(--g1)}
-.fsel{border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--d1);background:var(--white);cursor:pointer;outline:none}
-.btn-add{background:var(--g1);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
-.btn-add:hover{background:var(--d2)}
+.fb:hover:not(.active){background:var(--surface)}
+.fsel{border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--ink);background:#fff;cursor:pointer;outline:none}
+.fsel:focus{border-color:var(--g1)}
+/* BUTTONS */
+.btn-primary{background:var(--g1);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.btn-primary:hover{background:var(--ink2)}
+/* CHARTS */
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:120px;overflow-x:auto;padding-bottom:2px;direction:ltr}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:38px}
+.bar-body{border-radius:5px 5px 0 0;width:100%;background:var(--g2);min-height:3px;transition:.3s}
+.bar-lbl{font-size:9px;color:var(--ink3);font-weight:600;text-transform:uppercase}
+.bar-v{font-size:9px;font-weight:700;color:var(--g1)}
+/* PROGRESS */
+.progress-bar{background:var(--g4);border-radius:99px;height:5px;overflow:hidden;margin-top:4px}
+.progress-fill{height:100%;border-radius:99px;background:var(--g2)}
+/* LEGEND */
+.legend-row{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
+.legend-row:last-child{border:none}
+/* PIPELINE */
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:1100px){.pipeline{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.pipeline{grid-template-columns:1fr}}
+.pl-col{background:#fff;border-radius:12px;border:1px solid var(--border);min-height:180px}
+.pl-head{padding:12px 14px;border-bottom-width:2px;border-bottom-style:solid;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.pl-body{padding:10px;display:flex;flex-direction:column;gap:8px}
+.pl-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px}
+.pl-dates{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.pl-date-box{background:#fff;border:1px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center}
+.pl-date-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
+.pl-date-val{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px}
+/* GRID */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
 @media(max-width:800px){.g2,.g3{grid-template-columns:1fr}}
-.bar-chart{display:flex;align-items:flex-end;gap:5px;height:110px;overflow-x:auto;padding-bottom:2px;direction:ltr}
-.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:34px}
-.bar-body{border-radius:5px 5px 0 0;width:100%;background:var(--g2);min-height:3px}
-.bar-lbl{font-size:9px;color:var(--d3);font-weight:600;text-transform:uppercase}
-.bar-v{font-size:9px;font-weight:700;color:var(--g1)}
-.progress-bar{background:var(--g4);border-radius:99px;height:5px;overflow:hidden;margin-top:4px}
-.progress-fill{height:100%;border-radius:99px;background:var(--g2)}
-.legend-row{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
-.legend-row:last-child{border:none}
-.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-@media(max-width:1000px){.pipeline{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.pipeline{grid-template-columns:1fr}}
-.pl-col{background:var(--white);border-radius:12px;border:1px solid var(--border);min-height:200px}
-.pl-head{padding:12px 14px;border-bottom:2px solid;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
-.pl-body{padding:10px;display:flex;flex-direction:column;gap:8px}
-.pl-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer}
-.pl-card:hover{border-color:var(--g2)}
-.pl-dates{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.pl-date-box{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center}
-.pl-date-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
-.pl-date-val{font-size:11px;font-weight:700;color:var(--d1);margin-top:2px}
+/* FIN */
 .fin-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
 .fin-row:last-child{border:none}
-.exp-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(44,44,44,.5);z-index:200;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:#fff;border-radius:16px;padding:1.75rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;position:relative;border-top:3px solid var(--g2)}
-.modal h2{font-size:16px;font-weight:700;color:var(--d1);margin-bottom:1.25rem;margin-top:0}
-.mc{position:absolute;top:1rem;left:1rem;background:none;border:none;font-size:20px;cursor:pointer;color:var(--d3)}
-.fr{margin-bottom:.9rem}
-.fr label{display:block;font-size:11px;font-weight:700;color:var(--d3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
-.fr input,.fr select,.fr textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:var(--d1);outline:none;background:#fff;box-sizing:border-box}
-.fr input:focus,.fr select:focus,.fr textarea:focus{border-color:var(--g1)}
-.fr textarea{resize:vertical;min-height:60px}
-.fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mfooter{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
-.btn-cancel{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:var(--d2)}
-.btn-save{background:var(--g1);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
-.btn-save:hover{background:var(--d2)}
+/* WEEKLY */
+.week-section{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem}
+.week-section-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.week-section-head h3{color:#fff;font-size:13px;font-weight:700;margin:0}
+/* LOADING SKELETON */
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--g4) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;height:20px;margin-bottom:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+/* TOAST */
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--g1);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:.3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 input[type="date"]{direction:ltr;text-align:left}
-
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl th{background:var(--surface);padding:10px 14px;text-align:right;font-weight:600;color:var(--d3);border-bottom:1px solid var(--border);white-space:nowrap;font-size:11px}
-.tbl td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--d1);vertical-align:middle}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:var(--surface)}
+.empty-state{text-align:center;padding:3rem 0;color:var(--ink3)}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:13px}
+/* REFRESH BTN */
+.refresh-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer}
+.refresh-btn:hover{background:rgba(255,255,255,.25)}
 </style>
 </head>
 <body>
+
 <nav class="nav">
   <div class="nav-brand">عزيز هيلثي</div>
   <div class="nav-tabs">
@@ -140,22 +152,29 @@ input[type="date"]{direction:ltr;text-align:left}
     <button class="ntab" onclick="showPage('finance',this)">المالية</button>
     <button class="ntab" onclick="showPage('weekly',this)">خطة الأسبوع</button>
   </div>
-  <div class="sync-indicator">
-    <div class="sync-dot" id="sync-dot"></div>
-    <span id="sync-text">متصل</span>
+  <div class="sync-bar">
+    <div class="sync-dot loading" id="sync-dot"></div>
+    <span id="sync-text">جاري التحميل...</span>
+    <button class="refresh-btn" onclick="loadAll()">↻ تحديث</button>
   </div>
 </nav>
 
 <!-- OVERVIEW -->
 <div class="page active" id="page-overview">
-  <div class="kpi-row" id="ov-kpis"></div>
+  <div class="kpi-row" id="ov-kpis">
+    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
+    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
+    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
+    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
+  </div>
   <div class="card">
-    <div class="sh"><h2>الدخل الشهري</h2>
+    <div class="sh">
+      <h2>الدخل الشهري</h2>
       <select class="fsel" id="ov-year" onchange="renderOverview()">
         <option value="all">كل السنوات</option>
       </select>
     </div>
-    <div class="bar-chart" id="ov-chart"></div>
+    <div class="bar-chart" id="ov-chart"><div class="skeleton" style="height:80px;width:100%"></div></div>
   </div>
   <div class="g3">
     <div class="card"><div class="sh"><h2>أنواع الإعلانات</h2></div><div id="ov-types"></div></div>
@@ -168,8 +187,7 @@ input[type="date"]{direction:ltr;text-align:left}
 <!-- UPCOMING -->
 <div class="page" id="page-upcoming">
   <div class="sh">
-    <h2>الإعلانات القادمة <span class="cnt" id="up-cnt">0</span></h2>
-    <button class="btn-add" onclick="openUpModal()">+ إعلان قادم</button>
+    <h2>الإعلانات القادمة <span class="cnt" id="up-cnt">—</span></h2>
   </div>
   <div class="pipeline" id="pipeline"></div>
 </div>
@@ -177,8 +195,7 @@ input[type="date"]{direction:ltr;text-align:left}
 <!-- CLIENTS -->
 <div class="page" id="page-clients">
   <div class="sh">
-    <h2>العملاء والإعلانات <span class="cnt" id="cl-cnt">0</span></h2>
-    <button class="btn-add" onclick="openAdModal('new-client')">+ عميل جديد</button>
+    <h2>العملاء والإعلانات <span class="cnt" id="cl-cnt">—</span></h2>
   </div>
   <div class="filters">
     <button class="fb active" onclick="filterClients('all',this)">الكل</button>
@@ -186,14 +203,13 @@ input[type="date"]{direction:ltr;text-align:left}
     <button class="fb" onclick="filterClients('repeat',this)">متكرر</button>
     <button class="fb" onclick="filterClients('contract',this)">عقد</button>
     <div style="margin-right:auto;display:flex;gap:8px;align-items:center">
-      <span style="font-size:12px;color:var(--d3)">ترتيب:</span>
+      <span style="font-size:12px;color:var(--ink3)">ترتيب:</span>
       <select class="fsel" id="cl-sort" onchange="renderClients()">
         <option value="amount">الأعلى مبلغاً</option>
         <option value="latest">الأحدث</option>
         <option value="repeat">الأكثر تكراراً</option>
         <option value="status-active">نشط</option>
         <option value="status-ended">منتهي</option>
-        <option value="status-paused">متوقف</option>
       </select>
     </div>
   </div>
@@ -202,343 +218,442 @@ input[type="date"]{direction:ltr;text-align:left}
 
 <!-- FINANCE -->
 <div class="page" id="page-finance">
-  <div class="sh">
-    <h2>المالية</h2>
-    <button class="btn-add" onclick="openExpModal()">+ مصروف جديد</button>
-  </div>
+  <div class="sh"><h2>المالية</h2></div>
   <div class="kpi-row" id="fin-kpis"></div>
   <div class="card">
-    <div class="sh"><h2>الدخل الشهري</h2>
+    <div class="sh">
+      <h2>الدخل الشهري</h2>
       <select class="fsel" id="fin-year" onchange="renderFinance()">
         <option value="all">كل السنوات</option>
       </select>
     </div>
     <div class="bar-chart" id="fin-chart"></div>
   </div>
-  <div class="card"><div class="sh"><h2>المصروفات</h2></div><div id="exp-list"></div></div>
-</div>
-
-<!-- MODAL: AD -->
-<div class="modal-bg" id="modal-ad">
-  <div class="modal">
-    <button class="mc" onclick="closeModal('modal-ad')">✕</button>
-    <h2 id="ad-modal-title">إضافة إعلان</h2>
-    <div class="fr" id="ad-client-name-row">
-      <label>اسم العميل / البراند</label>
-      <input type="text" id="ad-client-name" placeholder="مثال: زايروس">
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:12px 16px;background:var(--red);display:flex;justify-content:space-between;align-items:center">
+      <h3 style="color:#fff;font-size:13px;font-weight:700;margin:0">المصروفات</h3>
     </div>
-    <div class="fg2">
-      <div class="fr"><label>المبلغ (ريال)</label><input type="number" id="ad-amount" placeholder="5000"></div>
-      <div class="fr"><label>التاريخ</label><input type="date" id="ad-date"></div>
-    </div>
-    <div class="fg2">
-      <div class="fr"><label>نوع الإعلان</label>
-        <select id="ad-type"><option value="">غير محدد</option><option>مرة واحدة</option><option>عقد</option><option>عقد + نسبة</option></select>
-      </div>
-      <div class="fr"><label>النسبة % (اختياري)</label><input type="number" id="ad-pct" placeholder="30"></div>
-    </div>
-    <div class="fg2">
-      <div class="fr"><label>المنصة</label>
-        <select id="ad-platform"><option value="">غير محدد</option><option>تيك توك</option><option>سناب</option><option>انستقرام</option><option>جميع المنصات</option></select>
-      </div>
-      <div class="fr"><label>المدينة</label>
-        <select id="ad-city"><option value="">غير محدد</option><option>الرياض</option><option>جدة</option><option>الخبر</option></select>
-      </div>
-    </div>
-    <div class="fr"><label>الحالة</label>
-      <select id="ad-status"><option>تم</option><option>قيد العمل</option><option>ملغي</option></select>
-    </div>
-    <div class="fr"><label>ملاحظات</label><input type="text" id="ad-notes" placeholder="أي تفاصيل..."></div>
-    <div class="mfooter">
-      <button class="btn-cancel" onclick="closeModal('modal-ad')">إلغاء</button>
-      <button class="btn-save" onclick="saveAd()">حفظ</button>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>التاريخ</th><th>البند</th><th>المبلغ</th><th>الفئة</th><th>ملاحظات</th></tr></thead>
+        <tbody id="exp-tbody"></tbody>
+      </table>
     </div>
   </div>
 </div>
 
-<!-- MODAL: UPCOMING -->
-<div class="modal-bg" id="modal-up">
-  <div class="modal">
-    <button class="mc" onclick="closeModal('modal-up')">✕</button>
-    <h2 id="up-modal-title">إضافة إعلان قادم</h2>
-    <div class="fg2">
-      <div class="fr"><label>اسم العميل / البراند</label><input type="text" id="up-name" placeholder="مثال: زايروس"></div>
-      <div class="fr"><label>المدينة</label>
-        <select id="up-city"><option>الرياض</option><option>جدة</option><option>الخبر</option></select>
-      </div>
+<!-- WEEKLY -->
+<div class="page" id="page-weekly">
+  <div class="sh">
+    <div>
+      <h2>خطة الأسبوع</h2>
+      <div style="font-size:12px;color:var(--ink3);margin-top:4px" id="week-info-label"></div>
     </div>
-    <div class="fr"><label>المنصة</label>
-      <select id="up-platform"><option>تيك توك</option><option>سناب</option><option>انستقرام</option><option>جميع المنصات</option></select>
-    </div>
-    <div class="fg2">
-      <div class="fr"><label style="color:#5F6F52">تاريخ الإعلان (الاتفاق)</label><input type="date" id="up-ad-date"></div>
-      <div class="fr"><label style="color:#2E7D32">تاريخ النشر المتوقع</label><input type="date" id="up-pub-date"></div>
-    </div>
-    <div class="fr"><label>المرحلة</label>
-      <select id="up-stage">
-        <option>غير معتمد</option><option>معتمد</option><option>التصوير</option><option>المونتاج</option><option>النشر</option>
+    <div style="display:flex;gap:8px;align-items:center">
+      <select class="fsel" id="week-selector" onchange="switchWeek(this.value)">
+        <option value="">اختر أسبوعاً...</option>
       </select>
     </div>
-    <div class="fr"><label>ملاحظات</label><textarea id="up-notes" placeholder="أي تفاصيل..."></textarea></div>
-    <div class="mfooter">
-      <button class="btn-cancel" onclick="closeModal('modal-up')">إلغاء</button>
-      <button class="btn-save" onclick="saveUpcoming()">حفظ</button>
-    </div>
   </div>
-</div>
-
-<!-- MODAL: EXPENSE -->
-<div class="modal-bg" id="modal-exp">
-  <div class="modal">
-    <button class="mc" onclick="closeModal('modal-exp')">✕</button>
-    <h2>إضافة مصروف</h2>
-    <div class="fr"><label>البند</label><input type="text" id="exp-name" placeholder="تصوير، مونتاج..."></div>
-    <div class="fg2">
-      <div class="fr"><label>المبلغ (ريال)</label><input type="number" id="exp-amount" placeholder="500"></div>
-      <div class="fr"><label>التاريخ</label><input type="date" id="exp-date"></div>
-    </div>
-    <div class="fr"><label>الفئة</label>
-      <select id="exp-cat"><option>تصوير</option><option>مونتاج</option><option>إنتاج</option><option>تسويق</option><option>إداري</option><option>أخرى</option></select>
-    </div>
-    <div class="mfooter">
-      <button class="btn-cancel" onclick="closeModal('modal-exp')">إلغاء</button>
-      <button class="btn-save" onclick="saveExpense()">حفظ</button>
-    </div>
+  <div id="weekly-content">
+    <div class="empty-state"><div class="icon">📅</div><p>جاري تحميل خطة الأسبوع من Google Sheets...</p></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══ SUPABASE CONFIG ══
-const SUPA_URL = 'https://otoedlpbrtkjwqqthyap.supabase.co';
-const SUPA_KEY = 'sb_publishable_hkTEbarhnovUVMVJhndsgQ_LOBxfhSY';
-const { createClient } = supabase;
-const db = createClient(SUPA_URL, SUPA_KEY);
+// ════════════════════════════════════════════
+// CONFIG — Google Sheets
+// ════════════════════════════════════════════
+const SHEET_ID = '1BoqP-1ekwufxUd8QYXNtTO_DHsgPe0hu';
+const BASE = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-// ══ STATE ══
-let clients = {}, ads = [], upcomingList = [], expenses = [];
-let adModalMode = 'new-client', adModalClientKey = null, adModalAdId = null;
-let upModalId = null;
+const SHEETS = {
+  ads:      'الاعلانات',
+  clients:  'العملاء',
+  upcoming: 'الاعلانات القادمة',
+  finance:  'المالية',
+  weekly:   'خطة الاسبوع',
+};
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+let rawAds = [], rawClients = [], rawUpcoming = [], rawExpenses = [], rawWeekly = [];
+let clientMap = {};
 let clientFilter = 'all';
+let currentWeekIdx = 0;
 
-// ══ UTILS ══
+// ════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════
 const ARM = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 const MEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function fmtDate(s){if(!s)return'—';const d=new Date(s+'T00:00:00');return`${d.getDate()} ${ARM[d.getMonth()]} ${d.getFullYear()}`;}
-function fmtMoney(n){return n?Number(n).toLocaleString('ar')+' ر.س':'—';}
-function monthKey(date){if(!date)return'';const d=new Date(date+'T00:00:00');return`${MEN[d.getMonth()]} ${d.getFullYear()}`;}
-function showPage(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+
+function fmtDate(s) {
+  if (!s || s === '' || s === '—') return '—';
+  // handle Date(y,m,d) format from gviz
+  if (typeof s === 'string' && s.startsWith('Date(')) {
+    const parts = s.slice(5,-1).split(',').map(Number);
+    const d = new Date(parts[0], parts[1], parts[2]);
+    return `${d.getDate()} ${ARM[d.getMonth()]} ${d.getFullYear()}`;
+  }
+  // handle dd/mm/yyyy or yyyy-mm-dd
+  try {
+    const d = new Date(s);
+    if (!isNaN(d)) return `${d.getDate()} ${ARM[d.getMonth()]} ${d.getFullYear()}`;
+  } catch(e) {}
+  return s;
+}
+
+function fmtMoney(n) {
+  if (!n && n !== 0) return '—';
+  const num = parseFloat(n);
+  if (isNaN(num) || num === 0) return '—';
+  return num.toLocaleString('ar') + ' ر.س';
+}
+
+function monthKey(s) {
+  if (!s) return '';
+  if (typeof s === 'string' && s.startsWith('Date(')) {
+    const parts = s.slice(5,-1).split(',').map(Number);
+    return `${MEN[parts[1]]} ${parts[0]}`;
+  }
+  try {
+    const d = new Date(s);
+    if (!isNaN(d)) return `${MEN[d.getMonth()]} ${d.getFullYear()}`;
+  } catch(e){}
+  return '';
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
-  if(id==='overview')renderOverview();
-  if(id==='finance')renderFinance();
-  if(id==='clients')renderClients();
-  if(id==='upcoming')renderPipeline();
-  if(id==='weekly'){loadWeeks();}
-}
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-function setSyncing(v){
-  const dot=document.getElementById('sync-dot');
-  const txt=document.getElementById('sync-text');
-  dot.className='sync-dot'+(v?' syncing':'');
-  txt.textContent=v?'جاري الحفظ...':'متصل ✓';
-}
-function ptag(p){
-  if(!p)return'';
-  const m={'تيك توك':'p-tiktok','سناب':'p-snap','انستقرام':'p-insta','جميع المنصات':'p-all'};
-  return`<span class="ptag ${m[p]||'p-all'}">${p}</span>`;
 }
 
-// ══ BUILD CLIENT MAP ══
-function buildClients(){
-  clients={};
-  ads.forEach(a=>{
-    const k=a.client_name;
-    if(!clients[k])clients[k]={name:k,ads:[],clientStatus:'نشط'};
-    clients[k].ads.push(a);
-  });
-  // apply status from DB
-  // (client_status stored in clients table)
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
-function clientTotal(c){return c.ads.reduce((s,a)=>s+(Number(a.amount)||0),0);}
-function clientLastDate(c){return c.ads.map(a=>a.date||'').sort().reverse()[0]||'';}
-function clientHasActive(c){return c.ads.some(a=>a.status==='قيد العمل');}
 
-// ══ LOAD DATA ══
-async function loadAll(){
-  setSyncing(true);
-  try{
-    const [adsRes, upRes, expRes, clRes] = await Promise.all([
-      db.from('ads').select('*').order('date',{ascending:false}),
-      db.from('upcoming').select('*').order('created_at',{ascending:false}),
-      db.from('expenses').select('*').order('created_at',{ascending:false}),
-      db.from('clients').select('*'),
-    ]);
-    ads = adsRes.data||[];
-    upcomingList = upRes.data||[];
-    expenses = expRes.data||[];
-    buildClients();
-    // apply client statuses
-    (clRes.data||[]).forEach(c=>{
-      if(clients[c.name])clients[c.name].clientStatus=c.client_status||'نشط';
+function setSyncing(loading, error) {
+  const dot = document.getElementById('sync-dot');
+  const txt = document.getElementById('sync-text');
+  dot.className = 'sync-dot' + (loading ? ' loading' : error ? ' error' : '');
+  txt.textContent = loading ? 'جاري التحميل...' : error ? 'خطأ في الاتصال' : `آخر تحديث: ${new Date().toLocaleTimeString('ar-SA')}`;
+}
+
+function ptag(p) {
+  if (!p) return '';
+  const map = {
+    'تيك توك': 'p-tiktok', 'سناب': 'p-snap',
+    'انستقرام': 'p-insta', 'جميع المنصات': 'p-all',
+    'X': 'p-x', 'يوتيوب': 'p-yt',
+  };
+  return `<span class="ptag ${map[p] || 'p-all'}">${p}</span>`;
+}
+
+// ════════════════════════════════════════════
+// GOOGLE SHEETS FETCH
+// ════════════════════════════════════════════
+async function fetchSheet(sheetName) {
+  const url = `${BASE}&sheet=${encodeURIComponent(sheetName)}`;
+  const res = await fetch(url);
+  const text = await res.text();
+  // gviz returns: /*O_o*/ google.visualization.Query.setResponse({...});
+  const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+  const cols = json.table.cols.map(c => c.label || c.id);
+  const rows = (json.table.rows || []).map(r => {
+    const obj = {};
+    cols.forEach((col, i) => {
+      const cell = r.c && r.c[i];
+      obj[col] = cell ? (cell.f !== undefined && cell.f !== null ? cell.f : cell.v) : null;
     });
+    return obj;
+  });
+  return { cols, rows };
+}
+
+// ════════════════════════════════════════════
+// LOAD ALL DATA
+// ════════════════════════════════════════════
+async function loadAll() {
+  setSyncing(true);
+  try {
+    const [adsData, clientsData, upData, finData, weekData] = await Promise.all([
+      fetchSheet(SHEETS.ads),
+      fetchSheet(SHEETS.clients),
+      fetchSheet(SHEETS.upcoming),
+      fetchSheet(SHEETS.finance),
+      fetchSheet(SHEETS.weekly),
+    ]);
+
+    // Parse Ads — skip header/summary rows (ID must be a number)
+    rawAds = adsData.rows.filter(r => {
+      const id = r['ID'] || r[adsData.cols[0]];
+      return id && !isNaN(parseFloat(id));
+    }).map(r => ({
+      id:       r['ID'] || r[adsData.cols[0]],
+      brand:    r['اسم الشركة / البراند'] || r['اسم الشركة'] || r['الشركة'] || '',
+      amount:   parseFloat(r['المبلغ (ريال)'] || r['المبلغ'] || r['القيمة'] || 0) || 0,
+      pct:      parseFloat(r['النسبة %'] || r['النسبة'] || 0) || 0,
+      type:     r['نوع الإعلان'] || r['النوع'] || 'مرة واحدة',
+      status:   r['المرحلة'] || r['الحالة'] || '',
+      platform: r['المنصة'] || '',
+      city:     r['المدينة'] || '',
+      adDate:   r['تاريخ الإعلان'] || '',
+      pubDate:  r['تاريخ النشر'] || '',
+      notes:    r['ملاحظات'] || '',
+    })).filter(r => r.brand);
+
+    // Parse Clients
+    rawClients = clientsData.rows.filter(r => r[clientsData.cols[0]]).map(r => ({
+      name:    r['اسم العميل / البراند'] || r['اسم العميل'] || r[clientsData.cols[0]] || '',
+      status:  r['حالة العميل'] || r['الحالة'] || 'نشط',
+      count:   r['إجمالي الإعلانات'] || 0,
+      total:   r['إجمالي المبالغ (ر.س)'] || r['إجمالي المبالغ'] || 0,
+      lastAd:  r['آخر إعلان'] || '',
+      notes:   r['ملاحظات'] || '',
+    })).filter(r => r.name);
+
+    // Build client map from ads
+    clientMap = {};
+    rawAds.forEach(a => {
+      const k = a.brand.trim();
+      if (!clientMap[k]) {
+        const cl = rawClients.find(c => c.name.trim() === k);
+        clientMap[k] = { name: k, ads: [], clientStatus: cl ? cl.status : 'نشط' };
+      }
+      clientMap[k].ads.push(a);
+    });
+
+    // Parse Upcoming
+    rawUpcoming = upData.rows.filter(r => r[upData.cols[0]]).map(r => ({
+      name:     r['اسم العميل'] || r[upData.cols[0]] || '',
+      platform: r['المنصة'] || '',
+      city:     r['المدينة'] || '',
+      adDate:   r['تاريخ الاتفاق'] || r['تاريخ الإعلان'] || '',
+      pubDate:  r['تاريخ النشر المتوقع'] || r['تاريخ النشر'] || '',
+      stage:    r['المرحلة'] || 'غير معتمد',
+      assigned: r['المسؤول'] || '',
+      notes:    r['ملاحظات'] || '',
+    })).filter(r => r.name);
+
+    // Parse Expenses (from المالية sheet, rows after the KPI section)
+    rawExpenses = finData.rows.filter(r => {
+      const v = r[finData.cols[0]] || r['التاريخ'] || r['البند'];
+      const amt = r['المبلغ (ر.س)'] || r['المبلغ'];
+      return amt && parseFloat(amt) > 0;
+    }).map(r => ({
+      date:   r['التاريخ'] || '',
+      name:   r['البند'] || '',
+      amount: parseFloat(r['المبلغ (ر.س)'] || r['المبلغ'] || 0) || 0,
+      cat:    r['الفئة'] || '',
+      notes:  r['ملاحظات'] || '',
+    })).filter(r => r.name && r.amount > 0);
+
+    // Parse Weekly
+    rawWeekly = weekData.rows.filter(r => Object.values(r).some(v => v));
+
+    // Build year options
     buildYearOptions();
+
+    // Render all pages
     renderOverview();
     renderClients();
     renderPipeline();
     renderFinance();
-  }catch(e){toast('خطأ في الاتصال');}
-  setSyncing(false);
+    renderWeekly();
+
+    setSyncing(false);
+    toast('✅ تم تحميل البيانات من Google Sheets');
+
+  } catch (e) {
+    setSyncing(false, true);
+    console.error(e);
+    toast('❌ تعذر الاتصال — تأكد إن الملف مشارك للعموم');
+  }
 }
 
-// ══ YEAR OPTIONS ══
-function buildYearOptions(){
-  const years=[...new Set(ads.map(a=>a.date?new Date(a.date+'T00:00:00').getFullYear():null).filter(Boolean))].sort();
-  const min=Math.min(2025,...years);
-  const opts=['<option value="all">كل السنوات</option>'];
-  for(let y=min;y<=2030;y++)opts.push(`<option value="${y}">${y}</option>`);
-  ['ov-year','fin-year'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el)el.innerHTML=opts.join('');
+// ════════════════════════════════════════════
+// YEAR OPTIONS
+// ════════════════════════════════════════════
+function buildYearOptions() {
+  const years = [...new Set(rawAds.map(a => {
+    const m = monthKey(a.adDate || a.pubDate);
+    return m ? parseInt(m.split(' ')[1]) : null;
+  }).filter(Boolean))].sort();
+  const min = Math.min(2025, ...(years.length ? years : [2025]));
+  const opts = ['<option value="all">كل السنوات</option>'];
+  for (let y = min; y <= 2030; y++) opts.push(`<option value="${y}">${y}</option>`);
+  ['ov-year', 'fin-year'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = opts.join('');
   });
 }
 
-// ══ OVERVIEW ══
-function renderOverview(){
-  const allAds=Object.values(clients).flatMap(c=>c.ads);
-  const totalIn=allAds.reduce((s,a)=>s+(Number(a.amount)||0),0);
-  const cl=Object.values(clients);
-  const repeatC=cl.filter(c=>c.ads.length>1).length;
-  const activeC=cl.filter(c=>clientHasActive(c)).length;
-  const contracts=allAds.filter(a=>a.type&&a.type.includes('عقد')).length;
+// ════════════════════════════════════════════
+// OVERVIEW
+// ════════════════════════════════════════════
+function renderOverview() {
+  const cl = Object.values(clientMap);
+  const totalIn = rawAds.filter(a => a.status === 'تمت').reduce((s, a) => s + a.amount, 0);
+  const activeC = cl.filter(c => c.ads.some(a => a.status === 'قيد العمل')).length;
+  const repeatC = cl.filter(c => c.ads.length > 1).length;
+  const contracts = rawAds.filter(a => a.type && a.type.includes('عقد')).length;
 
-  document.getElementById('ov-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">إجمالي الإعلانات</div><div class="kpi-val">${allAds.length}</div><div class="kpi-sub">${activeC} قيد العمل</div><div class="kpi-accent" style="background:var(--g2)"></div></div>
+  document.getElementById('ov-kpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">إجمالي الإعلانات</div><div class="kpi-val">${rawAds.length}</div><div class="kpi-sub">${activeC} قيد العمل</div><div class="kpi-accent" style="background:var(--g2)"></div></div>
     <div class="kpi"><div class="kpi-label">إجمالي الدخل</div><div class="kpi-val">${(totalIn/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g1)"></div></div>
     <div class="kpi"><div class="kpi-label">عدد العملاء</div><div class="kpi-val">${cl.length}</div><div class="kpi-sub">${repeatC} متكرر</div><div class="kpi-accent" style="background:var(--g3)"></div></div>
-    <div class="kpi"><div class="kpi-label">عقود</div><div class="kpi-val">${contracts}</div><div class="kpi-sub">مقابل ${allAds.filter(a=>a.type==='مرة واحدة').length} مرة واحدة</div><div class="kpi-accent" style="background:var(--g4)"></div></div>`;
+    <div class="kpi"><div class="kpi-label">عقود</div><div class="kpi-val">${contracts}</div><div class="kpi-sub">مقابل ${rawAds.filter(a => a.type === 'مرة واحدة').length} مرة واحدة</div><div class="kpi-accent" style="background:var(--g4)"></div></div>`;
 
-  const yf=document.getElementById('ov-year').value;
-  renderBarChart('ov-chart',allAds,yf);
+  const yf = document.getElementById('ov-year').value;
+  renderBarChart('ov-chart', rawAds, yf);
 
-  const top=[...cl].sort((a,b)=>clientTotal(b)-clientTotal(a)).slice(0,5);
-  const mx=clientTotal(top[0]||{ads:[]})||1;
-  document.getElementById('ov-top').innerHTML=top.map(c=>`
-    <div style="margin-bottom:10px">
+  // Top clients
+  const top = [...cl].sort((a, b) => {
+    const ta = a.ads.reduce((s, x) => s + x.amount, 0);
+    const tb = b.ads.reduce((s, x) => s + x.amount, 0);
+    return tb - ta;
+  }).slice(0, 5);
+  const mxTop = top[0] ? top[0].ads.reduce((s, a) => s + a.amount, 0) : 1;
+  document.getElementById('ov-top').innerHTML = top.map(c => {
+    const t = c.ads.reduce((s, a) => s + a.amount, 0);
+    return `<div style="margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;margin-bottom:3px">
         <span style="font-size:13px;font-weight:600">${c.name}</span>
-        <span style="font-size:12px;font-weight:700;color:var(--g1)">${fmtMoney(clientTotal(c))}</span>
+        <span style="font-size:12px;font-weight:700;color:var(--g1)">${fmtMoney(t)}</span>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(clientTotal(c)/mx*100)}%"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(t/mxTop*100)}%"></div></div>
+    </div>`;
+  }).join('');
+
+  // Types
+  const types = {'مرة واحدة': 0, 'عقد': 0, 'عقد + نسبة': 0};
+  rawAds.forEach(a => { const k = a.type || 'مرة واحدة'; types[k] = (types[k] || 0) + 1; });
+  const tc = {'مرة واحدة': 'var(--blue)', 'عقد': 'var(--g1)', 'عقد + نسبة': 'var(--g3)'};
+  document.getElementById('ov-types').innerHTML = Object.entries(types).filter(([,v]) => v > 0).map(([k, v]) => `
+    <div class="legend-row">
+      <div style="width:10px;height:10px;border-radius:50%;background:${tc[k]};flex-shrink:0"></div>
+      <span style="flex:1;font-size:13px">${k}</span><b>${v}</b>
+      <span style="color:var(--ink3);font-size:11px;margin-right:6px">${rawAds.length ? Math.round(v/rawAds.length*100) : 0}%</span>
     </div>`).join('');
 
-  const types={'مرة واحدة':0,'عقد':0,'عقد + نسبة':0};
-  allAds.forEach(a=>{const k=a.type||'مرة واحدة';types[k]=(types[k]||0)+1;});
-  const tc={'مرة واحدة':'var(--blue)','عقد':'var(--g1)','عقد + نسبة':'var(--g3)'};
-  document.getElementById('ov-types').innerHTML=Object.entries(types).filter(([,v])=>v>0).map(([k,v])=>`
-    <div class="legend-row"><div style="width:10px;height:10px;border-radius:50%;background:${tc[k]};flex-shrink:0"></div>
-    <span style="flex:1;font-size:13px">${k}</span><b>${v}</b>
-    <span style="color:var(--d3);font-size:11px;margin-right:6px">${allAds.length?Math.round(v/allAds.length*100):0}%</span></div>`).join('');
-
-  const activeCl=cl.filter(c=>clientHasActive(c));
-  document.getElementById('ov-active').innerHTML=activeCl.length?activeCl.map(c=>`
-    <div class="fin-row">
+  // Active
+  const activeCl = cl.filter(c => c.ads.some(a => a.status === 'قيد العمل'));
+  document.getElementById('ov-active').innerHTML = activeCl.length ? activeCl.map(c => {
+    const activeAds = c.ads.filter(a => a.status === 'قيد العمل');
+    return `<div class="fin-row">
       <div><div style="font-weight:600;font-size:13px">${c.name}</div>
-        <div style="font-size:11px;color:var(--d3)">${c.ads.filter(a=>a.status==='قيد العمل').map(a=>a.type||'—').join('، ')}</div></div>
-      <span style="font-weight:700;color:var(--g1);font-size:13px">${fmtMoney(c.ads.filter(a=>a.status==='قيد العمل').reduce((s,a)=>s+a.amount,0))}</span>
-    </div>`).join(''):'<div style="color:var(--d3);font-size:13px;padding:8px 0">لا يوجد</div>';
+        <div style="font-size:11px;color:var(--ink3)">${activeAds.map(a => a.type || '—').join('، ')}</div></div>
+      <span style="font-weight:700;color:var(--g1);font-size:13px">${fmtMoney(activeAds.reduce((s,a) => s+a.amount, 0))}</span>
+    </div>`;
+  }).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">لا يوجد</div>';
 
-  const reps=[...cl].filter(c=>c.ads.length>1).sort((a,b)=>b.ads.length-a.ads.length).slice(0,5);
-  document.getElementById('ov-repeats').innerHTML=reps.length?reps.map(c=>`
+  // Repeats
+  const reps = [...cl].filter(c => c.ads.length > 1).sort((a, b) => b.ads.length - a.ads.length).slice(0, 5);
+  document.getElementById('ov-repeats').innerHTML = reps.length ? reps.map(c => `
     <div class="fin-row">
       <span style="font-weight:600;font-size:13px">${c.name}</span>
       <div style="display:flex;align-items:center;gap:8px">
         <span class="badge b-olive">${c.ads.length} مرات</span>
-        <span style="font-size:12px;font-weight:600;color:var(--g1)">${fmtMoney(clientTotal(c))}</span>
+        <span style="font-size:12px;font-weight:600;color:var(--g1)">${fmtMoney(c.ads.reduce((s,a) => s+a.amount, 0))}</span>
       </div>
-    </div>`).join(''):'<div style="color:var(--d3);font-size:13px;padding:8px 0">—</div>';
+    </div>`).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">—</div>';
 }
 
-function renderBarChart(elId,allAds,yf){
-  const bm={};
-  allAds.forEach(a=>{
-    if(!a.date)return;
-    const d=new Date(a.date+'T00:00:00');
-    if(yf!=='all'&&d.getFullYear()!==+yf)return;
-    const m=monthKey(a.date);
-    bm[m]=(bm[m]||0)+(Number(a.amount)||0);
+// ════════════════════════════════════════════
+// BAR CHART
+// ════════════════════════════════════════════
+function renderBarChart(elId, ads, yf) {
+  const bm = {};
+  ads.forEach(a => {
+    const d = a.adDate || a.pubDate;
+    if (!d) return;
+    const m = monthKey(d);
+    if (!m) return;
+    const yr = parseInt(m.split(' ')[1]);
+    if (yf !== 'all' && yr !== +yf) return;
+    if (a.status === 'تمت') bm[m] = (bm[m] || 0) + a.amount;
   });
-  const keys=Object.keys(bm);
-  if(!keys.length){document.getElementById(elId).innerHTML='<div style="color:var(--d3);font-size:12px;padding:20px 0">لا توجد بيانات</div>';return;}
-  const dates=keys.map(k=>{const[mo,yr]=k.split(' ');return new Date(yr,MEN.indexOf(mo),1);}).sort((a,b)=>a-b);
-  const allMonths=[];let cur=new Date(dates[0]);const end=dates[dates.length-1];
-  while(cur<=end){allMonths.push(`${MEN[cur.getMonth()]} ${cur.getFullYear()}`);cur.setMonth(cur.getMonth()+1);}
-  const vals=allMonths.map(m=>bm[m]||0);
-  const mx=Math.max(...vals,1);
-  document.getElementById(elId).innerHTML=allMonths.map((m,i)=>`
+  const keys = Object.keys(bm);
+  if (!keys.length) {
+    document.getElementById(elId).innerHTML = '<div style="color:var(--ink3);font-size:12px;padding:20px 0">لا توجد بيانات</div>';
+    return;
+  }
+  const dates = keys.map(k => { const [mo, yr] = k.split(' '); return new Date(yr, MEN.indexOf(mo), 1); }).sort((a, b) => a - b);
+  const allMonths = [];
+  let cur = new Date(dates[0]);
+  const end = dates[dates.length - 1];
+  while (cur <= end) { allMonths.push(`${MEN[cur.getMonth()]} ${cur.getFullYear()}`); cur.setMonth(cur.getMonth() + 1); }
+  const vals = allMonths.map(m => bm[m] || 0);
+  const mx = Math.max(...vals, 1);
+  document.getElementById(elId).innerHTML = allMonths.map((m, i) => `
     <div class="bar-col">
-      <div class="bar-v">${vals[i]?(vals[i]/1000).toFixed(1)+'k':''}</div>
-      <div class="bar-body" style="height:${Math.max(3,Math.round(vals[i]/mx*95))}px;background:${i===allMonths.length-1?'var(--g1)':'var(--g3)'}"></div>
+      <div class="bar-v">${vals[i] ? (vals[i]/1000).toFixed(1)+'k' : ''}</div>
+      <div class="bar-body" style="height:${Math.max(3, Math.round(vals[i]/mx*95))}px;background:${i===allMonths.length-1?'var(--g1)':'var(--g3)'}"></div>
       <div class="bar-lbl">${m.split(' ')[0]}</div>
     </div>`).join('');
 }
 
-// ══ CLIENTS ══
-function filterClients(f,btn){
-  clientFilter=f;
-  document.querySelectorAll('#page-clients .fb').forEach(b=>b.classList.remove('active'));
+// ════════════════════════════════════════════
+// CLIENTS
+// ════════════════════════════════════════════
+function filterClients(f, btn) {
+  clientFilter = f;
+  document.querySelectorAll('#page-clients .fb').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderClients();
 }
-function renderClients(){
-  let list=Object.values(clients);
-  if(clientFilter==='active')list=list.filter(c=>clientHasActive(c));
-  else if(clientFilter==='repeat')list=list.filter(c=>c.ads.length>1);
-  else if(clientFilter==='contract')list=list.filter(c=>c.ads.some(a=>a.type&&a.type.includes('عقد')));
-  const sort=document.getElementById('cl-sort').value;
-  list=[...list];
-  if(sort==='amount'||sort==='all')list.sort((a,b)=>clientTotal(b)-clientTotal(a));
-  else if(sort==='latest')list.sort((a,b)=>clientLastDate(b).localeCompare(clientLastDate(a)));
-  else if(sort==='repeat')list.sort((a,b)=>b.ads.length-a.ads.length);
-  else if(sort==='status-active'){list=list.filter(c=>c.clientStatus==='نشط');list.sort((a,b)=>clientTotal(b)-clientTotal(a));}
-  else if(sort==='status-ended'){list=list.filter(c=>c.clientStatus==='منتهي');list.sort((a,b)=>clientTotal(b)-clientTotal(a));}
-  else if(sort==='status-paused'){list=list.filter(c=>c.clientStatus==='متوقف');list.sort((a,b)=>clientTotal(b)-clientTotal(a));}
-  document.getElementById('cl-cnt').textContent=list.length;
-  document.getElementById('clients-grid').innerHTML=list.map(c=>clientCard(c)).join('');
+function renderClients() {
+  let list = Object.values(clientMap);
+  if (clientFilter === 'active') list = list.filter(c => c.ads.some(a => a.status === 'قيد العمل'));
+  else if (clientFilter === 'repeat') list = list.filter(c => c.ads.length > 1);
+  else if (clientFilter === 'contract') list = list.filter(c => c.ads.some(a => a.type && a.type.includes('عقد')));
+  list = [...list];
+  const sort = document.getElementById('cl-sort').value;
+  const getTotal = c => c.ads.reduce((s, a) => s + a.amount, 0);
+  if (sort === 'amount') list.sort((a, b) => getTotal(b) - getTotal(a));
+  else if (sort === 'latest') list.sort((a, b) => {
+    const la = a.ads.map(x => x.adDate || '').sort().reverse()[0] || '';
+    const lb = b.ads.map(x => x.adDate || '').sort().reverse()[0] || '';
+    return lb.localeCompare(la);
+  });
+  else if (sort === 'repeat') list.sort((a, b) => b.ads.length - a.ads.length);
+  else if (sort === 'status-active') { list = list.filter(c => c.clientStatus === 'نشط'); list.sort((a, b) => getTotal(b) - getTotal(a)); }
+  else if (sort === 'status-ended') { list = list.filter(c => c.clientStatus === 'منتهي'); list.sort((a, b) => getTotal(b) - getTotal(a)); }
+  document.getElementById('cl-cnt').textContent = list.length;
+  document.getElementById('clients-grid').innerHTML = list.map(c => clientCard(c)).join('');
 }
-function clientCard(c){
-  const key=c.name;
-  const total=clientTotal(c);
-  const isRepeat=c.ads.length>1;
-  const hasActive=clientHasActive(c);
-  const lastDate=clientLastDate(c);
-  const cs=c.clientStatus||'نشط';
-  const statusColors={'نشط':'#1F618D','منتهي':'#7FCBA4','متوقف':'#9494B0'};
-  let topBorder=hasActive?'3px solid var(--g2)':isRepeat?'3px solid var(--g3)':'none';
-  let badges='';
-  if(hasActive)badges+=`<span class="badge b-olive">قيد العمل</span>`;
-  if(isRepeat)badges+=`<span class="badge b-sand">متكرر · ${c.ads.length}</span>`;
-  if(c.ads.some(a=>a.type&&a.type.includes('عقد')))badges+=`<span class="badge b-blue">عقد</span>`;
-  const adsHtml=c.ads.sort((a,b)=>a.date>b.date?1:-1).map((a,i)=>`
+function clientCard(c) {
+  const total = c.ads.reduce((s, a) => s + a.amount, 0);
+  const isRepeat = c.ads.length > 1;
+  const hasActive = c.ads.some(a => a.status === 'قيد العمل');
+  const lastDate = c.ads.map(a => a.adDate || '').sort().reverse()[0] || '';
+  const cs = c.clientStatus || 'نشط';
+  const statusColors = {'نشط': '#1F618D', 'منتهي': '#7FCBA4', 'متوقف': '#9A9A80'};
+  let topBorder = hasActive ? '3px solid var(--g2)' : isRepeat ? '3px solid var(--g3)' : 'none';
+  let badges = '';
+  if (hasActive) badges += `<span class="badge b-gold">قيد العمل</span>`;
+  if (isRepeat) badges += `<span class="badge b-sand">متكرر · ${c.ads.length}</span>`;
+  if (c.ads.some(a => a.type && a.type.includes('عقد'))) badges += `<span class="badge b-blue">عقد</span>`;
+  const adsHtml = c.ads.map((a, i) => `
     <div class="cc-ad-row">
       <div class="ad-num">${i+1}</div>
       <div class="ad-info">
-        <div class="ad-title">${a.notes||a.type||'إعلان'}</div>
-        <div class="ad-sub">${fmtDate(a.date)} ${a.city?'· '+a.city:''} ${ptag(a.platform)}
-          <span class="badge ${a.status==='تم'?'b-green':a.status==='قيد العمل'?'b-olive':'b-gray'}" style="font-size:9px">${a.status}</span>
+        <div class="ad-title">${a.notes || a.type || 'إعلان'}</div>
+        <div class="ad-sub">${fmtDate(a.adDate)} ${a.city ? '· '+a.city : ''} ${ptag(a.platform)}
+          <span class="badge ${a.status==='تمت'?'b-green':a.status==='قيد العمل'?'b-gold':'b-gray'}" style="font-size:9px">${a.status}</span>
         </div>
       </div>
-      <div class="ad-amount">${a.amount?fmtMoney(a.amount):a.pct?a.pct+'%':'—'}</div>
-      <button class="ad-btn" onclick="openAdModal('edit','${key.replace(/'/g,"\\'")}','${a.id}')">✎</button>
-      <button class="ad-btn" onclick="deleteAd('${a.id}')" style="color:var(--red)">🗑</button>
+      <div class="ad-amount">${a.amount ? fmtMoney(a.amount) : a.pct ? a.pct*100+'%' : '—'}</div>
     </div>`).join('');
-  return`<div class="client-card" style="border-top:${topBorder}">
+  return `<div class="client-card" style="border-top:${topBorder}">
     <div class="cc-head">
       <div class="cc-name">${c.name}</div>
       <div class="cc-meta">آخر إعلان: ${fmtDate(lastDate)}</div>
@@ -546,631 +661,152 @@ function clientCard(c){
     </div>
     <div class="cc-stats">
       <div class="cc-stat"><div class="cc-stat-val">${c.ads.length}</div><div class="cc-stat-lbl">إعلان</div></div>
-      <div class="cc-stat"><div class="cc-stat-val" style="color:var(--g1);font-size:13px">${total?(total/1000).toFixed(1)+'k':'—'}</div><div class="cc-stat-lbl">إجمالي ر.س</div></div>
-      <div class="cc-stat" style="padding:6px 8px">
-        <select class="status-sel" style="color:${statusColors[cs]}" onchange="setClientStatus('${key.replace(/'/g,"\\'")}',this.value)" onclick="event.stopPropagation()">
-          <option${cs==='نشط'?' selected':''}>نشط</option>
-          <option${cs==='منتهي'?' selected':''}>منتهي</option>
-          <option${cs==='متوقف'?' selected':''}>متوقف</option>
-        </select>
-        <div class="cc-stat-lbl">حالة العميل</div>
-      </div>
+      <div class="cc-stat"><div class="cc-stat-val" style="color:var(--g1);font-size:13px">${total ? (total/1000).toFixed(1)+'k' : '—'}</div><div class="cc-stat-lbl">إجمالي ر.س</div></div>
+      <div class="cc-stat"><div class="cc-stat-val" style="font-size:13px;color:${statusColors[cs]}">${cs}</div><div class="cc-stat-lbl">الحالة</div></div>
     </div>
     <div class="cc-ads">${adsHtml}</div>
-    <div style="padding:8px 16px 14px">
-      <button class="add-ad-btn" onclick="openAdModal('new-ad','${key.replace(/'/g,"\\'")}')">+ إضافة إعلان لنفس العميل</button>
-    </div>
   </div>`;
 }
 
-// ══ AD MODAL ══
-function openAdModal(mode,clientKey,adId){
-  adModalMode=mode; adModalClientKey=clientKey||null; adModalAdId=adId||null;
-  const titleMap={'new-client':'عميل جديد + أول إعلان','new-ad':`إعلان جديد — ${clientKey}`,'edit':`تعديل إعلان — ${clientKey}`};
-  document.getElementById('ad-modal-title').textContent=titleMap[mode];
-  document.getElementById('ad-client-name-row').style.display=mode==='new-client'?'block':'none';
-  ['ad-client-name','ad-amount','ad-pct','ad-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('ad-date').value='';
-  document.getElementById('ad-type').value='';
-  document.getElementById('ad-platform').value='';
-  document.getElementById('ad-city').value='';
-  document.getElementById('ad-status').value='تم';
-  if(mode==='edit'&&adId){
-    const a=ads.find(x=>x.id===adId);
-    if(a){
-      document.getElementById('ad-amount').value=a.amount||'';
-      document.getElementById('ad-date').value=a.date||'';
-      document.getElementById('ad-type').value=a.type||'';
-      document.getElementById('ad-pct').value=a.pct||'';
-      document.getElementById('ad-platform').value=a.platform||'';
-      document.getElementById('ad-city').value=a.city||'';
-      document.getElementById('ad-status').value=a.status||'تم';
-      document.getElementById('ad-notes').value=a.notes||'';
-    }
-  }
-  openModal('modal-ad');
-}
-async function saveAd(){
-  setSyncing(true);
-  const obj={
-    amount:+document.getElementById('ad-amount').value||0,
-    date:document.getElementById('ad-date').value,
-    type:document.getElementById('ad-type').value||'مرة واحدة',
-    pct:+document.getElementById('ad-pct').value||0,
-    platform:document.getElementById('ad-platform').value,
-    city:document.getElementById('ad-city').value,
-    status:document.getElementById('ad-status').value,
-    notes:document.getElementById('ad-notes').value.trim(),
-  };
-  if(adModalMode==='new-client'){
-    const name=document.getElementById('ad-client-name').value.trim();
-    if(!name){toast('اكتب اسم العميل');setSyncing(false);return;}
-    obj.client_name=name;
-    await db.from('clients').upsert({name,client_status:'نشط'},{onConflict:'name'});
-    await db.from('ads').insert(obj);
-  } else if(adModalMode==='new-ad'){
-    obj.client_name=adModalClientKey;
-    await db.from('ads').insert(obj);
-  } else if(adModalMode==='edit'){
-    await db.from('ads').update(obj).eq('id',adModalAdId);
-  }
-  closeModal('modal-ad');
-  await loadAll();
-  toast('✅ تم الحفظ');
-}
-async function deleteAd(id){
-  if(!confirm('حذف هذا الإعلان؟'))return;
-  setSyncing(true);
-  await db.from('ads').delete().eq('id',id);
-  await loadAll();
-  toast('تم الحذف');
-}
-async function setClientStatus(key,val){
-  setSyncing(true);
-  await db.from('clients').upsert({name:key,client_status:val},{onConflict:'name'});
-  await loadAll();
-  toast('تم تحديث حالة العميل');
-}
-
-// ══ UPCOMING ══
-const STAGES=['غير معتمد','معتمد','التصوير','المونتاج','النشر'];
-const STAGE_COLORS={'غير معتمد':'#C0392B','معتمد':'#6C3483','التصوير':'#D35400','المونتاج':'#1F618D','النشر':'#2E7D32'};
-function renderPipeline(){
-  document.getElementById('up-cnt').textContent=upcomingList.length;
-  document.getElementById('pipeline').innerHTML=STAGES.map(stage=>{
-    const items=upcomingList.filter(u=>u.stage===stage);
-    return`<div class="pl-col">
+// ════════════════════════════════════════════
+// PIPELINE
+// ════════════════════════════════════════════
+const STAGES = ['غير معتمد', 'معتمد', 'التصوير', 'المونتاج', 'النشر'];
+const STAGE_COLORS = {'غير معتمد':'#C0392B','معتمد':'#6C3483','التصوير':'#D35400','المونتاج':'#1F618D','النشر':'#1A7A4A'};
+function renderPipeline() {
+  document.getElementById('up-cnt').textContent = rawUpcoming.length;
+  document.getElementById('pipeline').innerHTML = STAGES.map(stage => {
+    const items = rawUpcoming.filter(u => u.stage === stage);
+    return `<div class="pl-col">
       <div class="pl-head" style="border-bottom-color:${STAGE_COLORS[stage]}">
         <span>${stage}</span><span class="cnt">${items.length}</span>
       </div>
       <div class="pl-body">
-        ${items.length?items.map(u=>`
-          <div class="pl-card" onclick="openUpModal('${u.id}')">
-            <div style="font-size:13px;font-weight:700">${u.name}</div>
-            <div style="font-size:10px;color:var(--d3);margin-top:2px">${u.city||'—'}</div>
+        ${items.length ? items.map(u => `
+          <div class="pl-card">
+            <div style="font-size:13px;font-weight:700;color:var(--ink)">${u.name}</div>
+            ${u.city ? `<div style="font-size:10px;color:var(--ink3);margin-top:2px">${u.city}</div>` : ''}
             <div class="pl-dates">
-              <div class="pl-date-box"><div class="pl-date-lbl" style="color:#5F6F52">تاريخ الإعلان</div><div class="pl-date-val">${fmtDate(u.ad_date)}</div></div>
-              <div class="pl-date-box"><div class="pl-date-lbl" style="color:#2E7D32">تاريخ النشر</div><div class="pl-date-val">${fmtDate(u.pub_date)}</div></div>
+              <div class="pl-date-box"><div class="pl-date-lbl" style="color:var(--g1)">الإعلان</div><div class="pl-date-val">${fmtDate(u.adDate)}</div></div>
+              <div class="pl-date-box"><div class="pl-date-lbl" style="color:#1A7A4A">النشر</div><div class="pl-date-val">${fmtDate(u.pubDate)}</div></div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
               ${ptag(u.platform)}
-              <button class="ad-btn" onclick="event.stopPropagation();deleteUpcoming('${u.id}')" style="color:var(--red)">🗑</button>
+              ${u.assigned ? `<span style="font-size:10px;color:var(--ink3)">${u.assigned}</span>` : ''}
             </div>
           </div>`).join('')
-        :'<div style="color:var(--d3);font-size:12px;text-align:center;padding:20px 0">لا يوجد</div>'}
+        : '<div style="color:var(--ink3);font-size:12px;text-align:center;padding:20px 0">لا يوجد</div>'}
       </div>
     </div>`;
   }).join('');
 }
-function openUpModal(id){
-  upModalId=id||null;
-  document.getElementById('up-modal-title').textContent=id?'تعديل إعلان قادم':'إضافة إعلان قادم';
-  ['up-name','up-ad-date','up-pub-date','up-notes'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('up-platform').value='تيك توك';
-  document.getElementById('up-city').value='الرياض';
-  document.getElementById('up-stage').value='غير معتمد';
-  if(id){
-    const u=upcomingList.find(x=>x.id===id);
-    if(u){
-      document.getElementById('up-name').value=u.name;
-      document.getElementById('up-platform').value=u.platform||'تيك توك';
-      document.getElementById('up-city').value=u.city||'الرياض';
-      document.getElementById('up-ad-date').value=u.ad_date||'';
-      document.getElementById('up-pub-date').value=u.pub_date||'';
-      document.getElementById('up-stage').value=u.stage||'غير معتمد';
-      document.getElementById('up-notes').value=u.notes||'';
+
+// ════════════════════════════════════════════
+// FINANCE
+// ════════════════════════════════════════════
+function renderFinance() {
+  const totalIn = rawAds.filter(a => a.status === 'تمت').reduce((s, a) => s + a.amount, 0);
+  const inProgress = rawAds.filter(a => a.status === 'قيد العمل').reduce((s, a) => s + a.amount, 0);
+  const totalExp = rawExpenses.reduce((s, e) => s + e.amount, 0);
+  const net = totalIn - totalExp;
+  document.getElementById('fin-kpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">إجمالي الدخل (تمت)</div><div class="kpi-val">${(totalIn/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g1)"></div></div>
+    <div class="kpi"><div class="kpi-label">قيد العمل</div><div class="kpi-val">${(inProgress/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--gold)"></div></div>
+    <div class="kpi"><div class="kpi-label">المصروفات</div><div class="kpi-val">${(totalExp/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--red)"></div></div>
+    <div class="kpi"><div class="kpi-label">صافي الربح</div><div class="kpi-val" style="color:${net>=0?'var(--g1)':'var(--red)'}">${(net/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g2)"></div></div>`;
+  const yf = document.getElementById('fin-year').value;
+  renderBarChart('fin-chart', rawAds, yf);
+  document.getElementById('exp-tbody').innerHTML = rawExpenses.length ? rawExpenses.map(e => `
+    <tr>
+      <td style="font-size:12px;color:var(--ink3)">${fmtDate(e.date)}</td>
+      <td style="font-weight:600">${e.name}</td>
+      <td style="font-weight:700;color:var(--red)">${fmtMoney(e.amount)}</td>
+      <td><span class="badge b-gray">${e.cat || '—'}</span></td>
+      <td style="font-size:11px;color:var(--ink3)">${e.notes || ''}</td>
+    </tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:24px">لا توجد مصروفات مسجلة في الملف</td></tr>';
+}
+
+// ════════════════════════════════════════════
+// WEEKLY PLAN
+// ════════════════════════════════════════════
+function renderWeekly() {
+  if (!rawWeekly.length) {
+    document.getElementById('weekly-content').innerHTML = `
+      <div class="empty-state"><div class="icon">📅</div>
+        <p>لا توجد بيانات في ورقة "خطة الاسبوع"<br>أضف بيانات في Google Sheets وأعد التحميل</p></div>`;
+    return;
+  }
+
+  // Group rows by week — detect week separator rows (rows where first non-empty cell looks like a week title)
+  // Simple approach: show all rows as a table
+  const cols = Object.keys(rawWeekly[0]).filter(k => k && k !== 'null');
+
+  // Try to detect sections (rows with a header-like value)
+  const sections = [];
+  let currentSection = null;
+
+  rawWeekly.forEach(row => {
+    const vals = Object.values(row).filter(v => v);
+    if (vals.length === 1 || (vals.length > 0 && !row[cols[1]] && !row[cols[2]])) {
+      // likely a section header
+      if (currentSection) sections.push(currentSection);
+      currentSection = { title: vals[0], rows: [] };
+    } else if (vals.length > 0) {
+      if (!currentSection) currentSection = { title: 'خطة الأسبوع', rows: [] };
+      currentSection.rows.push(row);
     }
-  }
-  openModal('modal-up');
-}
-async function saveUpcoming(){
-  const name=document.getElementById('up-name').value.trim();
-  if(!name){toast('اكتب اسم العميل');return;}
-  setSyncing(true);
-  const obj={name,platform:document.getElementById('up-platform').value,city:document.getElementById('up-city').value,ad_date:document.getElementById('up-ad-date').value,pub_date:document.getElementById('up-pub-date').value,stage:document.getElementById('up-stage').value,notes:document.getElementById('up-notes').value.trim()};
-  if(upModalId)await db.from('upcoming').update(obj).eq('id',upModalId);
-  else await db.from('upcoming').insert(obj);
-  closeModal('modal-up');
-  await loadAll();
-  toast('✅ تم الحفظ');
-}
-async function deleteUpcoming(id){
-  if(!confirm('حذف هذا الإعلان؟'))return;
-  setSyncing(true);
-  await db.from('upcoming').delete().eq('id',id);
-  await loadAll();
-  toast('تم الحذف');
-}
+  });
+  if (currentSection) sections.push(currentSection);
 
-// ══ FINANCE ══
-function renderFinance(){
-  const allAds=Object.values(clients).flatMap(c=>c.ads);
-  const totalIn=allAds.reduce((s,a)=>s+(Number(a.amount)||0),0);
-  const totalExp=expenses.reduce((s,e)=>s+e.amount,0);
-  const net=totalIn-totalExp;
-  document.getElementById('fin-kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">إجمالي الدخل</div><div class="kpi-val">${totalIn.toLocaleString()}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g1)"></div></div>
-    <div class="kpi"><div class="kpi-label">المصروفات</div><div class="kpi-val">${totalExp.toLocaleString()}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--red)"></div></div>
-    <div class="kpi"><div class="kpi-label">صافي الربح</div><div class="kpi-val" style="color:${net>=0?'var(--g1)':'var(--red)'}">${net.toLocaleString()}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g2)"></div></div>
-    <div class="kpi"><div class="kpi-label">عدد الإعلانات</div><div class="kpi-val">${allAds.length}</div><div class="kpi-sub">عقود وحملات</div><div class="kpi-accent" style="background:var(--g3)"></div></div>`;
-  const yf=document.getElementById('fin-year').value;
-  renderBarChart('fin-chart',allAds,yf);
-  document.getElementById('exp-list').innerHTML=expenses.length?expenses.map(e=>`
-    <div class="exp-card">
-      <div><div style="font-size:13px;font-weight:600">${e.name}</div><div style="font-size:11px;color:var(--d3);margin-top:2px">${e.cat} · ${fmtDate(e.date)}</div></div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-weight:700;color:var(--red)">${fmtMoney(e.amount)}</span>
-        <button class="ad-btn" onclick="deleteExpense('${e.id}')" style="color:var(--red)">🗑</button>
+  const SECTION_COLORS = {
+    'خطة النشر': '#8A9A72',
+    'أفكار المحتوى': '#1F618D',
+    'الإعلانات': '#2C2C2C',
+    'مهام الفريق': '#C5C0A5',
+  };
+
+  document.getElementById('weekly-content').innerHTML = sections.map(sec => {
+    if (!sec.rows.length) return '';
+    const secCols = cols.filter(c => sec.rows.some(r => r[c]));
+    const color = Object.keys(SECTION_COLORS).find(k => sec.title && sec.title.includes(k));
+    const bg = color ? SECTION_COLORS[color] : '#5F6F52';
+    const textColor = bg === '#C5C0A5' ? 'var(--ink)' : '#fff';
+
+    return `<div class="week-section">
+      <div class="week-section-head" style="background:${bg}">
+        <h3 style="color:${textColor}">${sec.title || 'قسم'}</h3>
       </div>
-    </div>`).join(''):'<div style="color:var(--d3);font-size:13px;padding:24px 0;text-align:center">لا توجد مصروفات بعد</div>';
-}
-function openExpModal(){openModal('modal-exp');['exp-name','exp-amount','exp-date'].forEach(id=>document.getElementById(id).value='');}
-async function saveExpense(){
-  const name=document.getElementById('exp-name').value.trim();
-  const amount=+document.getElementById('exp-amount').value;
-  if(!name||!amount){toast('أدخل البند والمبلغ');return;}
-  setSyncing(true);
-  await db.from('expenses').insert({name,amount,date:document.getElementById('exp-date').value,cat:document.getElementById('exp-cat').value});
-  closeModal('modal-exp');
-  await loadAll();
-  toast('✅ تم تسجيل المصروف');
-}
-async function deleteExpense(id){
-  setSyncing(true);
-  await db.from('expenses').delete().eq('id',id);
-  await loadAll();
-  toast('تم الحذف');
-}
-
-// ══ REALTIME SYNC ══
-db.channel('realtime-all')
-  .on('postgres_changes',{event:'*',schema:'public'},(payload)=>{
-    loadAll();
-  })
-  .subscribe();
-
-
-// ══ WEEKLY PLAN ══
-let currentWeekId = null;
-let allWeeks = [];
-let wkPub = [], wkIdeas = [], wkWkAds = [], wkTasks = [];
-let wkItemMode = null, wkItemId = null;
-const WK_STATUSES = {
-  'لم يبدأ': {bg:'#F0F0F0',color:'#666'},
-  'قيد التنفيذ': {bg:'#D6EAF8',color:'#1F618D'},
-  'مكتمل': {bg:'#D5F5E3',color:'#1A7A4A'},
-  'مؤجل': {bg:'#FDEBD0',color:'#D35400'}
-};
-function wkStatusBadge(s){const st=WK_STATUSES[s]||WK_STATUSES['لم يبدأ'];return`<span class="badge" style="background:${st.bg};color:${st.color}">${s}</span>`;}
-
-async function loadWeeks(){
-  const {data}=await db.from('weeks').select('*').order('created_at',{ascending:false});
-  allWeeks=data||[];
-  const sel=document.getElementById('week-selector');
-  sel.innerHTML='<option value="">اختر أسبوع...</option>'+allWeeks.map(w=>`<option value="${w.id}">${w.title} (${w.status})</option>`).join('');
-  const active=allWeeks.find(w=>w.status==='نشط');
-  if(active){sel.value=active.id;loadWeek(active.id);}
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr>${secCols.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+          <tbody>
+            ${sec.rows.map((r, ri) => `
+              <tr>
+                ${secCols.map(c => {
+                  const v = r[c] || '';
+                  const statusMap = {'لم يبدأ':'b-gray','قيد التنفيذ':'b-blue','مكتمل':'b-green','مؤجل':'b-gold'};
+                  const isStatus = ['الحالة','حالة البريف','حالة السكريبت','الحالة العامة'].includes(c);
+                  return `<td>${isStatus && statusMap[v] ? `<span class="badge ${statusMap[v]}">${v || '—'}</span>` : (v || '—')}</td>`;
+                }).join('')}
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }).join('') || '<div class="empty-state"><div class="icon">📅</div><p>لا توجد بيانات منظمة في ورقة خطة الأسبوع</p></div>';
 }
 
-async function loadWeek(id){
-  if(!id){document.getElementById('weekly-content').style.display='none';document.getElementById('weekly-empty').style.display='block';currentWeekId=null;return;}
-  currentWeekId=id;
-  const week=allWeeks.find(w=>w.id===id);
-  document.getElementById('weekly-content').style.display='block';
-  document.getElementById('weekly-empty').style.display='none';
-  document.getElementById('wk-title-display').textContent=week.title;
-  document.getElementById('wk-dates-display').textContent=`${fmtDate(week.start_date)} — ${fmtDate(week.end_date)}`;
-  document.getElementById('wk-status-sel').value=week.status;
-  document.getElementById('active-week-label').textContent=week.status==='نشط'?'● الأسبوع النشط الحالي':'';
-
-  setSyncing(true);
-  const [p,i,a,t]=await Promise.all([
-    db.from('week_publishing').select('*').eq('week_id',id).order('created_at'),
-    db.from('week_ideas').select('*').eq('week_id',id).order('created_at'),
-    db.from('week_ads').select('*').eq('week_id',id).order('created_at'),
-    db.from('week_tasks').select('*').eq('week_id',id).order('created_at'),
-  ]);
-  wkPub=p.data||[]; wkIdeas=i.data||[]; wkWkAds=a.data||[]; wkTasks=t.data||[];
-  renderWeekData();
-  setSyncing(false);
+function switchWeek(val) {
+  // placeholder for future week switching
+  renderWeekly();
 }
 
-function renderWeekData(){
-  // KPIs
-  const total=wkPub.length+wkIdeas.length+wkWkAds.length+wkTasks.length;
-  const done=[...wkPub,...wkIdeas,...wkTasks].filter(x=>x.status==='مكتمل').length+wkWkAds.filter(x=>x.general_status==='مكتمل').length;
-  document.getElementById('wk-kpis').innerHTML=`
-    <div style="text-align:center"><div style="font-size:20px;font-weight:700">${total}</div><div style="font-size:10px;opacity:.7">إجمالي</div></div>
-    <div style="text-align:center"><div style="font-size:20px;font-weight:700">${done}</div><div style="font-size:10px;opacity:.7">مكتمل</div></div>
-    <div style="text-align:center"><div style="font-size:20px;font-weight:700">${total-done}</div><div style="font-size:10px;opacity:.7">متبقي</div></div>`;
-
-  // Publishing
-  document.getElementById('pub-tbody').innerHTML=wkPub.map(r=>`<tr>
-    <td>${r.platform||'—'}</td><td style="text-align:center">${r.posts_count||1}</td><td>${r.content_title||'—'}</td>
-    <td>${fmtDate(r.publish_date)}</td><td>${r.assigned_to||'—'}</td><td>${wkStatusBadge(r.status)}</td>
-    <td style="font-size:11px;color:var(--d3)">${r.notes||''}</td>
-    <td><button class="ad-btn" onclick="editWkItem('pub','${r.id}')">✎</button><button class="ad-btn" onclick="deleteWkItem('pub','${r.id}')" style="color:var(--red)">🗑</button></td>
-  </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--d3);padding:16px">لا يوجد — اضغط + إضافة</td></tr>';
-
-  // Ideas
-  document.getElementById('ideas-tbody').innerHTML=wkIdeas.map(r=>`<tr>
-    <td style="font-weight:600">${r.title||'—'}</td><td style="font-size:12px">${r.hook||'—'}</td>
-    <td style="font-size:11px;color:var(--d3);max-width:150px">${r.details||'—'}</td>
-    <td>${r.assigned_to||'—'}</td><td>${wkStatusBadge(r.status)}</td>
-    <td style="font-size:11px;color:var(--d3)">${r.notes||''}</td>
-    <td><button class="ad-btn" onclick="editWkItem('idea','${r.id}')">✎</button><button class="ad-btn" onclick="deleteWkItem('idea','${r.id}')" style="color:var(--red)">🗑</button></td>
-  </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--d3);padding:16px">لا يوجد</td></tr>';
-
-  // Week Ads
-  document.getElementById('wkads-tbody').innerHTML=wkWkAds.map(r=>`<tr>
-    <td style="font-weight:600">${r.brand||'—'}</td>
-    <td>${wkStatusBadge(r.brief_status)}</td><td>${wkStatusBadge(r.script_status)}</td>
-    <td><span class="badge b-sand">${r.shoot_type||'—'}</span></td>
-    <td>${fmtDate(r.shoot_date)}</td><td>${fmtDate(r.publish_date)}</td>
-    <td>${r.assigned_to||'—'}</td><td>${wkStatusBadge(r.general_status)}</td>
-    <td style="font-size:11px;color:var(--d3)">${r.notes||''}</td>
-    <td><button class="ad-btn" onclick="editWkItem('wkad','${r.id}')">✎</button><button class="ad-btn" onclick="deleteWkItem('wkad','${r.id}')" style="color:var(--red)">🗑</button></td>
-  </tr>`).join('')||'<tr><td colspan="10" style="text-align:center;color:var(--d3);padding:16px">لا يوجد</td></tr>';
-
-  // Tasks
-  document.getElementById('tasks-tbody').innerHTML=wkTasks.map(r=>`<tr>
-    <td style="font-weight:600">${r.title||'—'}</td><td>${r.assigned_to||'—'}</td>
-    <td>${fmtDate(r.deadline)}</td><td>${wkStatusBadge(r.status)}</td>
-    <td style="font-size:12px;color:var(--d3)">${r.related_to||'—'}</td>
-    <td style="font-size:11px;color:var(--d3)">${r.notes||''}</td>
-    <td><button class="ad-btn" onclick="editWkItem('task','${r.id}')">✎</button><button class="ad-btn" onclick="deleteWkItem('task','${r.id}')" style="color:var(--red)">🗑</button></td>
-  </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--d3);padding:16px">لا يوجد</td></tr>';
-}
-
-function openWeekModal(){
-  document.getElementById('wk-title').value='';
-  document.getElementById('wk-start').value='';
-  document.getElementById('wk-end').value='';
-  openModal('modal-week');
-}
-async function saveWeek(){
-  const title=document.getElementById('wk-title').value.trim();
-  if(!title){toast('اكتب عنوان الأسبوع');return;}
-  setSyncing(true);
-  await db.from('weeks').insert({title,start_date:document.getElementById('wk-start').value,end_date:document.getElementById('wk-end').value,status:'نشط'});
-  closeModal('modal-week');
-  await loadWeeks();
-  toast('✅ تم إنشاء الأسبوع');
-}
-async function updateWeekStatus(val){
-  if(!currentWeekId)return;
-  setSyncing(true);
-  await db.from('weeks').update({status:val}).eq('id',currentWeekId);
-  await loadWeeks();
-  toast('تم تحديث حالة الأسبوع');
-}
-async function duplicateWeek(){
-  if(!currentWeekId){toast('اختر أسبوعاً أولاً');return;}
-  const title=prompt('اسم الأسبوع الجديد:');
-  if(!title)return;
-  setSyncing(true);
-  // archive current
-  await db.from('weeks').update({status:'مؤرشف'}).eq('id',currentWeekId);
-  // create new
-  const {data:newWeek}=await db.from('weeks').insert({title,status:'نشط'}).select().single();
-  if(!newWeek){toast('خطأ في الإنشاء');setSyncing(false);return;}
-  // copy all items (reset status)
-  if(wkPub.length) await db.from('week_publishing').insert(wkPub.map(r=>({...r,id:undefined,week_id:newWeek.id,status:'لم يبدأ',created_at:undefined})));
-  if(wkIdeas.length) await db.from('week_ideas').insert(wkIdeas.map(r=>({...r,id:undefined,week_id:newWeek.id,status:'لم يبدأ',created_at:undefined})));
-  if(wkWkAds.length) await db.from('week_ads').insert(wkWkAds.map(r=>({...r,id:undefined,week_id:newWeek.id,brief_status:'لم يبدأ',script_status:'لم يبدأ',general_status:'لم يبدأ',created_at:undefined})));
-  if(wkTasks.length) await db.from('week_tasks').insert(wkTasks.map(r=>({...r,id:undefined,week_id:newWeek.id,status:'لم يبدأ',created_at:undefined})));
-  await loadWeeks();
-  document.getElementById('week-selector').value=newWeek.id;
-  loadWeek(newWeek.id);
-  toast('✅ تم نسخ الأسبوع');
-}
-
-function openWkModal(type){
-  wkItemMode=type; wkItemId=null;
-  const titles={pub:'إضافة للنشر',idea:'إضافة فكرة محتوى',wkad:'إضافة إعلان',task:'إضافة مهمة'};
-  document.getElementById('wk-item-title').textContent=titles[type];
-  ['pub-fields','idea-fields','wkad-fields','task-fields'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById(type==='wkad'?'wkad-fields':type+'-fields').style.display='block';
-  openModal('modal-wk-item');
-}
-async function editWkItem(type,id){
-  wkItemMode=type; wkItemId=id;
-  const titles={pub:'تعديل خطة نشر',idea:'تعديل فكرة',wkad:'تعديل إعلان',task:'تعديل مهمة'};
-  document.getElementById('wk-item-title').textContent=titles[type];
-  ['pub-fields','idea-fields','wkad-fields','task-fields'].forEach(el=>document.getElementById(el).style.display='none');
-  document.getElementById(type==='wkad'?'wkad-fields':type+'-fields').style.display='block';
-  let r;
-  if(type==='pub') r=wkPub.find(x=>x.id===id);
-  else if(type==='idea') r=wkIdeas.find(x=>x.id===id);
-  else if(type==='wkad') r=wkWkAds.find(x=>x.id===id);
-  else r=wkTasks.find(x=>x.id===id);
-  if(!r)return;
-  if(type==='pub'){document.getElementById('pub-platform').value=r.platform||'تيك توك';document.getElementById('pub-count').value=r.posts_count||1;document.getElementById('pub-ctitle').value=r.content_title||'';document.getElementById('pub-pdate').value=r.publish_date||'';document.getElementById('pub-assigned').value=r.assigned_to||'';document.getElementById('pub-status').value=r.status||'لم يبدأ';document.getElementById('pub-notes').value=r.notes||'';}
-  else if(type==='idea'){document.getElementById('idea-title').value=r.title||'';document.getElementById('idea-hook').value=r.hook||'';document.getElementById('idea-details').value=r.details||'';document.getElementById('idea-assigned').value=r.assigned_to||'';document.getElementById('idea-status').value=r.status||'لم يبدأ';document.getElementById('idea-notes').value=r.notes||'';}
-  else if(type==='wkad'){document.getElementById('wkad-brand').value=r.brand||'';document.getElementById('wkad-brief').value=r.brief_status||'لم يبدأ';document.getElementById('wkad-script').value=r.script_status||'لم يبدأ';document.getElementById('wkad-shoot-type').value=r.shoot_type||'في الموقع';document.getElementById('wkad-shoot-date').value=r.shoot_date||'';document.getElementById('wkad-pub-date').value=r.publish_date||'';document.getElementById('wkad-assigned').value=r.assigned_to||'';document.getElementById('wkad-status').value=r.general_status||'لم يبدأ';document.getElementById('wkad-notes').value=r.notes||'';}
-  else{document.getElementById('task-title-wk').value=r.title||'';document.getElementById('task-assigned').value=r.assigned_to||'';document.getElementById('task-deadline').value=r.deadline||'';document.getElementById('task-status-wk').value=r.status||'لم يبدأ';document.getElementById('task-related').value=r.related_to||'';document.getElementById('task-notes-wk').value=r.notes||'';}
-  openModal('modal-wk-item');
-}
-async function saveWkItem(){
-  if(!currentWeekId){toast('اختر أسبوعاً أولاً');return;}
-  setSyncing(true);
-  let table,obj;
-  if(wkItemMode==='pub'){
-    table='week_publishing';
-    obj={week_id:currentWeekId,platform:document.getElementById('pub-platform').value,posts_count:+document.getElementById('pub-count').value||1,content_title:document.getElementById('pub-ctitle').value,publish_date:document.getElementById('pub-pdate').value,assigned_to:document.getElementById('pub-assigned').value,status:document.getElementById('pub-status').value,notes:document.getElementById('pub-notes').value};
-  } else if(wkItemMode==='idea'){
-    table='week_ideas';
-    obj={week_id:currentWeekId,title:document.getElementById('idea-title').value,hook:document.getElementById('idea-hook').value,details:document.getElementById('idea-details').value,assigned_to:document.getElementById('idea-assigned').value,status:document.getElementById('idea-status').value,notes:document.getElementById('idea-notes').value};
-  } else if(wkItemMode==='wkad'){
-    table='week_ads';
-    obj={week_id:currentWeekId,brand:document.getElementById('wkad-brand').value,brief_status:document.getElementById('wkad-brief').value,script_status:document.getElementById('wkad-script').value,shoot_type:document.getElementById('wkad-shoot-type').value,shoot_date:document.getElementById('wkad-shoot-date').value,publish_date:document.getElementById('wkad-pub-date').value,assigned_to:document.getElementById('wkad-assigned').value,general_status:document.getElementById('wkad-status').value,notes:document.getElementById('wkad-notes').value};
-  } else {
-    table='week_tasks';
-    obj={week_id:currentWeekId,title:document.getElementById('task-title-wk').value,assigned_to:document.getElementById('task-assigned').value,deadline:document.getElementById('task-deadline').value,status:document.getElementById('task-status-wk').value,related_to:document.getElementById('task-related').value,notes:document.getElementById('task-notes-wk').value};
-  }
-  if(wkItemId) await db.from(table).update(obj).eq('id',wkItemId);
-  else await db.from(table).insert(obj);
-  closeModal('modal-wk-item');
-  await loadWeek(currentWeekId);
-  toast('✅ تم الحفظ');
-}
-async function deleteWkItem(type,id){
-  if(!confirm('حذف هذا البند؟'))return;
-  setSyncing(true);
-  const tables={pub:'week_publishing',idea:'week_ideas',wkad:'week_ads',task:'week_tasks'};
-  await db.from(tables[type]).delete().eq('id',id);
-  await loadWeek(currentWeekId);
-  toast('تم الحذف');
-}
-
-// load weeks on weekly page visit
-
-// ══ INIT ══
+// ════════════════════════════════════════════
+// INIT — auto-refresh every 5 minutes
+// ════════════════════════════════════════════
 loadAll();
-loadWeeks();
+setInterval(loadAll, 5 * 60 * 1000);
 </script>
-
-<!-- WEEKLY PLAN -->
-<div class="page" id="page-weekly">
-  <div class="sh">
-    <div>
-      <h2>خطة الأسبوع</h2>
-      <div id="active-week-label" style="font-size:12px;color:var(--d3);margin-top:4px"></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <select class="fsel" id="week-selector" onchange="loadWeek(this.value)">
-        <option value="">اختر أسبوع...</option>
-      </select>
-      <button class="btn-add" onclick="openWeekModal()">+ أسبوع جديد</button>
-      <button class="btn-add" style="background:var(--g3)" onclick="duplicateWeek()">نسخ الأسبوع</button>
-    </div>
-  </div>
-
-  <div id="weekly-content" style="display:none">
-    <!-- week header -->
-    <div class="card" id="week-header-card" style="background:var(--g1);color:#fff;margin-bottom:1.5rem">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-        <div>
-          <div style="font-size:18px;font-weight:700" id="wk-title-display"></div>
-          <div style="font-size:12px;opacity:.8;margin-top:4px" id="wk-dates-display"></div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select id="wk-status-sel" onchange="updateWeekStatus(this.value)" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;color:#fff;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;outline:none;cursor:pointer">
-            <option value="نشط">نشط</option>
-            <option value="مكتمل">مكتمل</option>
-            <option value="مؤرشف">مؤرشف</option>
-          </select>
-          <div id="wk-kpis" style="display:flex;gap:12px"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4 sections -->
-    <div style="display:flex;flex-direction:column;gap:1.5rem">
-
-      <!-- 1. Publishing -->
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="background:var(--g2);padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
-          <h3 style="color:#fff;font-size:14px;font-weight:700;margin:0">خطة النشر</h3>
-          <button class="btn-add" style="font-size:11px;padding:5px 12px" onclick="openWkModal('pub')">+ إضافة</button>
-        </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" id="pub-table">
-            <thead><tr>
-              <th>المنصة</th><th>عدد المنشورات</th><th>العنوان</th><th>تاريخ النشر</th><th>المسؤول</th><th>الحالة</th><th>ملاحظات</th><th></th>
-            </tr></thead>
-            <tbody id="pub-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 2. Ideas -->
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="background:var(--blue);padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
-          <h3 style="color:#fff;font-size:14px;font-weight:700;margin:0">أفكار المحتوى</h3>
-          <button class="btn-add" style="font-size:11px;padding:5px 12px;background:rgba(255,255,255,.2)" onclick="openWkModal('idea')">+ إضافة</button>
-        </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" id="ideas-table">
-            <thead><tr>
-              <th>عنوان الفكرة</th><th>الهوك</th><th>التفاصيل</th><th>المسؤول</th><th>الحالة</th><th>ملاحظات</th><th></th>
-            </tr></thead>
-            <tbody id="ideas-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 3. Ads -->
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="background:var(--d1);padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
-          <h3 style="color:var(--g3);font-size:14px;font-weight:700;margin:0">الإعلانات</h3>
-          <button class="btn-add" style="font-size:11px;padding:5px 12px;background:rgba(255,255,255,.15)" onclick="openWkModal('wkad')">+ إضافة</button>
-        </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" id="wkads-table">
-            <thead><tr>
-              <th>البراند</th><th>حالة البريف</th><th>حالة السكريبت</th><th>نوع التصوير</th><th>تاريخ التصوير</th><th>تاريخ النشر</th><th>المسؤول</th><th>الحالة</th><th>ملاحظات</th><th></th>
-            </tr></thead>
-            <tbody id="wkads-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 4. Tasks -->
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="background:var(--g4);padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
-          <h3 style="color:var(--g1);font-size:14px;font-weight:700;margin:0">مهام الفريق</h3>
-          <button class="btn-add" style="font-size:11px;padding:5px 12px" onclick="openWkModal('task')">+ إضافة</button>
-        </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" id="tasks-table">
-            <thead><tr>
-              <th>المهمة</th><th>المسؤول</th><th>الموعد النهائي</th><th>الحالة</th><th>المرتبط بـ</th><th>ملاحظات</th><th></th>
-            </tr></thead>
-            <tbody id="tasks-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="weekly-empty" style="text-align:center;padding:4rem 0;color:var(--d3)">
-    <div style="font-size:48px;margin-bottom:16px">📅</div>
-    <div style="font-size:16px;font-weight:600;margin-bottom:8px">لا يوجد أسبوع محدد</div>
-    <div style="font-size:13px">اضغط "+ أسبوع جديد" لإنشاء خطة الأسبوع</div>
-  </div>
-</div>
-
-<!-- MODAL: WEEK -->
-<div class="modal-bg" id="modal-week">
-  <div class="modal">
-    <button class="mc" onclick="closeModal('modal-week')">✕</button>
-    <h2 id="week-modal-title">أسبوع جديد</h2>
-    <div class="fr"><label>عنوان الأسبوع</label><input type="text" id="wk-title" placeholder="مثال: أسبوع 1 — يوليو 2026"></div>
-    <div class="fg2">
-      <div class="fr"><label>تاريخ البداية (الجمعة)</label><input type="date" id="wk-start"></div>
-      <div class="fr"><label>تاريخ النهاية (الخميس)</label><input type="date" id="wk-end"></div>
-    </div>
-    <div class="mfooter">
-      <button class="btn-cancel" onclick="closeModal('modal-week')">إلغاء</button>
-      <button class="btn-save" onclick="saveWeek()">حفظ</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: WEEKLY ITEMS -->
-<div class="modal-bg" id="modal-wk-item">
-  <div class="modal">
-    <button class="mc" onclick="closeModal('modal-wk-item')">✕</button>
-    <h2 id="wk-item-title">إضافة</h2>
-
-    <!-- PUB fields -->
-    <div id="pub-fields">
-      <div class="fg2">
-        <div class="fr"><label>المنصة</label>
-          <select id="pub-platform"><option>تيك توك</option><option>سناب</option><option>انستقرام</option><option>X</option><option>يوتيوب</option></select>
-        </div>
-        <div class="fr"><label>عدد المنشورات</label><input type="number" id="pub-count" value="1" min="1"></div>
-      </div>
-      <div class="fr"><label>عنوان المحتوى</label><input type="text" id="pub-ctitle" placeholder="عنوان المحتوى أو البوست"></div>
-      <div class="fg2">
-        <div class="fr"><label>تاريخ النشر</label><input type="date" id="pub-pdate"></div>
-        <div class="fr"><label>المسؤول</label><input type="text" id="pub-assigned" placeholder="الاسم"></div>
-      </div>
-      <div class="fg2">
-        <div class="fr"><label>الحالة</label>
-          <select id="pub-status"><option>لم يبدأ</option><option>قيد التنفيذ</option><option>مكتمل</option><option>مؤجل</option></select>
-        </div>
-        <div class="fr"><label>ملاحظات</label><input type="text" id="pub-notes"></div>
-      </div>
-    </div>
-
-    <!-- IDEA fields -->
-    <div id="idea-fields" style="display:none">
-      <div class="fr"><label>عنوان الفكرة</label><input type="text" id="idea-title" placeholder="عنوان الفكرة"></div>
-      <div class="fr"><label>الهوك</label><input type="text" id="idea-hook" placeholder="الجملة الافتتاحية"></div>
-      <div class="fr"><label>تفاصيل المحتوى</label><textarea id="idea-details" placeholder="شرح تفصيلي للفكرة..."></textarea></div>
-      <div class="fg2">
-        <div class="fr"><label>المسؤول</label><input type="text" id="idea-assigned" placeholder="الاسم"></div>
-        <div class="fr"><label>الحالة</label>
-          <select id="idea-status"><option>لم يبدأ</option><option>قيد التنفيذ</option><option>مكتمل</option><option>مؤجل</option></select>
-        </div>
-      </div>
-      <div class="fr"><label>ملاحظات</label><input type="text" id="idea-notes"></div>
-    </div>
-
-    <!-- WKAD fields -->
-    <div id="wkad-fields" style="display:none">
-      <div class="fr"><label>البراند / العميل</label><input type="text" id="wkad-brand" placeholder="اسم البراند"></div>
-      <div class="fg2">
-        <div class="fr"><label>حالة البريف</label>
-          <select id="wkad-brief"><option>لم يبدأ</option><option>قيد التنفيذ</option><option>مكتمل</option><option>مؤجل</option></select>
-        </div>
-        <div class="fr"><label>حالة السكريبت</label>
-          <select id="wkad-script"><option>لم يبدأ</option><option>قيد التنفيذ</option><option>مكتمل</option><option>مؤجل</option></select>
-        </div>
-      </div>
-      <div class="fg2">
-        <div class="fr"><label>نوع التصوير</label>
-          <select id="wkad-shoot-type"><option>في الموقع</option><option>في المنزل</option></select>
-        </div>
-        <div class="fr"><label>تاريخ التصوير</label><input type="date" id="wkad-shoot-date"></div>
-      </div>
-      <div class="fg2">
-        <div class="fr"><label>تاريخ النشر</label><input type="date" id="wkad-pub-date"></div>
-        <div class="fr"><label>المسؤول</label><input type="text" id="wkad-assigned"></div>
-      </div>
-      <div class="fg2">
-        <div class="fr"><label>الحالة العامة</label>
-          <select id="wkad-status"><option>لم يبدأ</option><option>قيد التنفيذ</option><option>مكتمل</option><option>مؤجل</option></select>
-        </div>
-        <div class="fr"><label>ملاحظات</label><input type="text" id="wkad-notes"></div>
-      </div>
-    </div>
-
-    <!-- TASK fields -->
-    <div id="task-fields" style="display:none">
-      <div class="fr"><label>عنوان المهمة</label><input type="text" id="task-title-wk" placeholder="المهمة"></div>
-      <div class="fg2">
-        <div class="fr"><label>المسؤول</label><input type="text" id="task-assigned" placeholder="الاسم"></div>
-        <div class="fr"><label>الموعد النهائي</label><input type="date" id="task-deadline"></div>
-      </div>
-      <div class="fg2">
-        <div class="fr"><label>الحالة</label>
-          <select id="task-status-wk"><option>لم يبدأ</option><option>قيد التنفيذ</option><option>مكتمل</option><option>مؤجل</option></select>
-        </div>
-        <div class="fr"><label>مرتبط بـ</label><input type="text" id="task-related" placeholder="اسم الإعلان أو المشروع"></div>
-      </div>
-      <div class="fr"><label>ملاحظات</label><input type="text" id="task-notes-wk"></div>
-    </div>
-
-    <div class="mfooter">
-      <button class="btn-cancel" onclick="closeModal('modal-wk-item')">إلغاء</button>
-      <button class="btn-save" onclick="saveWkItem()">حفظ</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
