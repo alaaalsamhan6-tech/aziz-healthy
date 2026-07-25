@@ -240,19 +240,14 @@ function sync(s){const d=document.getElementById('sdot'),t=document.getElementBy
 
 // ── FETCH ──
 async function fetchSheet(name){
-  const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&headers=0&sheet='+encodeURIComponent(name)+'&t='+Date.now();
+  const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&headers=2&sheet='+encodeURIComponent(name)+'&t='+Date.now();
   const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
   const txt=await r.text();
   const m=txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);if(!m)throw new Error('Bad gviz');
   const json=JSON.parse(m[1]);if(!json.table)throw new Error('No table');
+  const cols=(json.table.cols||[]).map(c=>(c.label||c.id||'').trim());
   const rows=json.table.rows||[];
-  let hi=-1,cols=[];
-  for(let i=0;i<Math.min(10,rows.length);i++){
-    const v=(rows[i].c||[]).map(c=>c?String(c.f??c.v??'').trim():'');
-    if(v.filter(x=>x&&isNaN(parseFloat(x))&&!x.startsWith('Date(')).length>=2){cols=v;hi=i;break;}
-  }
-  if(hi===-1)return{cols:[],rows:[]};
-  const data=rows.slice(hi+1).map(row=>{
+  const data=rows.map(row=>{
     const c=row.c||[];const o={};
     cols.forEach((col,i)=>{if(!col)return;const cell=c[i];if(!cell){o[col]=null;o['_n_'+col]=null;return;}o[col]=cell.f!=null?String(cell.f).trim():(cell.v!=null?cell.v:null);o['_n_'+col]=typeof cell.v==='number'?cell.v:null;});
     return o;
