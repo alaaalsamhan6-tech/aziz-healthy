@@ -9,8 +9,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --g1:#5F6F52;--g2:#8A9A72;--g3:#C5C0A5;--g4:#E8E2D2;
-  --white:#FFFFFF;--surface:#F5F3EE;--border:#D6D0C0;--ink:#2C2C2C;--ink2:#5F6F52;--ink3:#9A9A80;
-  --red:#C0392B;--red2:#FADBD8;--blue:#1F618D;--blue2:#D6EAF8;--gold:#856404;--gold2:#FFF3CD;
+  --white:#fff;--surface:#F5F3EE;--border:#D6D0C0;
+  --ink:#2C2C2C;--ink2:#5F6F52;--ink3:#9A9A80;
+  --red:#C0392B;--red2:#FADBD8;--blue:#1F618D;--blue2:#D6EAF8;
+  --gold:#856404;--gold2:#FFF3CD;--purple:#6C3483;--purple2:#EBDEF0;
 }
 body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh}
 .nav{background:var(--g1);height:56px;display:flex;align-items:center;padding:0 2rem;gap:2rem;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--g3)}
@@ -19,21 +21,23 @@ body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);m
 .ntab{background:none;border:none;color:rgba(255,255,255,.6);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;transition:.15s}
 .ntab:hover{color:#fff;background:rgba(255,255,255,.1)}
 .ntab.active{color:#fff;background:rgba(255,255,255,.2);border-bottom:2px solid var(--g4)}
-.sync-bar{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.6)}
+.sync-bar{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.7)}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;flex-shrink:0}
 .sync-dot.loading{background:#FFC107;animation:pulse 1s infinite}
 .sync-dot.error{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.refresh-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;transition:.15s}
+.refresh-btn:hover{background:rgba(255,255,255,.25)}
 .page{display:none;padding:2rem;max-width:1400px;margin:0 auto}.page.active{display:block}
 /* KPI */
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:2rem}
-.kpi{background:#fff;border-radius:12px;padding:1.1rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin-bottom:2rem}
+.kpi{background:var(--white);border-radius:12px;padding:1.1rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden}
 .kpi-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 .kpi-val{font-size:26px;font-weight:700;line-height:1;color:var(--ink)}
 .kpi-sub{font-size:11px;color:var(--ink3);margin-top:6px}
 .kpi-accent{position:absolute;top:0;right:0;width:4px;height:100%}
 /* CARD */
-.card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;padding:1.25rem}
+.card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;padding:1.25rem}
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px}
 .sh h2{font-size:15px;font-weight:700;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px}
 .cnt{font-size:11px;color:var(--ink3);background:var(--surface);padding:2px 8px;border-radius:20px;border:1px solid var(--border)}
@@ -44,27 +48,27 @@ body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);m
 .tbl tr:last-child td{border-bottom:none}
 .tbl tr:hover td{background:var(--surface)}
 /* CLIENT CARDS */
-.clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.client-card{background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden;transition:.2s}
+.clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.client-card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;transition:.2s}
 .client-card:hover{box-shadow:0 4px 20px rgba(95,111,82,.12)}
 .client-card.has-active{border-top:3px solid var(--g2)}
 .client-card.is-repeat:not(.has-active){border-top:3px solid var(--g3)}
-.cc-head{padding:14px 16px 8px}
-.cc-name{font-size:14px;font-weight:700;color:var(--ink)}
-.cc-meta{font-size:11px;color:var(--ink3);margin-top:3px}
+.cc-head{padding:14px 16px 10px;border-bottom:1px solid var(--border)}
+.cc-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.cc-meta-row{display:flex;gap:16px;flex-wrap:wrap}
+.cc-meta-item{font-size:12px;color:var(--ink3)}
+.cc-meta-item strong{color:var(--ink);font-weight:600}
 .cc-badges{margin-top:8px;display:flex;gap:4px;flex-wrap:wrap}
-.cc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.cc-stat{padding:10px 12px;text-align:center}
-.cc-stat:not(:last-child){border-left:1px solid var(--border)}
-.cc-stat-val{font-size:16px;font-weight:700;color:var(--ink);line-height:1}
-.cc-stat-lbl{font-size:10px;color:var(--ink3);margin-top:3px}
-.cc-ads{padding:10px 16px}
-.cc-ad-row{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--surface);border-radius:8px;margin-bottom:6px;border:1px solid var(--border)}
-.ad-num{width:20px;height:20px;border-radius:50%;background:var(--g1);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ad-info{flex:1;min-width:0}
-.ad-title{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ad-sub{font-size:10px;color:var(--ink3);margin-top:1px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.ad-amount{font-size:12px;font-weight:700;color:var(--g1);white-space:nowrap}
+/* AD ITEMS inside card */
+.cc-ads{padding:12px 16px}
+.cc-ad-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+.cc-ad-item:last-child{margin-bottom:0}
+.cc-ad-header{font-size:12px;font-weight:700;color:var(--g1);margin-bottom:6px}
+.cc-ad-details{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.cc-ad-field{font-size:11px}
+.cc-ad-field .lbl{color:var(--ink3);display:block;margin-bottom:2px}
+.cc-ad-field .val{font-weight:600;color:var(--ink);font-size:12px}
+.cc-ad-field .val.amount{color:var(--g1);font-size:13px}
 /* BADGES */
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
 .b-green{background:#D5F5E3;color:#1A7A4A}
@@ -74,71 +78,61 @@ body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);m
 .b-red{background:var(--red2);color:var(--red)}
 .b-gray{background:#F0F0F0;color:#666}
 .b-sand{background:var(--g4);color:var(--g1)}
+.b-purple{background:var(--purple2);color:var(--purple)}
+/* PLATFORM TAGS */
 .ptag{display:inline-flex;align-items:center;padding:1px 7px;border-radius:5px;font-size:9px;font-weight:700}
-.p-tiktok{background:#1A1A1A;color:#fff}
-.p-snap{background:#FFFC00;color:#1A1A1A}
+.p-tiktok{background:#1A1A1A;color:#fff}.p-snap{background:#FFFC00;color:#1A1A1A}
 .p-insta{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);color:#fff}
-.p-all{background:var(--g2);color:#fff}
-.p-x{background:#000;color:#fff}
-.p-yt{background:#FF0000;color:#fff}
+.p-all{background:var(--g2);color:#fff}.p-x{background:#000;color:#fff}.p-yt{background:#FF0000;color:#fff}
 /* FILTERS */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
-.fb{background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--ink2);transition:.15s}
+.fb{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--ink2);transition:.15s}
 .fb.active{background:var(--g1);color:#fff;border-color:var(--g1)}
 .fb:hover:not(.active){background:var(--surface)}
-.fsel{border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--ink);background:#fff;cursor:pointer;outline:none}
+.fsel{border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--ink);background:var(--white);cursor:pointer;outline:none}
 .fsel:focus{border-color:var(--g1)}
-/* BUTTONS */
-.btn-primary{background:var(--g1);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
-.btn-primary:hover{background:var(--ink2)}
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+@media(max-width:800px){.g2,.g3{grid-template-columns:1fr}}
 /* CHARTS */
-.bar-chart{display:flex;align-items:flex-end;gap:5px;height:120px;overflow-x:auto;padding-bottom:2px;direction:ltr}
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:130px;overflow-x:auto;padding-bottom:4px;direction:ltr}
 .bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:38px}
-.bar-body{border-radius:5px 5px 0 0;width:100%;background:var(--g2);min-height:3px;transition:.3s}
+.bar-body{border-radius:5px 5px 0 0;width:100%;background:var(--g3);min-height:3px;transition:.3s}
 .bar-lbl{font-size:9px;color:var(--ink3);font-weight:600;text-transform:uppercase}
 .bar-v{font-size:9px;font-weight:700;color:var(--g1)}
+.bar-trend{font-size:9px;font-weight:700}
 /* PROGRESS */
 .progress-bar{background:var(--g4);border-radius:99px;height:5px;overflow:hidden;margin-top:4px}
 .progress-fill{height:100%;border-radius:99px;background:var(--g2)}
 /* LEGEND */
-.legend-row{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
+.legend-row{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:12px;border-bottom:1px solid var(--border)}
 .legend-row:last-child{border:none}
 /* PIPELINE */
 .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 @media(max-width:1100px){.pipeline{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.pipeline{grid-template-columns:1fr}}
-.pl-col{background:#fff;border-radius:12px;border:1px solid var(--border);min-height:180px}
+.pl-col{background:var(--white);border-radius:12px;border:1px solid var(--border);min-height:180px}
 .pl-head{padding:12px 14px;border-bottom-width:2px;border-bottom-style:solid;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
 .pl-body{padding:10px;display:flex;flex-direction:column;gap:8px}
 .pl-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px}
 .pl-dates{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.pl-date-box{background:#fff;border:1px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center}
+.pl-date-box{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center}
 .pl-date-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
 .pl-date-val{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px}
-/* GRID */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
-@media(max-width:800px){.g2,.g3{grid-template-columns:1fr}}
 /* FIN */
 .fin-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
 .fin-row:last-child{border:none}
 /* WEEKLY */
-.week-section{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem}
-.week-section-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.week-section-head h3{color:#fff;font-size:13px;font-weight:700;margin:0}
-/* LOADING SKELETON */
-.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--g4) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;height:20px;margin-bottom:8px}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.wk-section{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem}
+.wk-head{padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.wk-head h3{color:#fff;font-size:14px;font-weight:700;margin:0}
 /* TOAST */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--g1);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:.3s;pointer-events:none}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--g1);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:.3s;pointer-events:none;border:1px solid var(--g2)}
 .toast.show{opacity:1;transform:translateY(0)}
-input[type="date"]{direction:ltr;text-align:left}
 .empty-state{text-align:center;padding:3rem 0;color:var(--ink3)}
 .empty-state .icon{font-size:48px;margin-bottom:12px}
-.empty-state p{font-size:13px}
-/* REFRESH BTN */
-.refresh-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer}
-.refresh-btn:hover{background:rgba(255,255,255,.25)}
+input[type="date"]{direction:ltr;text-align:left}
 </style>
 </head>
 <body>
@@ -155,18 +149,13 @@ input[type="date"]{direction:ltr;text-align:left}
   <div class="sync-bar">
     <div class="sync-dot loading" id="sync-dot"></div>
     <span id="sync-text">جاري التحميل...</span>
-    <button class="refresh-btn" onclick="loadAll()">↻ تحديث</button>
+    <button class="refresh-btn" onclick="loadAll(true)">↻ تحديث</button>
   </div>
 </nav>
 
 <!-- OVERVIEW -->
 <div class="page active" id="page-overview">
-  <div class="kpi-row" id="ov-kpis">
-    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
-    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
-    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
-    <div class="kpi"><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
-  </div>
+  <div class="kpi-row" id="ov-kpis"></div>
   <div class="card">
     <div class="sh">
       <h2>الدخل الشهري</h2>
@@ -174,29 +163,25 @@ input[type="date"]{direction:ltr;text-align:left}
         <option value="all">كل السنوات</option>
       </select>
     </div>
-    <div class="bar-chart" id="ov-chart"><div class="skeleton" style="height:80px;width:100%"></div></div>
+    <div class="bar-chart" id="ov-chart"></div>
   </div>
   <div class="g3">
     <div class="card"><div class="sh"><h2>أنواع الإعلانات</h2></div><div id="ov-types"></div></div>
     <div class="card"><div class="sh"><h2>عقود قيد العمل</h2></div><div id="ov-active"></div></div>
-    <div class="card"><div class="sh"><h2>العملاء الدائمون</h2></div><div id="ov-repeats"></div></div>
+    <div class="card"><div class="sh"><h2>العملاء المتكررون</h2></div><div id="ov-repeats"></div></div>
   </div>
   <div class="card"><div class="sh"><h2>العملاء الأعلى دخلاً</h2></div><div id="ov-top"></div></div>
 </div>
 
 <!-- UPCOMING -->
 <div class="page" id="page-upcoming">
-  <div class="sh">
-    <h2>الإعلانات القادمة <span class="cnt" id="up-cnt">—</span></h2>
-  </div>
+  <div class="sh"><h2>الإعلانات القادمة <span class="cnt" id="up-cnt">—</span></h2></div>
   <div class="pipeline" id="pipeline"></div>
 </div>
 
 <!-- CLIENTS -->
 <div class="page" id="page-clients">
-  <div class="sh">
-    <h2>العملاء والإعلانات <span class="cnt" id="cl-cnt">—</span></h2>
-  </div>
+  <div class="sh"><h2>العملاء والإعلانات <span class="cnt" id="cl-cnt">—</span></h2></div>
   <div class="filters">
     <button class="fb active" onclick="filterClients('all',this)">الكل</button>
     <button class="fb" onclick="filterClients('active',this)">قيد العمل</button>
@@ -230,7 +215,7 @@ input[type="date"]{direction:ltr;text-align:left}
     <div class="bar-chart" id="fin-chart"></div>
   </div>
   <div class="card" style="padding:0;overflow:hidden">
-    <div style="padding:12px 16px;background:var(--red);display:flex;justify-content:space-between;align-items:center">
+    <div style="padding:12px 16px;background:var(--red)">
       <h3 style="color:#fff;font-size:13px;font-weight:700;margin:0">المصروفات</h3>
     </div>
     <div style="overflow-x:auto">
@@ -244,32 +229,21 @@ input[type="date"]{direction:ltr;text-align:left}
 
 <!-- WEEKLY -->
 <div class="page" id="page-weekly">
-  <div class="sh">
-    <div>
-      <h2>خطة الأسبوع</h2>
-      <div style="font-size:12px;color:var(--ink3);margin-top:4px" id="week-info-label"></div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <select class="fsel" id="week-selector" onchange="switchWeek(this.value)">
-        <option value="">اختر أسبوعاً...</option>
-      </select>
-    </div>
-  </div>
+  <div class="sh"><h2>خطة الأسبوع</h2></div>
   <div id="weekly-content">
-    <div class="empty-state"><div class="icon">📅</div><p>جاري تحميل خطة الأسبوع من Google Sheets...</p></div>
+    <div class="empty-state"><div class="icon">📅</div><p>جاري تحميل خطة الأسبوع...</p></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════
-// CONFIG — Google Sheets
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════
 const SHEET_ID = '1BoqP-1ekwufxUd8QYXNtTO_DHsgPe0hu';
-const BASE = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-const SHEETS = {
+const SHEET_NAMES = {
   ads:      'الاعلانات',
   clients:  'العملاء',
   upcoming: 'الاعلانات القادمة',
@@ -277,192 +251,272 @@ const SHEETS = {
   weekly:   'خطة الاسبوع',
 };
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // STATE
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 let rawAds = [], rawClients = [], rawUpcoming = [], rawExpenses = [], rawWeekly = [];
 let clientMap = {};
 let clientFilter = 'all';
-let currentWeekIdx = 0;
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // UTILS
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 const ARM = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 const MEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-function fmtDate(s) {
-  if (!s || s === '' || s === '—') return '—';
-  // handle Date(y,m,d) format from gviz
+function parseGvizDate(s) {
+  if (!s) return null;
   if (typeof s === 'string' && s.startsWith('Date(')) {
-    const parts = s.slice(5,-1).split(',').map(Number);
-    const d = new Date(parts[0], parts[1], parts[2]);
-    return `${d.getDate()} ${ARM[d.getMonth()]} ${d.getFullYear()}`;
+    const p = s.slice(5,-1).split(',').map(Number);
+    return new Date(p[0], p[1], p[2]);
   }
-  // handle dd/mm/yyyy or yyyy-mm-dd
-  try {
-    const d = new Date(s);
-    if (!isNaN(d)) return `${d.getDate()} ${ARM[d.getMonth()]} ${d.getFullYear()}`;
-  } catch(e) {}
-  return s;
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
+}
+
+function fmtDate(s) {
+  if (!s) return '';
+  const d = parseGvizDate(s);
+  if (!d) return s;
+  return `${d.getDate()} ${ARM[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+// Parse money from any format: "1,500 ر.س" / "1500" / "1,000 ريال" / 1500 / 0.30
+function parseMoney(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  if (typeof v === 'number') return isNaN(v) ? 0 : v;
+  const s = String(v).replace(/[^\d.]/g, '');
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+
+// Parse percentage: handles 0.30 → 30, 30 → 30, "30%" → 30
+function parsePct(v) {
+  if (!v && v !== 0) return 0;
+  if (typeof v === 'number') {
+    // Google Sheets stores 30% as 0.3
+    return v <= 1 ? Math.round(v * 100) : Math.round(v);
+  }
+  const s = String(v).replace('%','').trim();
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n <= 1 ? Math.round(n * 100) : Math.round(n);
 }
 
 function fmtMoney(n) {
-  if (!n && n !== 0) return '—';
-  const num = parseFloat(n);
-  if (isNaN(num) || num === 0) return '—';
-  return num.toLocaleString('ar') + ' ر.س';
+  if (!n && n !== 0) return '';
+  const num = parseMoney(n);
+  if (num === 0) return '';
+  return num.toLocaleString('ar-SA') + ' ر.س';
 }
 
 function monthKey(s) {
   if (!s) return '';
-  if (typeof s === 'string' && s.startsWith('Date(')) {
-    const parts = s.slice(5,-1).split(',').map(Number);
-    return `${MEN[parts[1]]} ${parts[0]}`;
-  }
-  try {
-    const d = new Date(s);
-    if (!isNaN(d)) return `${MEN[d.getMonth()]} ${d.getFullYear()}`;
-  } catch(e){}
-  return '';
+  const d = parseGvizDate(s);
+  if (!d) return '';
+  return `${MEN[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function getMonthYear(s) {
+  const d = parseGvizDate(s);
+  if (!d) return null;
+  return { mo: d.getMonth(), yr: d.getFullYear(), key: `${MEN[d.getMonth()]} ${d.getFullYear()}` };
 }
 
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.ntab').forEach(t => t.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
 }
 
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 function setSyncing(loading, error) {
   const dot = document.getElementById('sync-dot');
   const txt = document.getElementById('sync-text');
   dot.className = 'sync-dot' + (loading ? ' loading' : error ? ' error' : '');
-  txt.textContent = loading ? 'جاري التحميل...' : error ? 'خطأ في الاتصال' : `آخر تحديث: ${new Date().toLocaleTimeString('ar-SA')}`;
+  txt.textContent = loading ? 'جاري التحميل...' : error ? 'خطأ في الاتصال' : `آخر تحديث: ${new Date().toLocaleTimeString('ar-SA', {hour:'2-digit',minute:'2-digit'})}`;
 }
 
 function ptag(p) {
   if (!p) return '';
-  const map = {
-    'تيك توك': 'p-tiktok', 'سناب': 'p-snap',
-    'انستقرام': 'p-insta', 'جميع المنصات': 'p-all',
-    'X': 'p-x', 'يوتيوب': 'p-yt',
-  };
-  return `<span class="ptag ${map[p] || 'p-all'}">${p}</span>`;
+  const map = {'تيك توك':'p-tiktok','سناب':'p-snap','انستقرام':'p-insta','جميع المنصات':'p-all','X':'p-x','يوتيوب':'p-yt'};
+  return `<span class="ptag ${map[p]||'p-all'}">${p}</span>`;
 }
 
-// ════════════════════════════════════════════
-// GOOGLE SHEETS FETCH
-// ════════════════════════════════════════════
+function statusBadge(s) {
+  if (!s) return '';
+  const map = {
+    'تمت':'b-green','تمت':'b-green','قيد العمل':'b-gold','ملغي':'b-red',
+    'نشط':'b-blue','منتهي':'b-gray','متوقف':'b-gray','متكرر':'b-sand',
+    'لم يبدأ':'b-gray','قيد التنفيذ':'b-blue','مكتمل':'b-green','مؤجل':'b-gold',
+  };
+  return `<span class="badge ${map[s]||'b-gray'}">${s}</span>`;
+}
+
+// ══════════════════════════════════════
+// FETCH — Google Visualization API
+// No-cache via timestamp param
+// ══════════════════════════════════════
 async function fetchSheet(sheetName) {
-  const url = `${BASE}&sheet=${encodeURIComponent(sheetName)}`;
-  const res = await fetch(url);
+  const ts = Date.now();
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&ts=${ts}`;
+  const res = await fetch(url, { cache: 'no-store' });
   const text = await res.text();
-  // gviz returns: /*O_o*/ google.visualization.Query.setResponse({...});
-  const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-  const cols = json.table.cols.map(c => c.label || c.id);
+  const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+  if (!match) throw new Error(`Could not parse response for sheet: ${sheetName}`);
+  const json = JSON.parse(match[1]);
+  if (!json.table) throw new Error(`No table data for sheet: ${sheetName}`);
+  const cols = json.table.cols.map(c => (c.label || c.id || '').trim());
   const rows = (json.table.rows || []).map(r => {
     const obj = {};
     cols.forEach((col, i) => {
+      if (!col) return;
       const cell = r.c && r.c[i];
-      obj[col] = cell ? (cell.f !== undefined && cell.f !== null ? cell.f : cell.v) : null;
+      if (!cell) { obj[col] = null; return; }
+      // Use formatted value if available, otherwise raw value
+      obj[col] = (cell.f !== null && cell.f !== undefined) ? cell.f : cell.v;
+      // Also store raw numeric value for money/pct parsing
+      if (typeof cell.v === 'number') obj['_raw_'+col] = cell.v;
     });
     return obj;
   });
   return { cols, rows };
 }
 
-// ════════════════════════════════════════════
-// LOAD ALL DATA
-// ════════════════════════════════════════════
-async function loadAll() {
+// ══════════════════════════════════════
+// LOAD ALL
+// ══════════════════════════════════════
+async function loadAll(manual) {
   setSyncing(true);
+
+  async function safeLoad(sheetKey) {
+    try {
+      return await fetchSheet(SHEET_NAMES[sheetKey]);
+    } catch(e) {
+      console.error(`[${sheetKey}] فشل تحميل الورقة "${SHEET_NAMES[sheetKey]}":`, e.message);
+      return null;
+    }
+  }
+
+  const [adsData, clientsData, upData, finData, weekData] = await Promise.all([
+    safeLoad('ads'),
+    safeLoad('clients'),
+    safeLoad('upcoming'),
+    safeLoad('finance'),
+    safeLoad('weekly'),
+  ]);
+
+  // Check if ALL failed (likely CORS / sharing issue)
+  if (!adsData && !clientsData && !upData && !finData && !weekData) {
+    setSyncing(false, true);
+    const errHTML = `
+      <div style="background:#fff;border:2px solid var(--red);border-radius:12px;padding:2rem;margin:1rem 0;text-align:center">
+        <div style="font-size:32px;margin-bottom:12px">⚠️</div>
+        <div style="font-size:16px;font-weight:700;color:var(--red);margin-bottom:8px">تعذر الاتصال بـ Google Sheets</div>
+        <div style="font-size:13px;color:var(--ink3);line-height:1.8">
+          تأكد أن ملف Google Sheets مضبوط على:<br>
+          <b>Share → Anyone with the link → Viewer</b><br><br>
+          الرابط المستخدم:<br>
+          <code style="font-size:11px;color:var(--blue);word-break:break-all">
+            https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?...
+          </code>
+        </div>
+        <button onclick="loadAll(true)" style="margin-top:16px;background:var(--g1);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;cursor:pointer">↻ إعادة المحاولة</button>
+      </div>`;
+    document.getElementById('ov-kpis').innerHTML = errHTML;
+    toast('❌ تعذر الاتصال بـ Google Sheets');
+    return;
+  }
+
   try {
-    const [adsData, clientsData, upData, finData, weekData] = await Promise.all([
-      fetchSheet(SHEETS.ads),
-      fetchSheet(SHEETS.clients),
-      fetchSheet(SHEETS.upcoming),
-      fetchSheet(SHEETS.finance),
-      fetchSheet(SHEETS.weekly),
-    ]);
+    // ── Parse Ads ──
+    if (adsData) {
+      rawAds = adsData.rows.filter(r => {
+        const idRaw = r['_raw_ID'] ?? r['_raw_' + adsData.cols[0]];
+        const id = idRaw !== undefined ? idRaw : parseFloat(String(r[adsData.cols[0]]||'').replace(/[^\d.]/g,''));
+        return id > 0 && !isNaN(id);
+      }).map(r => {
+        const amountRaw = r['_raw_المبلغ (ريال)'] ?? r['_raw_المبلغ'] ?? r['_raw_القيمة'];
+        const amount = (amountRaw !== undefined && amountRaw !== null) ? amountRaw : parseMoney(r['المبلغ (ريال)'] || r['المبلغ'] || r['القيمة'] || '');
+        const pctRaw = r['_raw_النسبة %'] ?? r['_raw_النسبة'];
+        const pct = (pctRaw !== undefined && pctRaw !== null) ? parsePct(pctRaw) : parsePct(r['النسبة %'] || r['النسبة'] || '');
+        return {
+          brand:    (r['اسم الشركة / البراند'] || r['اسم الشركة'] || r['الشركة'] || '').trim(),
+          amount,
+          pct,
+          type:     (r['نوع الإعلان'] || r['النوع'] || '').trim(),
+          status:   (r['المرحلة'] || r['الحالة'] || '').trim(),
+          platform: (r['المنصة'] || '').trim(),
+          city:     (r['المدينة'] || '').trim(),
+          adDate:   r['تاريخ الإعلان'] || null,
+          pubDate:  r['تاريخ النشر'] || null,
+          notes:    (r['ملاحظات'] || '').trim(),
+        };
+      }).filter(r => r.brand);
+    }
 
-    // Parse Ads — skip header/summary rows (ID must be a number)
-    rawAds = adsData.rows.filter(r => {
-      const id = r['ID'] || r[adsData.cols[0]];
-      return id && !isNaN(parseFloat(id));
-    }).map(r => ({
-      id:       r['ID'] || r[adsData.cols[0]],
-      brand:    r['اسم الشركة / البراند'] || r['اسم الشركة'] || r['الشركة'] || '',
-      amount:   parseFloat(r['المبلغ (ريال)'] || r['المبلغ'] || r['القيمة'] || 0) || 0,
-      pct:      parseFloat(r['النسبة %'] || r['النسبة'] || 0) || 0,
-      type:     r['نوع الإعلان'] || r['النوع'] || 'مرة واحدة',
-      status:   r['المرحلة'] || r['الحالة'] || '',
-      platform: r['المنصة'] || '',
-      city:     r['المدينة'] || '',
-      adDate:   r['تاريخ الإعلان'] || '',
-      pubDate:  r['تاريخ النشر'] || '',
-      notes:    r['ملاحظات'] || '',
-    })).filter(r => r.brand);
+    // ── Parse Clients (status override) ──
+    const clientStatusMap = {};
+    if (clientsData) {
+      clientsData.rows.filter(r => r['اسم العميل / البراند'] || r['اسم العميل']).forEach(r => {
+        const name = (r['اسم العميل / البراند'] || r['اسم العميل'] || '').trim();
+        const status = (r['حالة العميل'] || r['الحالة'] || '').trim();
+        if (name) clientStatusMap[name] = status || 'نشط';
+      });
+    }
 
-    // Parse Clients
-    rawClients = clientsData.rows.filter(r => r[clientsData.cols[0]]).map(r => ({
-      name:    r['اسم العميل / البراند'] || r['اسم العميل'] || r[clientsData.cols[0]] || '',
-      status:  r['حالة العميل'] || r['الحالة'] || 'نشط',
-      count:   r['إجمالي الإعلانات'] || 0,
-      total:   r['إجمالي المبالغ (ر.س)'] || r['إجمالي المبالغ'] || 0,
-      lastAd:  r['آخر إعلان'] || '',
-      notes:   r['ملاحظات'] || '',
-    })).filter(r => r.name);
-
-    // Build client map from ads
+    // ── Build Client Map ──
     clientMap = {};
     rawAds.forEach(a => {
-      const k = a.brand.trim();
+      const k = a.brand;
       if (!clientMap[k]) {
-        const cl = rawClients.find(c => c.name.trim() === k);
-        clientMap[k] = { name: k, ads: [], clientStatus: cl ? cl.status : 'نشط' };
+        clientMap[k] = { name: k, ads: [], clientStatus: clientStatusMap[k] || 'نشط' };
       }
       clientMap[k].ads.push(a);
     });
 
-    // Parse Upcoming
-    rawUpcoming = upData.rows.filter(r => r[upData.cols[0]]).map(r => ({
-      name:     r['اسم العميل'] || r[upData.cols[0]] || '',
-      platform: r['المنصة'] || '',
-      city:     r['المدينة'] || '',
-      adDate:   r['تاريخ الاتفاق'] || r['تاريخ الإعلان'] || '',
-      pubDate:  r['تاريخ النشر المتوقع'] || r['تاريخ النشر'] || '',
-      stage:    r['المرحلة'] || 'غير معتمد',
-      assigned: r['المسؤول'] || '',
-      notes:    r['ملاحظات'] || '',
-    })).filter(r => r.name);
+    // ── Parse Upcoming ──
+    if (upData) {
+      rawUpcoming = upData.rows.filter(r => {
+        const name = (r['اسم العميل'] || r[upData.cols[0]] || '').trim();
+        return name && name !== 'اسم العميل' && name !== upData.cols[0];
+      }).map(r => ({
+        name:     (r['اسم العميل'] || r[upData.cols[0]] || '').trim(),
+        platform: (r['المنصة'] || '').trim(),
+        city:     (r['المدينة'] || '').trim(),
+        adDate:   r['تاريخ الاتفاق'] || r['تاريخ الإعلان'] || null,
+        pubDate:  r['تاريخ النشر المتوقع'] || r['تاريخ النشر'] || null,
+        stage:    (r['المرحلة'] || 'غير معتمد').trim(),
+        assigned: (r['المسؤول'] || '').trim(),
+        amount:   parseMoney(r['المبلغ المتوقع'] || r['المبلغ'] || ''),
+        notes:    (r['ملاحظات'] || '').trim(),
+      }));
+    }
 
-    // Parse Expenses (from المالية sheet, rows after the KPI section)
-    rawExpenses = finData.rows.filter(r => {
-      const v = r[finData.cols[0]] || r['التاريخ'] || r['البند'];
-      const amt = r['المبلغ (ر.س)'] || r['المبلغ'];
-      return amt && parseFloat(amt) > 0;
-    }).map(r => ({
-      date:   r['التاريخ'] || '',
-      name:   r['البند'] || '',
-      amount: parseFloat(r['المبلغ (ر.س)'] || r['المبلغ'] || 0) || 0,
-      cat:    r['الفئة'] || '',
-      notes:  r['ملاحظات'] || '',
-    })).filter(r => r.name && r.amount > 0);
+    // ── Parse Expenses ──
+    if (finData) {
+      rawExpenses = finData.rows.filter(r => {
+        const name = String(r['البند'] || '').trim();
+        const amt = r['_raw_المبلغ (ر.س)'] ?? r['_raw_المبلغ'] ?? parseMoney(r['المبلغ (ر.س)'] || r['المبلغ'] || '');
+        return name && amt > 0;
+      }).map(r => ({
+        date:   r['التاريخ'] || null,
+        name:   String(r['البند'] || '').trim(),
+        amount: r['_raw_المبلغ (ر.س)'] ?? r['_raw_المبلغ'] ?? parseMoney(r['المبلغ (ر.س)'] || r['المبلغ'] || ''),
+        cat:    String(r['الفئة'] || '').trim(),
+        notes:  String(r['ملاحظات'] || '').trim(),
+      }));
+    }
 
-    // Parse Weekly
-    rawWeekly = weekData.rows.filter(r => Object.values(r).some(v => v));
+    // ── Parse Weekly ──
+    if (weekData) rawWeekly = weekData;
 
-    // Build year options
     buildYearOptions();
-
-    // Render all pages
     renderOverview();
     renderClients();
     renderPipeline();
@@ -470,343 +524,413 @@ async function loadAll() {
     renderWeekly();
 
     setSyncing(false);
-    toast('✅ تم تحميل البيانات من Google Sheets');
+    if (manual) toast('✅ تم تحديث البيانات من Google Sheets');
 
-  } catch (e) {
+  } catch(e) {
     setSyncing(false, true);
-    console.error(e);
-    toast('❌ تعذر الاتصال — تأكد إن الملف مشارك للعموم');
+    console.error('خطأ في معالجة البيانات:', e);
+    toast('❌ خطأ في معالجة البيانات — تفاصيل في Console');
   }
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // YEAR OPTIONS
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 function buildYearOptions() {
   const years = [...new Set(rawAds.map(a => {
-    const m = monthKey(a.adDate || a.pubDate);
-    return m ? parseInt(m.split(' ')[1]) : null;
+    const mk = monthKey(a.adDate || a.pubDate);
+    if (!mk) return null;
+    return parseInt(mk.split(' ')[1]);
   }).filter(Boolean))].sort();
   const min = Math.min(2025, ...(years.length ? years : [2025]));
   const opts = ['<option value="all">كل السنوات</option>'];
   for (let y = min; y <= 2030; y++) opts.push(`<option value="${y}">${y}</option>`);
-  ['ov-year', 'fin-year'].forEach(id => {
+  ['ov-year','fin-year'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = opts.join('');
   });
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // OVERVIEW
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 function renderOverview() {
   const cl = Object.values(clientMap);
-  const totalIn = rawAds.filter(a => a.status === 'تمت').reduce((s, a) => s + a.amount, 0);
+  const doneAds = rawAds.filter(a => a.status === 'تمت');
+  const totalIn = doneAds.reduce((s, a) => s + a.amount, 0);
   const activeC = cl.filter(c => c.ads.some(a => a.status === 'قيد العمل')).length;
   const repeatC = cl.filter(c => c.ads.length > 1).length;
+  // Contracts = ads where type includes 'عقد'
   const contracts = rawAds.filter(a => a.type && a.type.includes('عقد')).length;
+  const onceCnt = rawAds.filter(a => a.type === 'مرة واحدة').length;
 
   document.getElementById('ov-kpis').innerHTML = `
     <div class="kpi"><div class="kpi-label">إجمالي الإعلانات</div><div class="kpi-val">${rawAds.length}</div><div class="kpi-sub">${activeC} قيد العمل</div><div class="kpi-accent" style="background:var(--g2)"></div></div>
     <div class="kpi"><div class="kpi-label">إجمالي الدخل</div><div class="kpi-val">${(totalIn/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g1)"></div></div>
     <div class="kpi"><div class="kpi-label">عدد العملاء</div><div class="kpi-val">${cl.length}</div><div class="kpi-sub">${repeatC} متكرر</div><div class="kpi-accent" style="background:var(--g3)"></div></div>
-    <div class="kpi"><div class="kpi-label">عقود</div><div class="kpi-val">${contracts}</div><div class="kpi-sub">مقابل ${rawAds.filter(a => a.type === 'مرة واحدة').length} مرة واحدة</div><div class="kpi-accent" style="background:var(--g4)"></div></div>`;
+    <div class="kpi"><div class="kpi-label">عقود</div><div class="kpi-val">${contracts}</div><div class="kpi-sub">مقابل ${onceCnt} مرة واحدة</div><div class="kpi-accent" style="background:var(--g4)"></div></div>`;
 
   const yf = document.getElementById('ov-year').value;
-  renderBarChart('ov-chart', rawAds, yf);
+  renderBarChart('ov-chart', yf);
 
   // Top clients
-  const top = [...cl].sort((a, b) => {
-    const ta = a.ads.reduce((s, x) => s + x.amount, 0);
-    const tb = b.ads.reduce((s, x) => s + x.amount, 0);
+  const top = [...cl].sort((a,b) => {
+    const ta = a.ads.reduce((s,x) => s+x.amount, 0);
+    const tb = b.ads.reduce((s,x) => s+x.amount, 0);
     return tb - ta;
   }).slice(0, 5);
-  const mxTop = top[0] ? top[0].ads.reduce((s, a) => s + a.amount, 0) : 1;
+  const mxTop = (top[0]?.ads.reduce((s,a)=>s+a.amount,0)) || 1;
   document.getElementById('ov-top').innerHTML = top.map(c => {
-    const t = c.ads.reduce((s, a) => s + a.amount, 0);
-    return `<div style="margin-bottom:10px">
+    const t = c.ads.reduce((s,a)=>s+a.amount,0);
+    return `<div style="margin-bottom:12px">
       <div style="display:flex;justify-content:space-between;margin-bottom:3px">
         <span style="font-size:13px;font-weight:600">${c.name}</span>
         <span style="font-size:12px;font-weight:700;color:var(--g1)">${fmtMoney(t)}</span>
       </div>
       <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(t/mxTop*100)}%"></div></div>
     </div>`;
-  }).join('');
+  }).join('') || '<div style="color:var(--ink3);font-size:13px">لا توجد بيانات</div>';
 
-  // Types
-  const types = {'مرة واحدة': 0, 'عقد': 0, 'عقد + نسبة': 0};
-  rawAds.forEach(a => { const k = a.type || 'مرة واحدة'; types[k] = (types[k] || 0) + 1; });
-  const tc = {'مرة واحدة': 'var(--blue)', 'عقد': 'var(--g1)', 'عقد + نسبة': 'var(--g3)'};
-  document.getElementById('ov-types').innerHTML = Object.entries(types).filter(([,v]) => v > 0).map(([k, v]) => `
+  // Types breakdown
+  const types = {};
+  rawAds.forEach(a => {
+    const k = a.type || 'غير محدد';
+    types[k] = (types[k]||0) + 1;
+  });
+  const typeColors = {'مرة واحدة':'var(--blue)','عقد':'var(--g1)','عقد + نسبة':'var(--g3)','غير محدد':'var(--ink3)'};
+  document.getElementById('ov-types').innerHTML = Object.entries(types).map(([k,v]) => `
     <div class="legend-row">
-      <div style="width:10px;height:10px;border-radius:50%;background:${tc[k]};flex-shrink:0"></div>
-      <span style="flex:1;font-size:13px">${k}</span><b>${v}</b>
-      <span style="color:var(--ink3);font-size:11px;margin-right:6px">${rawAds.length ? Math.round(v/rawAds.length*100) : 0}%</span>
-    </div>`).join('');
+      <div style="width:10px;height:10px;border-radius:50%;background:${typeColors[k]||'var(--g3)'};flex-shrink:0"></div>
+      <span style="flex:1;font-size:13px">${k}</span>
+      <b style="font-size:13px">${v}</b>
+      <span style="color:var(--ink3);font-size:11px;margin-right:6px">${rawAds.length?Math.round(v/rawAds.length*100):0}%</span>
+    </div>`).join('') || '<div style="color:var(--ink3);font-size:13px">لا توجد بيانات</div>';
 
-  // Active
+  // Active contracts
   const activeCl = cl.filter(c => c.ads.some(a => a.status === 'قيد العمل'));
   document.getElementById('ov-active').innerHTML = activeCl.length ? activeCl.map(c => {
     const activeAds = c.ads.filter(a => a.status === 'قيد العمل');
+    const total = activeAds.reduce((s,a)=>s+a.amount,0);
     return `<div class="fin-row">
-      <div><div style="font-weight:600;font-size:13px">${c.name}</div>
-        <div style="font-size:11px;color:var(--ink3)">${activeAds.map(a => a.type || '—').join('، ')}</div></div>
-      <span style="font-weight:700;color:var(--g1);font-size:13px">${fmtMoney(activeAds.reduce((s,a) => s+a.amount, 0))}</span>
+      <div>
+        <div style="font-weight:600;font-size:13px">${c.name}</div>
+        <div style="font-size:11px;color:var(--ink3)">${activeAds.map(a=>a.type||'إعلان').join('، ')}</div>
+      </div>
+      <span style="font-weight:700;color:var(--g1);font-size:13px">${total ? fmtMoney(total) : 'نسبة'}</span>
     </div>`;
-  }).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">لا يوجد</div>';
+  }).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">لا توجد عقود نشطة</div>';
 
-  // Repeats
-  const reps = [...cl].filter(c => c.ads.length > 1).sort((a, b) => b.ads.length - a.ads.length).slice(0, 5);
+  // Repeat clients
+  const reps = [...cl].filter(c=>c.ads.length>1).sort((a,b)=>b.ads.length-a.ads.length).slice(0,5);
   document.getElementById('ov-repeats').innerHTML = reps.length ? reps.map(c => `
     <div class="fin-row">
       <span style="font-weight:600;font-size:13px">${c.name}</span>
       <div style="display:flex;align-items:center;gap:8px">
-        <span class="badge b-olive">${c.ads.length} مرات</span>
-        <span style="font-size:12px;font-weight:600;color:var(--g1)">${fmtMoney(c.ads.reduce((s,a) => s+a.amount, 0))}</span>
+        <span class="badge b-olive">${c.ads.length} إعلان</span>
+        <span style="font-size:12px;font-weight:600;color:var(--g1)">${fmtMoney(c.ads.reduce((s,a)=>s+a.amount,0))}</span>
       </div>
     </div>`).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">—</div>';
 }
 
-// ════════════════════════════════════════════
-// BAR CHART
-// ════════════════════════════════════════════
-function renderBarChart(elId, ads, yf) {
+// ══════════════════════════════════════
+// BAR CHART — with monthly trend arrows
+// ══════════════════════════════════════
+function renderBarChart(elId, yf) {
   const bm = {};
-  ads.forEach(a => {
+  rawAds.filter(a => a.status === 'تمت').forEach(a => {
     const d = a.adDate || a.pubDate;
     if (!d) return;
-    const m = monthKey(d);
-    if (!m) return;
-    const yr = parseInt(m.split(' ')[1]);
+    const mk = monthKey(d);
+    if (!mk) return;
+    const yr = parseInt(mk.split(' ')[1]);
     if (yf !== 'all' && yr !== +yf) return;
-    if (a.status === 'تمت') bm[m] = (bm[m] || 0) + a.amount;
+    bm[mk] = (bm[mk]||0) + a.amount;
   });
+
   const keys = Object.keys(bm);
   if (!keys.length) {
-    document.getElementById(elId).innerHTML = '<div style="color:var(--ink3);font-size:12px;padding:20px 0">لا توجد بيانات</div>';
+    document.getElementById(elId).innerHTML = '<div style="color:var(--ink3);font-size:12px;padding:20px 0;text-align:center">لا توجد بيانات للسنة المختارة</div>';
     return;
   }
-  const dates = keys.map(k => { const [mo, yr] = k.split(' '); return new Date(yr, MEN.indexOf(mo), 1); }).sort((a, b) => a - b);
-  const allMonths = [];
-  let cur = new Date(dates[0]);
-  const end = dates[dates.length - 1];
-  while (cur <= end) { allMonths.push(`${MEN[cur.getMonth()]} ${cur.getFullYear()}`); cur.setMonth(cur.getMonth() + 1); }
-  const vals = allMonths.map(m => bm[m] || 0);
-  const mx = Math.max(...vals, 1);
-  document.getElementById(elId).innerHTML = allMonths.map((m, i) => `
-    <div class="bar-col">
-      <div class="bar-v">${vals[i] ? (vals[i]/1000).toFixed(1)+'k' : ''}</div>
-      <div class="bar-body" style="height:${Math.max(3, Math.round(vals[i]/mx*95))}px;background:${i===allMonths.length-1?'var(--g1)':'var(--g3)'}"></div>
-      <div class="bar-lbl">${m.split(' ')[0]}</div>
-    </div>`).join('');
+
+  // Sort chronologically
+  const sorted = keys.map(k => {
+    const [mo, yr] = k.split(' ');
+    return { key: k, date: new Date(yr, MEN.indexOf(mo), 1), val: bm[k] };
+  }).sort((a,b) => a.date - b.date);
+
+  const mx = Math.max(...sorted.map(s=>s.val), 1);
+
+  document.getElementById(elId).innerHTML = sorted.map((s, i) => {
+    const prev = i > 0 ? sorted[i-1].val : null;
+    let trend = '';
+    if (prev !== null) {
+      const diff = s.val - prev;
+      const pct = prev > 0 ? Math.round(diff/prev*100) : 0;
+      if (diff > 0) trend = `<div class="bar-trend" style="color:#1A7A4A">↑${pct}%</div>`;
+      else if (diff < 0) trend = `<div class="bar-trend" style="color:var(--red)">↓${Math.abs(pct)}%</div>`;
+      else trend = `<div class="bar-trend" style="color:var(--ink3)">—</div>`;
+    } else {
+      trend = `<div class="bar-trend" style="color:var(--ink3);font-size:8px">لا توجد مقارنة سابقة</div>`;
+    }
+    return `<div class="bar-col">
+      ${trend}
+      <div class="bar-v">${(s.val/1000).toFixed(1)}k</div>
+      <div class="bar-body" style="height:${Math.max(3,Math.round(s.val/mx*90))}px;background:${i===sorted.length-1?'var(--g1)':'var(--g3)'}"></div>
+      <div class="bar-lbl">${s.key.split(' ')[0]}</div>
+    </div>`;
+  }).join('');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // CLIENTS
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 function filterClients(f, btn) {
   clientFilter = f;
-  document.querySelectorAll('#page-clients .fb').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#page-clients .fb').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderClients();
 }
 function renderClients() {
   let list = Object.values(clientMap);
-  if (clientFilter === 'active') list = list.filter(c => c.ads.some(a => a.status === 'قيد العمل'));
-  else if (clientFilter === 'repeat') list = list.filter(c => c.ads.length > 1);
-  else if (clientFilter === 'contract') list = list.filter(c => c.ads.some(a => a.type && a.type.includes('عقد')));
+  if (clientFilter === 'active') list = list.filter(c=>c.ads.some(a=>a.status==='قيد العمل'));
+  else if (clientFilter === 'repeat') list = list.filter(c=>c.ads.length>1);
+  else if (clientFilter === 'contract') list = list.filter(c=>c.ads.some(a=>a.type&&a.type.includes('عقد')));
   list = [...list];
   const sort = document.getElementById('cl-sort').value;
-  const getTotal = c => c.ads.reduce((s, a) => s + a.amount, 0);
-  if (sort === 'amount') list.sort((a, b) => getTotal(b) - getTotal(a));
-  else if (sort === 'latest') list.sort((a, b) => {
-    const la = a.ads.map(x => x.adDate || '').sort().reverse()[0] || '';
-    const lb = b.ads.map(x => x.adDate || '').sort().reverse()[0] || '';
+  const getTotal = c => c.ads.reduce((s,a)=>s+a.amount,0);
+  if (sort==='amount') list.sort((a,b)=>getTotal(b)-getTotal(a));
+  else if (sort==='latest') list.sort((a,b)=>{
+    const la = a.ads.map(x=>x.adDate||'').sort().reverse()[0]||'';
+    const lb = b.ads.map(x=>x.adDate||'').sort().reverse()[0]||'';
     return lb.localeCompare(la);
   });
-  else if (sort === 'repeat') list.sort((a, b) => b.ads.length - a.ads.length);
-  else if (sort === 'status-active') { list = list.filter(c => c.clientStatus === 'نشط'); list.sort((a, b) => getTotal(b) - getTotal(a)); }
-  else if (sort === 'status-ended') { list = list.filter(c => c.clientStatus === 'منتهي'); list.sort((a, b) => getTotal(b) - getTotal(a)); }
+  else if (sort==='repeat') list.sort((a,b)=>b.ads.length-a.ads.length);
+  else if (sort==='status-active'){list=list.filter(c=>c.clientStatus==='نشط');list.sort((a,b)=>getTotal(b)-getTotal(a));}
+  else if (sort==='status-ended'){list=list.filter(c=>c.clientStatus==='منتهي');list.sort((a,b)=>getTotal(b)-getTotal(a));}
   document.getElementById('cl-cnt').textContent = list.length;
-  document.getElementById('clients-grid').innerHTML = list.map(c => clientCard(c)).join('');
+  document.getElementById('clients-grid').innerHTML = list.map(c=>clientCard(c)).join('') ||
+    '<div class="empty-state"><div class="icon">👥</div><p>لا توجد بيانات</p></div>';
 }
+
 function clientCard(c) {
-  const total = c.ads.reduce((s, a) => s + a.amount, 0);
+  const total = c.ads.reduce((s,a)=>s+a.amount,0);
   const isRepeat = c.ads.length > 1;
-  const hasActive = c.ads.some(a => a.status === 'قيد العمل');
-  const lastDate = c.ads.map(a => a.adDate || '').sort().reverse()[0] || '';
+  const hasActive = c.ads.some(a=>a.status==='قيد العمل');
   const cs = c.clientStatus || 'نشط';
-  const statusColors = {'نشط': '#1F618D', 'منتهي': '#7FCBA4', 'متوقف': '#9A9A80'};
+  const statusColors = {'نشط':'#1F618D','منتهي':'#7FCBA4','متوقف':'#9A9A80'};
   let topBorder = hasActive ? '3px solid var(--g2)' : isRepeat ? '3px solid var(--g3)' : 'none';
+
   let badges = '';
   if (hasActive) badges += `<span class="badge b-gold">قيد العمل</span>`;
   if (isRepeat) badges += `<span class="badge b-sand">متكرر · ${c.ads.length}</span>`;
-  if (c.ads.some(a => a.type && a.type.includes('عقد'))) badges += `<span class="badge b-blue">عقد</span>`;
-  const adsHtml = c.ads.map((a, i) => `
-    <div class="cc-ad-row">
-      <div class="ad-num">${i+1}</div>
-      <div class="ad-info">
-        <div class="ad-title">${a.notes || a.type || 'إعلان'}</div>
-        <div class="ad-sub">${fmtDate(a.adDate)} ${a.city ? '· '+a.city : ''} ${ptag(a.platform)}
-          <span class="badge ${a.status==='تمت'?'b-green':a.status==='قيد العمل'?'b-gold':'b-gray'}" style="font-size:9px">${a.status}</span>
-        </div>
+  if (c.ads.some(a=>a.type&&a.type.includes('عقد'))) badges += `<span class="badge b-blue">عقد</span>`;
+
+  // Ads list
+  const adsHtml = c.ads.map((a, i) => {
+    const amt = a.amount > 0 ? fmtMoney(a.amount) : (a.pct > 0 ? `نسبة ${a.pct}%` : '');
+    const adType = a.type || '';
+    const adStatus = a.status || '';
+    const adPlatform = a.platform ? ptag(a.platform) : '';
+    const adCity = a.city ? `<span style="font-size:11px;color:var(--ink3)">${a.city}</span>` : '';
+    const adDate = fmtDate(a.adDate);
+    const adNotes = a.notes ? `<div class="cc-ad-field"><span class="lbl">ملاحظات</span><span class="val">${a.notes}</span></div>` : '';
+    return `<div class="cc-ad-item">
+      <div class="cc-ad-header">الإعلان ${i+1} ${adPlatform} ${adCity}</div>
+      <div class="cc-ad-details">
+        ${adType ? `<div class="cc-ad-field"><span class="lbl">نوع الإعلان</span><span class="val">${adType}</span></div>` : ''}
+        ${adStatus ? `<div class="cc-ad-field"><span class="lbl">الحالة</span><span class="val">${statusBadge(adStatus)}</span></div>` : ''}
+        ${amt ? `<div class="cc-ad-field"><span class="lbl">القيمة</span><span class="val amount">${amt}</span></div>` : ''}
+        ${adDate ? `<div class="cc-ad-field"><span class="lbl">التاريخ</span><span class="val">${adDate}</span></div>` : ''}
+        ${adNotes}
       </div>
-      <div class="ad-amount">${a.amount ? fmtMoney(a.amount) : a.pct ? a.pct*100+'%' : '—'}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+
   return `<div class="client-card" style="border-top:${topBorder}">
     <div class="cc-head">
       <div class="cc-name">${c.name}</div>
-      <div class="cc-meta">آخر إعلان: ${fmtDate(lastDate)}</div>
-      <div class="cc-badges">${badges}</div>
-    </div>
-    <div class="cc-stats">
-      <div class="cc-stat"><div class="cc-stat-val">${c.ads.length}</div><div class="cc-stat-lbl">إعلان</div></div>
-      <div class="cc-stat"><div class="cc-stat-val" style="color:var(--g1);font-size:13px">${total ? (total/1000).toFixed(1)+'k' : '—'}</div><div class="cc-stat-lbl">إجمالي ر.س</div></div>
-      <div class="cc-stat"><div class="cc-stat-val" style="font-size:13px;color:${statusColors[cs]}">${cs}</div><div class="cc-stat-lbl">الحالة</div></div>
+      <div class="cc-meta-row">
+        <div class="cc-meta-item">الحالة: <strong style="color:${statusColors[cs]}">${cs}</strong></div>
+        <div class="cc-meta-item">الإعلانات: <strong>${c.ads.length}</strong></div>
+        ${total > 0 ? `<div class="cc-meta-item">الإجمالي: <strong style="color:var(--g1)">${fmtMoney(total)}</strong></div>` : ''}
+      </div>
+      ${badges ? `<div class="cc-badges">${badges}</div>` : ''}
     </div>
     <div class="cc-ads">${adsHtml}</div>
   </div>`;
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // PIPELINE
-// ════════════════════════════════════════════
-const STAGES = ['غير معتمد', 'معتمد', 'التصوير', 'المونتاج', 'النشر'];
+// ══════════════════════════════════════
+const STAGES = ['غير معتمد','معتمد','التصوير','المونتاج','النشر'];
 const STAGE_COLORS = {'غير معتمد':'#C0392B','معتمد':'#6C3483','التصوير':'#D35400','المونتاج':'#1F618D','النشر':'#1A7A4A'};
+
 function renderPipeline() {
   document.getElementById('up-cnt').textContent = rawUpcoming.length;
+  if (!rawUpcoming.length) {
+    document.getElementById('pipeline').innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="icon">📋</div><p>لا توجد إعلانات قادمة في الشيت</p></div>';
+    return;
+  }
   document.getElementById('pipeline').innerHTML = STAGES.map(stage => {
-    const items = rawUpcoming.filter(u => u.stage === stage);
+    const items = rawUpcoming.filter(u=>u.stage===stage);
     return `<div class="pl-col">
       <div class="pl-head" style="border-bottom-color:${STAGE_COLORS[stage]}">
         <span>${stage}</span><span class="cnt">${items.length}</span>
       </div>
       <div class="pl-body">
-        ${items.length ? items.map(u => `
+        ${items.length ? items.map(u=>`
           <div class="pl-card">
             <div style="font-size:13px;font-weight:700;color:var(--ink)">${u.name}</div>
-            ${u.city ? `<div style="font-size:10px;color:var(--ink3);margin-top:2px">${u.city}</div>` : ''}
+            ${u.city?`<div style="font-size:10px;color:var(--ink3);margin-top:2px">${u.city}</div>`:''}
             <div class="pl-dates">
-              <div class="pl-date-box"><div class="pl-date-lbl" style="color:var(--g1)">الإعلان</div><div class="pl-date-val">${fmtDate(u.adDate)}</div></div>
-              <div class="pl-date-box"><div class="pl-date-lbl" style="color:#1A7A4A">النشر</div><div class="pl-date-val">${fmtDate(u.pubDate)}</div></div>
+              <div class="pl-date-box">
+                <div class="pl-date-lbl" style="color:var(--g1)">الإعلان</div>
+                <div class="pl-date-val">${fmtDate(u.adDate)||'—'}</div>
+              </div>
+              <div class="pl-date-box">
+                <div class="pl-date-lbl" style="color:#1A7A4A">النشر</div>
+                <div class="pl-date-val">${fmtDate(u.pubDate)||'—'}</div>
+              </div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
               ${ptag(u.platform)}
-              ${u.assigned ? `<span style="font-size:10px;color:var(--ink3)">${u.assigned}</span>` : ''}
+              ${u.assigned?`<span style="font-size:10px;color:var(--ink3)">${u.assigned}</span>`:''}
             </div>
+            ${u.amount>0?`<div style="font-size:12px;font-weight:700;color:var(--g1);margin-top:6px">${fmtMoney(u.amount)}</div>`:''}
           </div>`).join('')
-        : '<div style="color:var(--ink3);font-size:12px;text-align:center;padding:20px 0">لا يوجد</div>'}
+        :'<div style="color:var(--ink3);font-size:12px;text-align:center;padding:20px 0">لا يوجد</div>'}
       </div>
     </div>`;
   }).join('');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // FINANCE
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 function renderFinance() {
-  const totalIn = rawAds.filter(a => a.status === 'تمت').reduce((s, a) => s + a.amount, 0);
-  const inProgress = rawAds.filter(a => a.status === 'قيد العمل').reduce((s, a) => s + a.amount, 0);
-  const totalExp = rawExpenses.reduce((s, e) => s + e.amount, 0);
+  const doneAds = rawAds.filter(a=>a.status==='تمت');
+  const totalIn = doneAds.reduce((s,a)=>s+a.amount,0);
+  const inProgress = rawAds.filter(a=>a.status==='قيد العمل').reduce((s,a)=>s+a.amount,0);
+  const totalExp = rawExpenses.reduce((s,e)=>s+e.amount,0);
   const net = totalIn - totalExp;
+
   document.getElementById('fin-kpis').innerHTML = `
-    <div class="kpi"><div class="kpi-label">إجمالي الدخل (تمت)</div><div class="kpi-val">${(totalIn/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g1)"></div></div>
-    <div class="kpi"><div class="kpi-label">قيد العمل</div><div class="kpi-val">${(inProgress/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--gold)"></div></div>
-    <div class="kpi"><div class="kpi-label">المصروفات</div><div class="kpi-val">${(totalExp/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--red)"></div></div>
-    <div class="kpi"><div class="kpi-label">صافي الربح</div><div class="kpi-val" style="color:${net>=0?'var(--g1)':'var(--red)'}">${(net/1000).toFixed(1)}k</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g2)"></div></div>`;
+    <div class="kpi"><div class="kpi-label">إجمالي الدخل (تمت)</div><div class="kpi-val">${totalIn>=1000?(totalIn/1000).toFixed(1)+'k':totalIn.toLocaleString('ar-SA')}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g1)"></div></div>
+    <div class="kpi"><div class="kpi-label">قيد العمل</div><div class="kpi-val">${inProgress>=1000?(inProgress/1000).toFixed(1)+'k':inProgress.toLocaleString('ar-SA')}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--gold)"></div></div>
+    <div class="kpi"><div class="kpi-label">المصروفات</div><div class="kpi-val">${totalExp>=1000?(totalExp/1000).toFixed(1)+'k':totalExp.toLocaleString('ar-SA')}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--red)"></div></div>
+    <div class="kpi"><div class="kpi-label">صافي الربح</div><div class="kpi-val" style="color:${net>=0?'var(--g1)':'var(--red)'}">${net>=1000?(net/1000).toFixed(1)+'k':net.toLocaleString('ar-SA')}</div><div class="kpi-sub">ريال سعودي</div><div class="kpi-accent" style="background:var(--g2)"></div></div>`;
+
   const yf = document.getElementById('fin-year').value;
-  renderBarChart('fin-chart', rawAds, yf);
-  document.getElementById('exp-tbody').innerHTML = rawExpenses.length ? rawExpenses.map(e => `
+  renderBarChart('fin-chart', yf);
+
+  document.getElementById('exp-tbody').innerHTML = rawExpenses.length ? rawExpenses.map(e=>`
     <tr>
-      <td style="font-size:12px;color:var(--ink3)">${fmtDate(e.date)}</td>
+      <td style="font-size:12px;color:var(--ink3)">${fmtDate(e.date)||'—'}</td>
       <td style="font-weight:600">${e.name}</td>
       <td style="font-weight:700;color:var(--red)">${fmtMoney(e.amount)}</td>
-      <td><span class="badge b-gray">${e.cat || '—'}</span></td>
-      <td style="font-size:11px;color:var(--ink3)">${e.notes || ''}</td>
+      <td>${e.cat?statusBadge(e.cat)||`<span class="badge b-gray">${e.cat}</span>`:''}</td>
+      <td style="font-size:11px;color:var(--ink3)">${e.notes||''}</td>
     </tr>`).join('')
-    : '<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:24px">لا توجد مصروفات مسجلة في الملف</td></tr>';
+  : '<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:24px">لا توجد مصروفات مسجلة في الشيت</td></tr>';
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 // WEEKLY PLAN
-// ════════════════════════════════════════════
+// ══════════════════════════════════════
 function renderWeekly() {
-  if (!rawWeekly.length) {
-    document.getElementById('weekly-content').innerHTML = `
-      <div class="empty-state"><div class="icon">📅</div>
-        <p>لا توجد بيانات في ورقة "خطة الاسبوع"<br>أضف بيانات في Google Sheets وأعد التحميل</p></div>`;
+  const el = document.getElementById('weekly-content');
+  if (!rawWeekly || !rawWeekly.rows || !rawWeekly.rows.length) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">📅</div>
+      <p>لا توجد بيانات في ورقة "خطة الاسبوع"<br><small>أضف بيانات في Google Sheets وأعد التحميل</small></p></div>`;
     return;
   }
 
-  // Group rows by week — detect week separator rows (rows where first non-empty cell looks like a week title)
-  // Simple approach: show all rows as a table
-  const cols = Object.keys(rawWeekly[0]).filter(k => k && k !== 'null');
+  const cols = rawWeekly.cols.filter(c=>c&&c.trim());
+  const rows = rawWeekly.rows;
 
-  // Try to detect sections (rows with a header-like value)
+  // Detect sections: rows where only the first cell has a value (section header)
   const sections = [];
   let currentSection = null;
 
-  rawWeekly.forEach(row => {
-    const vals = Object.values(row).filter(v => v);
-    if (vals.length === 1 || (vals.length > 0 && !row[cols[1]] && !row[cols[2]])) {
-      // likely a section header
+  rows.forEach(row => {
+    const vals = cols.map(c=>row[c]).filter(v=>v!==null&&v!==undefined&&String(v).trim());
+    if (!vals.length) return;
+
+    const firstVal = cols.map(c=>row[c]).find(v=>v!==null&&v!==undefined&&String(v).trim());
+    const otherVals = cols.slice(1).map(c=>row[c]).filter(v=>v!==null&&v!==undefined&&String(v).trim());
+
+    // Section header = first col has value, rest are empty
+    if (firstVal && otherVals.length === 0) {
       if (currentSection) sections.push(currentSection);
-      currentSection = { title: vals[0], rows: [] };
-    } else if (vals.length > 0) {
-      if (!currentSection) currentSection = { title: 'خطة الأسبوع', rows: [] };
+      currentSection = { title: String(firstVal).trim(), rows: [], cols: [] };
+    } else if (firstVal && vals.length > 1) {
+      if (!currentSection) currentSection = { title: 'خطة الأسبوع', rows: [], cols: [] };
+      // First real row might be a header row
+      if (!currentSection.cols.length) {
+        currentSection.cols = cols.filter(c => row[c] !== null && row[c] !== undefined);
+      }
       currentSection.rows.push(row);
     }
   });
   if (currentSection) sections.push(currentSection);
 
   const SECTION_COLORS = {
-    'خطة النشر': '#8A9A72',
-    'أفكار المحتوى': '#1F618D',
-    'الإعلانات': '#2C2C2C',
-    'مهام الفريق': '#C5C0A5',
+    'خطة النشر':'#8A9A72','أفكار المحتوى':'#1F618D','الإعلانات':'#2C2C2C',
+    'مهام الفريق':'#5F6F52','المحتوى الجاهز':'#6C3483','المنشور':'#1A7A4A',
+    'المهام':'#C5C0A5','ملاحظات':'#9A9A80',
   };
 
-  document.getElementById('weekly-content').innerHTML = sections.map(sec => {
-    if (!sec.rows.length) return '';
-    const secCols = cols.filter(c => sec.rows.some(r => r[c]));
-    const color = Object.keys(SECTION_COLORS).find(k => sec.title && sec.title.includes(k));
-    const bg = color ? SECTION_COLORS[color] : '#5F6F52';
-    const textColor = bg === '#C5C0A5' ? 'var(--ink)' : '#fff';
-
-    return `<div class="week-section">
-      <div class="week-section-head" style="background:${bg}">
-        <h3 style="color:${textColor}">${sec.title || 'قسم'}</h3>
-      </div>
+  if (!sections.length) {
+    // Fallback: show all as one table
+    el.innerHTML = `<div class="wk-section">
+      <div class="wk-head" style="background:var(--g1)"><h3>خطة الأسبوع</h3></div>
       <div style="overflow-x:auto">
         <table class="tbl">
-          <thead><tr>${secCols.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+          <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+          <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${r[c]!==null&&r[c]!==undefined?r[c]:''}</td>`).join('')}</tr>`).join('')}</tbody>
+        </table>
+      </div></div>`;
+    return;
+  }
+
+  el.innerHTML = sections.filter(s=>s.rows.length>0).map(sec => {
+    const colorKey = Object.keys(SECTION_COLORS).find(k=>sec.title&&sec.title.includes(k));
+    const bg = colorKey ? SECTION_COLORS[colorKey] : 'var(--g1)';
+    const textColor = bg === '#C5C0A5' ? 'var(--ink)' : '#fff';
+    const secCols = sec.cols.length ? sec.cols : cols.filter(c=>sec.rows.some(r=>r[c]!==null&&r[c]!==undefined&&String(r[c]).trim()));
+    const WK_STATUS = {'لم يبدأ':'b-gray','قيد التنفيذ':'b-blue','مكتمل':'b-green','مؤجل':'b-gold','تمت':'b-green','قيد العمل':'b-gold'};
+    const statusCols = ['الحالة','حالة البريف','حالة السكريبت','الحالة العامة','الحالة الكتابة'];
+    return `<div class="wk-section">
+      <div class="wk-head" style="background:${bg}"><h3 style="color:${textColor}">${sec.title}</h3></div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr>${secCols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
           <tbody>
-            ${sec.rows.map((r, ri) => `
-              <tr>
-                ${secCols.map(c => {
-                  const v = r[c] || '';
-                  const statusMap = {'لم يبدأ':'b-gray','قيد التنفيذ':'b-blue','مكتمل':'b-green','مؤجل':'b-gold'};
-                  const isStatus = ['الحالة','حالة البريف','حالة السكريبت','الحالة العامة'].includes(c);
-                  return `<td>${isStatus && statusMap[v] ? `<span class="badge ${statusMap[v]}">${v || '—'}</span>` : (v || '—')}</td>`;
-                }).join('')}
-              </tr>`).join('')}
+            ${sec.rows.map((r,ri)=>`<tr style="background:${ri%2===0?'var(--white)':'var(--surface)'}">
+              ${secCols.map(c=>{
+                const v = r[c];
+                const val = v!==null&&v!==undefined ? String(v).trim() : '';
+                if (!val) return '<td></td>';
+                if (statusCols.includes(c) && WK_STATUS[val]) {
+                  return `<td><span class="badge ${WK_STATUS[val]}">${val}</span></td>`;
+                }
+                return `<td>${val}</td>`;
+              }).join('')}
+            </tr>`).join('')}
           </tbody>
         </table>
       </div>
     </div>`;
-  }).join('') || '<div class="empty-state"><div class="icon">📅</div><p>لا توجد بيانات منظمة في ورقة خطة الأسبوع</p></div>';
+  }).join('') || `<div class="empty-state"><div class="icon">📅</div><p>لا توجد بيانات في ورقة خطة الأسبوع</p></div>`;
 }
 
-function switchWeek(val) {
-  // placeholder for future week switching
-  renderWeekly();
-}
-
-// ════════════════════════════════════════════
-// INIT — auto-refresh every 5 minutes
-// ════════════════════════════════════════════
-loadAll();
-setInterval(loadAll, 5 * 60 * 1000);
+// ══════════════════════════════════════
+// INIT — auto refresh every 5 min
+// ══════════════════════════════════════
+loadAll(false);
+setInterval(() => loadAll(false), 5 * 60 * 1000);
 </script>
 </body>
 </html>
