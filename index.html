@@ -9,197 +9,139 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --g1:#5F6F52;--g2:#8A9A72;--g3:#C5C0A5;--g4:#E8E2D2;
-  --white:#fff;--surface:#F5F3EE;--border:#E2DDD4;
+  --white:#fff;--surface:#F5F3EE;--border:#D6D0C0;
   --ink:#2C2C2C;--ink2:#5F6F52;--ink3:#9A9A80;
   --red:#C0392B;--red2:#FADBD8;--blue:#1F618D;--blue2:#D6EAF8;
   --gold:#856404;--gold2:#FFF3CD;--purple:#6C3483;--purple2:#EBDEF0;
-  --shadow:0 2px 12px rgba(95,111,82,.08);
-  --shadow-md:0 4px 20px rgba(95,111,82,.12);
-  --radius:14px;--radius-sm:10px;
 }
 body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;direction:rtl}
-
-/* ── NAV ── */
-.nav{background:var(--g1);height:58px;display:flex;align-items:center;padding:0 2rem;gap:1.5rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(44,44,44,.2)}
-.nav-brand{color:#fff;font-size:16px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:8px}
-.nav-brand span{background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+/* NAV */
+.nav{background:var(--g1);height:56px;display:flex;align-items:center;padding:0 2rem;gap:1.5rem;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--g3)}
+.nav-brand{color:#fff;font-size:17px;font-weight:700;white-space:nowrap}
 .nav-tabs{display:flex;gap:2px;margin-right:auto;flex-wrap:wrap}
-.ntab{background:none;border:none;color:rgba(255,255,255,.6);padding:7px 14px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;transition:.2s;white-space:nowrap}
-.ntab:hover{color:#fff;background:rgba(255,255,255,.12)}
-.ntab.active{color:#fff;background:rgba(255,255,255,.2);box-shadow:inset 0 -2px 0 var(--g4)}
+.ntab{background:none;border:none;color:rgba(255,255,255,.6);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;transition:.15s;white-space:nowrap}
+.ntab:hover{color:#fff;background:rgba(255,255,255,.1)}
+.ntab.active{color:#fff;background:rgba(255,255,255,.2);border-bottom:2px solid var(--g4)}
 .sync-bar{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.7);white-space:nowrap}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;flex-shrink:0;transition:.3s}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;flex-shrink:0}
 .sync-dot.loading{background:#FFC107;animation:pulse 1s infinite}
 .sync-dot.error{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.refresh-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:8px;padding:5px 12px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;transition:.2s}
-.refresh-btn:hover{background:rgba(255,255,255,.22)}
-
-/* ── PAGES ── */
-.page{display:none;padding:1.75rem 2rem;max-width:1400px;margin:0 auto}.page.active{display:block}
-@media(max-width:768px){.page{padding:1rem}}
-
-/* ── KPI ROW ── */
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:1.75rem}
-.kpi{background:var(--white);border-radius:var(--radius);padding:1.25rem 1.4rem;border:1px solid var(--border);position:relative;overflow:hidden;box-shadow:var(--shadow);transition:.2s}
-.kpi:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.kpi-icon{font-size:20px;margin-bottom:8px;display:block}
-.kpi-label{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-.kpi-val{font-size:26px;font-weight:800;line-height:1;color:var(--ink);direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+.refresh-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;white-space:nowrap}
+.refresh-btn:hover{background:rgba(255,255,255,.25)}
+/* PAGES */
+.page{display:none;padding:2rem;max-width:1400px;margin:0 auto}.page.active{display:block}
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:2rem}
+.kpi{background:var(--white);border-radius:12px;padding:1.1rem 1.25rem;border:1px solid var(--border);position:relative;overflow:hidden}
+.kpi-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.kpi-val{font-size:24px;font-weight:700;line-height:1;color:var(--ink);direction:ltr;text-align:right}
 .kpi-sub{font-size:11px;color:var(--ink3);margin-top:6px}
-.kpi-accent{position:absolute;top:0;right:0;width:4px;height:100%;border-radius:0 var(--radius) var(--radius) 0}
-
-/* ── CARDS ── */
-.card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;padding:1.4rem;box-shadow:var(--shadow)}
+.kpi-accent{position:absolute;top:0;right:0;width:4px;height:100%}
+/* CARD */
+.card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;padding:1.25rem}
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px}
-.sh h2{font-size:14px;font-weight:700;color:var(--ink);margin:0;display:flex;align-items:center;gap:7px}
-.sh h2 .icon{font-size:16px}
-.cnt{font-size:11px;color:var(--ink3);background:var(--surface);padding:3px 10px;border-radius:20px;border:1px solid var(--border);font-weight:600}
-
-/* ── SKELETON LOADING ── */
-.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--g4) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skel-kpi{height:90px;border-radius:var(--radius)}
-.skel-bar{height:120px;border-radius:8px}
-.skel-line{height:14px;border-radius:6px;margin-bottom:8px}
-.skel-line.w60{width:60%}.skel-line.w40{width:40%}.skel-line.w80{width:80%}
-
-/* ── TABLE ── */
+.sh h2{font-size:15px;font-weight:700;color:var(--ink);margin:0}
+.cnt{font-size:11px;color:var(--ink3);background:var(--surface);padding:2px 8px;border-radius:20px;border:1px solid var(--border)}
+/* TABLE */
 .tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl th{background:var(--surface);padding:11px 14px;text-align:right;font-weight:700;color:var(--ink3);border-bottom:2px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:.3px}
-.tbl td{padding:11px 14px;border-bottom:1px solid #F0EDE7;color:var(--ink);vertical-align:middle}
+.tbl th{background:var(--surface);padding:10px 14px;text-align:right;font-weight:600;color:var(--ink3);border-bottom:1px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:.3px}
+.tbl td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--ink);vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:#FAFAF5}
-
-/* ── CLIENT CARDS ── */
+.tbl tr:hover td{background:#FAFAF7}
+/* CLIENT CARDS */
 .clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
-.client-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:.22s;box-shadow:var(--shadow)}
-.client-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.client-card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;transition:.2s}
+.client-card:hover{box-shadow:0 4px 20px rgba(95,111,82,.12)}
 .client-card.has-active{border-top:3px solid var(--g2)}
 .client-card.is-repeat:not(.has-active){border-top:3px solid var(--g3)}
-.cc-head{padding:16px 16px 10px;border-bottom:1px solid #F0EDE7}
-.cc-name{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:8px}
-.cc-meta-row{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink3)}
-.cc-meta-item strong{color:var(--ink);font-weight:700}
-.cc-badges{margin-top:8px;display:flex;gap:5px;flex-wrap:wrap}
-
-/* Client stats bar */
-.cc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--surface);border-bottom:1px solid #F0EDE7}
-.cc-stat{padding:10px 12px;text-align:center}
-.cc-stat:not(:last-child){border-left:1px solid #F0EDE7}
-.cc-stat-val{font-size:17px;font-weight:800;color:var(--ink);line-height:1;direction:ltr}
-.cc-stat-lbl{font-size:10px;color:var(--ink3);margin-top:3px;font-weight:600}
-
-/* Ad items inside card */
-.cc-ads{padding:12px 14px}
-.cc-ad-item{border:1px solid #F0EDE7;border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:8px;transition:.15s}
+.cc-head{padding:14px 16px 10px;border-bottom:1px solid var(--border)}
+.cc-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.cc-meta-row{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink3)}
+.cc-meta-row strong{color:var(--ink);font-weight:600}
+.cc-badges{margin-top:8px;display:flex;gap:4px;flex-wrap:wrap}
+.cc-ads{padding:10px 14px}
+.cc-ad-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px}
 .cc-ad-item:last-child{margin-bottom:0}
-.cc-ad-item:hover{border-color:var(--g3);background:#FAFDF8}
-.cc-ad-header{font-size:11px;font-weight:700;color:var(--g1);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.cc-ad-num{background:var(--g1);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
-.cc-ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cc-ad-field .lbl{font-size:10px;color:var(--ink3);display:block;margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.cc-ad-header{font-size:12px;font-weight:700;color:var(--g1);margin-bottom:6px}
+.cc-ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cc-ad-field .lbl{font-size:10px;color:var(--ink3);display:block;margin-bottom:2px}
 .cc-ad-field .val{font-size:12px;font-weight:600;color:var(--ink)}
-.cc-ad-field .val.amount-val{color:var(--g1);font-size:14px;font-weight:800}
-
-/* ── BADGES ── */
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;letter-spacing:.2px}
-.b-green{background:#E8F5E9;color:#2E7D32}
-.b-olive{background:#EEF1E9;color:var(--g1)}
-.b-blue{background:#E3F2FD;color:#1565C0}
-.b-gold{background:#FFF8E1;color:#F57F17}
-.b-red{background:#FFEBEE;color:#C62828}
-.b-gray{background:#F5F5F5;color:#616161}
+.cc-ad-field .val.amount-val{color:var(--g1);font-size:13px}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
+.b-green{background:#D5F5E3;color:#1A7A4A}
+.b-olive{background:#E8EDE0;color:var(--g1)}
+.b-blue{background:var(--blue2);color:var(--blue)}
+.b-gold{background:var(--gold2);color:var(--gold)}
+.b-red{background:var(--red2);color:var(--red)}
+.b-gray{background:#F0F0F0;color:#666}
 .b-sand{background:var(--g4);color:var(--g1)}
-.b-purple{background:#F3E5F5;color:#6A1B9A}
-
-/* ── PLATFORM TAGS ── */
-.ptag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700}
+.b-purple{background:var(--purple2);color:var(--purple)}
+/* PLATFORM */
+.ptag{display:inline-flex;align-items:center;padding:1px 7px;border-radius:5px;font-size:9px;font-weight:700}
 .p-tiktok{background:#1A1A1A;color:#fff}.p-snap{background:#FFFC00;color:#1A1A1A}
 .p-insta{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);color:#fff}
 .p-all{background:var(--g2);color:#fff}.p-x{background:#000;color:#fff}.p-yt{background:#FF0000;color:#fff}
-
-/* ── FILTERS ── */
+/* FILTERS */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
-.fb{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:5px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink2);transition:.18s}
+.fb{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--ink2);transition:.15s}
 .fb.active{background:var(--g1);color:#fff;border-color:var(--g1)}
-.fb:hover:not(.active){background:var(--surface);border-color:var(--g2)}
-.fsel{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--ink);background:var(--white);cursor:pointer;outline:none;transition:.18s}
-.fsel:focus{border-color:var(--g2)}
-
-/* ── GRIDS ── */
+.fb:hover:not(.active){background:var(--surface)}
+.fsel{border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--ink);background:var(--white);cursor:pointer;outline:none}
+/* GRIDS */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
 @media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
-
-/* ── BAR CHART ── */
-.bar-chart{display:flex;align-items:flex-end;gap:6px;height:150px;overflow-x:auto;padding-bottom:4px;direction:ltr;position:relative}
-.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:46px;position:relative;cursor:default}
-.bar-body{border-radius:6px 6px 0 0;width:100%;min-height:4px;transition:.4s cubic-bezier(.4,0,.2,1);position:relative}
-.bar-lbl{font-size:10px;color:var(--ink3);font-weight:700;text-align:center;direction:ltr;font-family:'Cairo',sans-serif}
-.bar-v{font-size:9px;font-weight:700;color:var(--g1);direction:ltr;text-align:center}
-.bar-trend{font-size:9px;font-weight:700;text-align:center;min-height:13px}
-/* Tooltip on hover */
-.bar-col:hover .bar-tooltip{opacity:1;transform:translateY(-4px)}
-.bar-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%) translateY(0);background:var(--g1);color:#fff;font-size:11px;padding:6px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transition:.2s;z-index:10;direction:rtl;text-align:right;box-shadow:0 4px 12px rgba(44,44,44,.25);min-width:120px}
-.bar-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--g1)}
-
-/* ── PROGRESS ── */
-.progress-bar{background:var(--g4);border-radius:99px;height:5px;overflow:hidden;margin-top:5px}
-.progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g3),var(--g1));transition:.4s}
-
-/* ── LEGEND ── */
-.legend-row{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:12px;border-bottom:1px solid #F0EDE7}
+/* CHARTS */
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:140px;overflow-x:auto;padding-bottom:4px;direction:ltr}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;min-width:42px}
+.bar-body{border-radius:5px 5px 0 0;width:100%;min-height:3px;transition:.3s}
+.bar-lbl{font-size:9px;color:var(--ink3);font-weight:600;text-transform:uppercase;text-align:center}
+.bar-v{font-size:9px;font-weight:700;color:var(--g1);direction:ltr}
+.bar-trend{font-size:9px;font-weight:700;text-align:center}
+/* PROGRESS */
+.progress-bar{background:var(--g4);border-radius:99px;height:5px;overflow:hidden;margin-top:4px}
+.progress-fill{height:100%;border-radius:99px;background:var(--g2)}
+/* LEGEND */
+.legend-row{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:12px;border-bottom:1px solid var(--border)}
 .legend-row:last-child{border:none}
-.legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-
-/* ── PIPELINE ── */
+/* PIPELINE */
 .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 @media(max-width:1100px){.pipeline{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.pipeline{grid-template-columns:1fr}}
-.pl-col{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);min-height:180px;box-shadow:var(--shadow)}
-.pl-head{padding:12px 14px;border-bottom-width:2px;border-bottom-style:solid;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;border-radius:var(--radius) var(--radius) 0 0}
+.pl-col{background:var(--white);border-radius:12px;border:1px solid var(--border);min-height:180px}
+.pl-head{padding:12px 14px;border-bottom-width:2px;border-bottom-style:solid;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
 .pl-body{padding:10px;display:flex;flex-direction:column;gap:8px}
-.pl-card{background:var(--surface);border:1px solid #F0EDE7;border-radius:var(--radius-sm);padding:10px;transition:.15s;cursor:default}
-.pl-card:hover{border-color:var(--g3)}
+.pl-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px}
 .pl-dates{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.pl-date-box{background:var(--white);border:1px solid #F0EDE7;border-radius:8px;padding:6px 8px;text-align:center}
-.pl-date-lbl{font-size:9px;font-weight:700;letter-spacing:.3px}
+.pl-date-box{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center}
+.pl-date-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
 .pl-date-val{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px}
-
-/* ── FINANCE ── */
-.fin-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #F0EDE7}
+/* FINANCE */
+.fin-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
 .fin-row:last-child{border:none}
-
-/* ── WEEKLY ── */
-.wk-section{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;box-shadow:var(--shadow)}
-.wk-head{padding:14px 18px;display:flex;align-items:center;gap:10px}
+/* WEEKLY */
+.wk-section{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem}
+.wk-head{padding:12px 16px}
 .wk-head h3{color:#fff;font-size:14px;font-weight:700;margin:0}
-
-/* ── ERROR BOX ── */
-.err-box{background:var(--white);border:2px solid var(--red);border-radius:var(--radius);padding:2.5rem;text-align:center;box-shadow:var(--shadow)}
-.err-box .icon{font-size:36px;margin-bottom:10px}
-.err-box h3{color:var(--red);font-size:15px;font-weight:700;margin-bottom:8px}
-.err-box p{font-size:13px;color:var(--ink3);line-height:1.9}
-
-/* ── EMPTY STATE ── */
-.empty-state{text-align:center;padding:3.5rem 0;color:var(--ink3)}
-.empty-state .icon{font-size:44px;margin-bottom:12px;display:block;opacity:.6}
-.empty-state p{font-size:13px;line-height:1.7}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--g1);color:#fff;padding:11px 22px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:.3s;pointer-events:none;box-shadow:0 4px 16px rgba(95,111,82,.35)}
+/* ERROR BOX */
+.err-box{background:var(--white);border:2px solid var(--red);border-radius:12px;padding:2rem;text-align:center;margin:1rem 0}
+.err-box .icon{font-size:32px;margin-bottom:10px}
+.err-box h3{color:var(--red);font-size:15px;margin-bottom:8px}
+.err-box p{font-size:13px;color:var(--ink3);line-height:1.8}
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:3rem 0;color:var(--ink3)}
+.empty-state .icon{font-size:40px;margin-bottom:10px}
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--g1);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:.3s;pointer-events:none;border:1px solid var(--g2)}
 .toast.show{opacity:1;transform:translateY(0)}
-
-/* ── BUTTON ── */
-.btn-primary{background:var(--g1);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:.18s}
-.btn-primary:hover{background:#4a5940}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="nav-brand">🌿 عزيز هيلثي</div>
+  <div class="nav-brand">عزيز هيلثي</div>
   <div class="nav-tabs">
     <button class="ntab active" onclick="showPage('overview',this)">نظرة عامة</button>
     <button class="ntab" onclick="showPage('upcoming',this)">الإعلانات القادمة</button>
@@ -216,36 +158,33 @@ body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);m
 
 <!-- OVERVIEW -->
 <div class="page active" id="page-overview">
-  <div class="kpi-row" id="ov-kpis">
-    <div class="kpi"><div class="skeleton skel-kpi"></div></div>
-    <div class="kpi"><div class="skeleton skel-kpi"></div></div>
-    <div class="kpi"><div class="skeleton skel-kpi"></div></div>
-    <div class="kpi"><div class="skeleton skel-kpi"></div></div>
-  </div>
+  <div class="kpi-row" id="ov-kpis"></div>
   <div class="card">
     <div class="sh">
-      <h2><span class="icon">📈</span>الدخل الشهري</h2>
-      <select class="fsel" id="ov-year" onchange="renderOverview()"><option value="all">كل السنوات</option></select>
+      <h2>الدخل الشهري</h2>
+      <select class="fsel" id="ov-year" onchange="renderOverview()">
+        <option value="all">كل السنوات</option>
+      </select>
     </div>
-    <div class="bar-chart" id="ov-chart"><div class="skeleton skel-bar" style="width:100%"></div></div>
+    <div class="bar-chart" id="ov-chart"></div>
   </div>
   <div class="g3">
-    <div class="card"><div class="sh"><h2><span class="icon">📋</span>أنواع الإعلانات</h2></div><div id="ov-types"><div class="skeleton skel-line"></div><div class="skeleton skel-line w80"></div><div class="skeleton skel-line w60"></div></div></div>
-    <div class="card"><div class="sh"><h2><span class="icon">⏳</span>عقود قيد العمل</h2></div><div id="ov-active"><div class="skeleton skel-line"></div><div class="skeleton skel-line w60"></div></div></div>
-    <div class="card"><div class="sh"><h2><span class="icon">🔄</span>العملاء المتكررون</h2></div><div id="ov-repeats"><div class="skeleton skel-line"></div><div class="skeleton skel-line w80"></div></div></div>
+    <div class="card"><div class="sh"><h2>أنواع الإعلانات</h2></div><div id="ov-types"></div></div>
+    <div class="card"><div class="sh"><h2>عقود قيد العمل</h2></div><div id="ov-active"></div></div>
+    <div class="card"><div class="sh"><h2>العملاء المتكررون</h2></div><div id="ov-repeats"></div></div>
   </div>
-  <div class="card"><div class="sh"><h2><span class="icon">🏆</span>العملاء الأعلى دخلاً</h2></div><div id="ov-top"><div class="skeleton skel-line"></div><div class="skeleton skel-line w80"></div><div class="skeleton skel-line w60"></div></div></div>
+  <div class="card"><div class="sh"><h2>العملاء الأعلى دخلاً</h2></div><div id="ov-top"></div></div>
 </div>
 
 <!-- UPCOMING -->
 <div class="page" id="page-upcoming">
-  <div class="sh"><h2><span class="icon">🗓</span>الإعلانات القادمة <span class="cnt" id="up-cnt">—</span></h2></div>
+  <div class="sh"><h2>الإعلانات القادمة <span class="cnt" id="up-cnt">—</span></h2></div>
   <div class="pipeline" id="pipeline"></div>
 </div>
 
 <!-- CLIENTS -->
 <div class="page" id="page-clients">
-  <div class="sh"><h2><span class="icon">👥</span>العملاء والإعلانات <span class="cnt" id="cl-cnt">—</span></h2></div>
+  <div class="sh"><h2>العملاء والإعلانات <span class="cnt" id="cl-cnt">—</span></h2></div>
   <div class="filters">
     <button class="fb active" onclick="filterClients('all',this)">الكل</button>
     <button class="fb" onclick="filterClients('active',this)">قيد العمل</button>
@@ -267,40 +206,45 @@ body{font-family:'Cairo',sans-serif;background:var(--surface);color:var(--ink);m
 
 <!-- FINANCE -->
 <div class="page" id="page-finance">
-  <div class="sh"><h2><span class="icon">💰</span>المالية</h2></div>
+  <div class="sh"><h2>المالية</h2></div>
   <div class="kpi-row" id="fin-kpis"></div>
   <div class="card">
     <div class="sh">
-      <h2><span class="icon">📊</span>الدخل الشهري</h2>
-      <select class="fsel" id="fin-year" onchange="renderFinance()"><option value="all">كل السنوات</option></select>
+      <h2>الدخل الشهري</h2>
+      <select class="fsel" id="fin-year" onchange="renderFinance()">
+        <option value="all">كل السنوات</option>
+      </select>
     </div>
     <div class="bar-chart" id="fin-chart"></div>
   </div>
   <div class="card" style="padding:0;overflow:hidden">
-    <div style="padding:14px 18px;background:var(--red);display:flex;align-items:center;gap:8px">
-      <span style="font-size:16px">📤</span>
-      <h3 style="color:#fff;font-size:13px;font-weight:700;margin:0">المصروفات</h3>
-    </div>
+    <div style="padding:12px 16px;background:var(--red)"><h3 style="color:#fff;font-size:13px;font-weight:700;margin:0">المصروفات</h3></div>
     <div style="overflow-x:auto">
-      <table class="tbl"><thead><tr><th>التاريخ</th><th>البند</th><th>المبلغ</th><th>الفئة</th><th>ملاحظات</th></tr></thead>
-      <tbody id="exp-tbody"></tbody></table>
+      <table class="tbl">
+        <thead><tr><th>التاريخ</th><th>البند</th><th>المبلغ</th><th>الفئة</th><th>ملاحظات</th></tr></thead>
+        <tbody id="exp-tbody"></tbody>
+      </table>
     </div>
   </div>
 </div>
 
 <!-- WEEKLY -->
 <div class="page" id="page-weekly">
-  <div class="sh"><h2><span class="icon">📅</span>خطة الأسبوع</h2></div>
-  <div id="weekly-content"><div class="empty-state"><div class="icon">📅</div><p>جاري التحميل...</p></div></div>
+  <div class="sh"><h2>خطة الأسبوع</h2></div>
+  <div id="weekly-content">
+    <div class="empty-state"><div class="icon">📅</div><p>جاري التحميل...</p></div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // CONFIG
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 const SHEET_ID = '1BoqP-1ekwufxUd8QYXNtTO_DHsgPe0hu';
+
+// Sheet names — must match Google Sheets tab names exactly
 const SN = {
   ads:      'الاعلانات',
   clients:  'العملاء',
@@ -309,18 +253,20 @@ const SN = {
   weekly:   'خطة الاسبوع',
 };
 
-// ════════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════════
-let rawAds = [], clientMap = {}, rawUpcoming = [], rawExpenses = [];
-let weeklyData = { pub:[], ideas:[], wkads:[], tasks:[] };
+// ══════════════════════════════════════════════════
+// STATE — all reset on refresh
+// ══════════════════════════════════════════════════
+let rawAds = [];
+let clientMap = {};
+let rawUpcoming = [];
+let rawExpenses = [];
+let weeklyData = { pub:[], ideas:[], ads:[], tasks:[] };
 let clientFilter = 'all';
 
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // UTILS
-// ════════════════════════════════════════════════════
-const ARM_FULL = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-const ARM_SHORT = ['ينا','فبر','مار','أبر','ماي','يون','يول','أغس','سبت','أكت','نوف','ديس'];
+// ══════════════════════════════════════════════════
+const ARM = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 const MEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function parseGDate(v) {
@@ -337,16 +283,16 @@ function parseGDate(v) {
 function fmtDate(v) {
   const d = parseGDate(v);
   if (!d) return '';
-  return d.getDate() + ' ' + ARM_FULL[d.getMonth()] + ' ' + d.getFullYear();
+  return d.getDate() + ' ' + ARM[d.getMonth()] + ' ' + d.getFullYear();
 }
 
 function monthKey(v) {
   const d = parseGDate(v);
   if (!d) return '';
-  // Store as "MEN_idx YEAR" for sorting, display as Arabic short
-  return d.getMonth() + '|' + d.getFullYear();
+  return MEN[d.getMonth()] + ' ' + d.getFullYear();
 }
 
+// Parse number from any format: "1,500 ر.س", 1500, "1500", 0.3
 function parseNum(v) {
   if (v === null || v === undefined || v === '') return 0;
   if (typeof v === 'number') return isNaN(v) ? 0 : v;
@@ -355,19 +301,35 @@ function parseNum(v) {
   return isNaN(n) ? 0 : n;
 }
 
+// Parse percentage: 0.3 → 30, 30 → 30, "30%" → 30, "3000%" → already wrong
 function parsePct(v) {
   if (!v && v !== 0) return 0;
-  if (typeof v === 'number') return v > 0 && v <= 1 ? Math.round(v * 100) : Math.round(v);
+  if (typeof v === 'number') {
+    // Google Sheets sends percentages as decimals (0.3 for 30%)
+    return v > 0 && v <= 1 ? Math.round(v * 100) : Math.round(v);
+  }
   const s = String(v).replace('%','').trim();
   const n = parseFloat(s);
   if (isNaN(n)) return 0;
   return n > 0 && n <= 1 ? Math.round(n * 100) : Math.round(n);
 }
 
-function fmtNum(n) {
-  if (!n && n !== 0) return '';
+// Format money — show full number, no K for small amounts
+function fmtMoney(n) {
   const num = typeof n === 'number' ? n : parseNum(n);
-  return num === 0 ? '' : num.toLocaleString('en-US');
+  if (!num && num !== 0) return '';
+  if (num === 0) return '';
+  return num.toLocaleString('en-US') + ' ر.س';
+}
+
+// JUNK strings to skip in column detection
+const JUNK = ['single source of truth','source of truth','readme','مرجع','ملاحظة مهمة',
+               'لا تُقرأ','بيانات الإعلانات','⚠️','single','source'];
+function isJunk(s) {
+  if (!s) return true;
+  const low = String(s).toLowerCase().trim();
+  if (!low) return true;
+  return JUNK.some(j => low.includes(j));
 }
 
 function showPage(id, btn) {
@@ -377,461 +339,591 @@ function showPage(id, btn) {
   btn.classList.add('active');
 }
 
-function showToast(msg) {
+function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function setSyncing(state) {
+function setSyncing(state) { // 'loading' | 'ok' | 'error'
   const dot = document.getElementById('sync-dot');
   const txt = document.getElementById('sync-text');
-  dot.className = 'sync-dot'+(state==='loading'?' loading':state==='error'?' error':'');
-  txt.textContent = state==='loading' ? 'جاري التحميل...' : state==='error' ? 'خطأ في الاتصال' : 'آخر تحديث: '+new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+  dot.className = 'sync-dot' + (state==='loading' ? ' loading' : state==='error' ? ' error' : '');
+  if (state === 'loading') txt.textContent = 'جاري التحميل...';
+  else if (state === 'error') txt.textContent = 'خطأ في الاتصال';
+  else txt.textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA', {hour:'2-digit',minute:'2-digit'});
 }
 
 function ptag(p) {
   if (!p) return '';
-  const m={'تيك توك':'p-tiktok','سناب':'p-snap','انستقرام':'p-insta','جميع المنصات':'p-all','X':'p-x','يوتيوب':'p-yt'};
+  const m = {'تيك توك':'p-tiktok','سناب':'p-snap','انستقرام':'p-insta','جميع المنصات':'p-all','X':'p-x','يوتيوب':'p-yt'};
   return '<span class="ptag '+(m[p]||'p-all')+'">'+p+'</span>';
 }
 
+// Status badge — no dash fallback
 function sbadge(s) {
   if (!s || !String(s).trim()) return '';
-  const map={'تمت':'b-green','تم':'b-green','منتهي':'b-gray','ملغي':'b-red','قيد العمل':'b-gold',
-    'نشط':'b-blue','متكرر':'b-sand','متوقف':'b-gray','لم يبدأ':'b-gray',
-    'قيد التنفيذ':'b-blue','مكتمل':'b-green','مؤجل':'b-gold','في الموقع':'b-olive','في المنزل':'b-sand'};
+  const map = {
+    'تمت':'b-green','تم':'b-green','منتهي':'b-gray','ملغي':'b-red',
+    'قيد العمل':'b-gold','نشط':'b-blue','متكرر':'b-sand','متوقف':'b-gray',
+    'لم يبدأ':'b-gray','قيد التنفيذ':'b-blue','مكتمل':'b-green','مؤجل':'b-gold',
+    'في الموقع':'b-olive','في المنزل':'b-sand',
+  };
   return '<span class="badge '+(map[s]||'b-gray')+'">'+s+'</span>';
 }
 
-const JUNK = ['single source of truth','source of truth','readme','بيانات الإعلانات','⚠️','single','source','لا تُقرأ'];
-function isJunk(s) {
-  if (!s) return true;
-  const low = String(s).toLowerCase().trim();
-  if (!low || low.length === 0) return true;
-  return JUNK.some(j => low.includes(j));
-}
-
-// ════════════════════════════════════════════════════
-// FETCH
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// GOOGLE SHEETS FETCH
+// Uses gviz API — works from any domain including Vercel
+// Anti-cache: timestamp param on every request
+// ══════════════════════════════════════════════════
 async function fetchSheet(sheetName) {
-  const url = 'https://docs.google.com/spreadsheets/d/'+SHEET_ID+
-    '/gviz/tq?tqx=out:json&headers=1&sheet='+encodeURIComponent(sheetName)+'&t='+Date.now();
-  const res = await fetch(url, { cache:'no-store' });
-  if (!res.ok) throw new Error('HTTP '+res.status);
+  const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+    '/gviz/tq?tqx=out:json&headers=1&sheet=' + encodeURIComponent(sheetName) + '&t=' + Date.now();
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error('HTTP ' + res.status + ' for sheet: ' + sheetName);
   const text = await res.text();
   const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?\s*$/);
-  if (!m) throw new Error('Bad gviz response for: '+sheetName);
+  if (!m) throw new Error('Bad response format for sheet: ' + sheetName);
   const json = JSON.parse(m[1]);
-  if (!json.table) throw new Error('No table for: '+sheetName);
+  if (!json.table) throw new Error('No table in response for: ' + sheetName);
 
   const rawCols = json.table.cols || [];
   const rows = json.table.rows || [];
-  let cols = rawCols.map(c => (c.label||c.id||'').trim());
 
-  // Auto-detect real header row if cols look like junk/design
-  const colsReal = cols.filter(c => c && !isJunk(c)).length >= 2;
-  if (!colsReal && rows.length > 0) {
-    for (let ri = 0; ri < Math.min(6, rows.length); ri++) {
-      const cand = (rows[ri].c||[]).map(cell => cell ? String(cell.f||cell.v||'').trim() : '');
-      if (cand.filter(c => c && !isJunk(c)).length >= 2) {
-        cols = cand;
-        rows.splice(0, ri+1);
+  // Find the real header row — first row where most cells have non-junk values
+  // gviz returns cols[] as headers, but if sheet has design rows the labels will be junk
+  // Strategy: use col labels if they look real, else scan first few rows
+  let cols = rawCols.map(c => (c.label || c.id || '').trim());
+  const colsLookReal = cols.filter(c => c && !isJunk(c)).length >= 2;
+
+  if (!colsLookReal && rows.length > 0) {
+    // Scan first 5 rows to find the real header row
+    for (let ri = 0; ri < Math.min(5, rows.length); ri++) {
+      const candidate = (rows[ri].c || []).map(cell => cell ? (cell.f || cell.v || '') : '').map(v => String(v).trim());
+      const realCount = candidate.filter(c => c && !isJunk(c)).length;
+      if (realCount >= 2) {
+        cols = candidate;
+        // Remove this row from data rows
+        rows.splice(0, ri + 1);
         break;
       }
     }
   }
 
-  const validCols = cols.filter(c => c && !isJunk(c));
+  // Build objects from rows — skip rows that are themselves headers or junk
   const data = [];
   for (const row of rows) {
     const cells = row.c || [];
     const obj = {};
-    let hasVal = false;
+    let hasValue = false;
     cols.forEach((col, i) => {
       if (!col || isJunk(col)) return;
       const cell = cells[i];
       if (!cell) { obj[col] = null; return; }
-      const fv = (cell.f !== null && cell.f !== undefined) ? String(cell.f).trim() : null;
+      // Prefer formatted value (f) for display, but keep raw (v) for numbers/dates
+      const fv = cell.f !== null && cell.f !== undefined ? String(cell.f).trim() : null;
       const rv = cell.v;
       obj[col] = fv || rv;
-      obj['__r__'+col] = rv;
-      if (obj[col]) hasVal = true;
+      obj['__raw__' + col] = rv; // raw numeric/date value
+      if (obj[col]) hasValue = true;
     });
-    if (hasVal) data.push(obj);
+    if (hasValue && !isJunk(Object.values(obj).find(v => v))) {
+      data.push(obj);
+    }
   }
-  return { cols: validCols, rows: data };
+
+  return { cols: cols.filter(c => c && !isJunk(c)), rows: data };
 }
 
+// Safe wrapper — returns null on error, logs to console
 async function safeLoad(key) {
-  try { return await fetchSheet(SN[key]); }
-  catch(e) { console.error('['+key+'] فشل:', e.message); return null; }
+  try {
+    return await fetchSheet(SN[key]);
+  } catch(e) {
+    console.error('[' + key + '] فشل تحميل الورقة "' + SN[key] + '":', e.message);
+    return null;
+  }
 }
 
-// ════════════════════════════════════════════════════
-// PARSE
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// PARSE ADS — from ورقة الاعلانات
+// Expected cols: ID, اسم الشركة / البراند, المبلغ (ريال),
+//   النسبة %, نوع الإعلان, المرحلة, المنصة, المدينة,
+//   تاريخ الإعلان, تاريخ النشر, ملاحظات
+// ══════════════════════════════════════════════════
 function parseAds(data) {
   if (!data) return [];
   return data.rows.filter(r => {
-    const brand = String(r['اسم الشركة / البراند']||r['اسم الشركة']||r['الشركة']||'').trim();
-    if (!brand || isJunk(brand)) return false;
-    const idRaw = r['__r__ID']??r['ID'];
+    // Must have a brand name
+    const brand = r['اسم الشركة / البراند'] || r['اسم الشركة'] || r['الشركة'] || '';
+    if (!String(brand).trim()) return false;
+    if (isJunk(brand)) return false;
+    // ID must be a positive number
+    const idRaw = r['__raw__ID'] ?? r['ID'];
     if (idRaw !== null && idRaw !== undefined) {
-      const id = typeof idRaw==='number' ? idRaw : parseNum(idRaw);
-      if (isNaN(id)||id<=0) return false;
+      const id = typeof idRaw === 'number' ? idRaw : parseNum(idRaw);
+      if (isNaN(id) || id <= 0) return false;
     }
     return true;
   }).map(r => {
-    const aRaw = r['__r__المبلغ (ريال)']??r['__r__المبلغ']??r['__r__القيمة'];
-    const amount = (typeof aRaw==='number') ? aRaw : parseNum(r['المبلغ (ريال)']||r['المبلغ']||r['القيمة']||0);
-    const pRaw = r['__r__النسبة %']??r['__r__النسبة'];
-    const pct = (pRaw!==null&&pRaw!==undefined) ? parsePct(pRaw) : parsePct(r['النسبة %']||r['النسبة']||0);
+    const amountRaw = r['__raw__المبلغ (ريال)'] ?? r['__raw__المبلغ'] ?? r['__raw__القيمة'];
+    const amount = (amountRaw !== null && amountRaw !== undefined && typeof amountRaw === 'number')
+      ? amountRaw
+      : parseNum(r['المبلغ (ريال)'] || r['المبلغ'] || r['القيمة'] || 0);
+
+    const pctRaw = r['__raw__النسبة %'] ?? r['__raw__النسبة'];
+    const pct = (pctRaw !== null && pctRaw !== undefined)
+      ? parsePct(pctRaw)
+      : parsePct(r['النسبة %'] || r['النسبة'] || 0);
+
     return {
-      brand:    String(r['اسم الشركة / البراند']||r['اسم الشركة']||r['الشركة']||'').trim(),
-      amount, pct,
-      type:     String(r['نوع الإعلان']||r['النوع']||'').trim(),
-      status:   String(r['المرحلة']||r['الحالة']||'').trim(),
-      platform: String(r['المنصة']||'').trim(),
-      city:     String(r['المدينة']||'').trim(),
-      adDate:   r['__r__تاريخ الإعلان']||r['تاريخ الإعلان']||null,
-      pubDate:  r['__r__تاريخ النشر']||r['تاريخ النشر']||null,
-      notes:    String(r['ملاحظات']||'').trim(),
+      brand:    String(r['اسم الشركة / البراند'] || r['اسم الشركة'] || r['الشركة'] || '').trim(),
+      amount,
+      pct,
+      type:     String(r['نوع الإعلان'] || r['النوع'] || '').trim(),
+      status:   String(r['المرحلة'] || r['الحالة'] || '').trim(),
+      platform: String(r['المنصة'] || '').trim(),
+      city:     String(r['المدينة'] || '').trim(),
+      adDate:   r['__raw__تاريخ الإعلان'] || r['تاريخ الإعلان'] || null,
+      pubDate:  r['__raw__تاريخ النشر'] || r['تاريخ النشر'] || null,
+      notes:    String(r['ملاحظات'] || '').trim(),
     };
   });
 }
 
-const WK_DEFS = {
-  pub:   { ar:'خطة النشر',     cols:['المنصة','عدد المنشورات','عنوان المحتوى','تاريخ النشر','المسؤول','الحالة','ملاحظات'] },
-  ideas: { ar:'أفكار المحتوى', cols:['عنوان الفكرة','الهوك','التفاصيل','المسؤول','الحالة','ملاحظات'] },
-  wkads: { ar:'الإعلانات',     cols:['البراند','حالة البريف','حالة السكريبت','نوع التصوير','تاريخ التصوير','تاريخ النشر','المسؤول','الحالة العامة','ملاحظات'] },
-  tasks: { ar:'مهام الفريق',   cols:['المهمة','المسؤول','الموعد النهائي','الحالة','مرتبطة بـ','ملاحظات'] },
+// ══════════════════════════════════════════════════
+// PARSE UPCOMING — from ورقة الاعلانات القادمة
+// Expected cols: اسم العميل, المنصة, المدينة,
+//   تاريخ الاتفاق, تاريخ النشر المتوقع, المرحلة,
+//   المسؤول, المبلغ المتوقع, ملاحظات
+// ══════════════════════════════════════════════════
+function parseUpcoming(data) {
+  if (!data) return [];
+  return data.rows.filter(r => {
+    const name = String(r['اسم العميل'] || r[data.cols[0]] || '').trim();
+    return name && !isJunk(name) && name !== 'اسم العميل';
+  }).map(r => ({
+    name:     String(r['اسم العميل'] || r[data.cols[0]] || '').trim(),
+    platform: String(r['المنصة'] || '').trim(),
+    city:     String(r['المدينة'] || '').trim(),
+    adDate:   r['__raw__تاريخ الاتفاق'] || r['تاريخ الاتفاق'] || r['__raw__تاريخ الإعلان'] || r['تاريخ الإعلان'] || null,
+    pubDate:  r['__raw__تاريخ النشر المتوقع'] || r['تاريخ النشر المتوقع'] || r['__raw__تاريخ النشر'] || r['تاريخ النشر'] || null,
+    stage:    String(r['المرحلة'] || '').trim() || 'غير معتمد',
+    assigned: String(r['المسؤول'] || '').trim(),
+    amount:   parseNum(r['المبلغ المتوقع'] || r['المبلغ'] || 0),
+    notes:    String(r['ملاحظات'] || '').trim(),
+  }));
+}
+
+// ══════════════════════════════════════════════════
+// PARSE WEEKLY — from ورقة خطة الاسبوع
+// Sheet structure: sections separated by header rows
+// Sections: خطة النشر, أفكار المحتوى, الإعلانات, مهام الفريق
+// ══════════════════════════════════════════════════
+const WK_SECTIONS = {
+  pub:   { ar: 'خطة النشر',     cols: ['المنصة','عدد المنشورات','عنوان المحتوى','تاريخ النشر','المسؤول','الحالة','ملاحظات'] },
+  ideas: { ar: 'أفكار المحتوى', cols: ['عنوان الفكرة','الهوك','التفاصيل','المسؤول','الحالة','ملاحظات'] },
+  wkads: { ar: 'الإعلانات',     cols: ['البراند','حالة البريف','حالة السكريبت','نوع التصوير','تاريخ التصوير','تاريخ النشر','المسؤول','الحالة العامة','ملاحظات'] },
+  tasks: { ar: 'مهام الفريق',   cols: ['المهمة','المسؤول','الموعد النهائي','الحالة','مرتبطة بـ','ملاحظات'] },
 };
 
 function parseWeekly(data) {
-  const result = {pub:[],ideas:[],wkads:[],tasks:[]};
-  if (!data||!data.rows.length) return result;
-  let cur = null;
+  const result = { pub:[], ideas:[], wkads:[], tasks:[] };
+  if (!data || !data.rows.length) return result;
+
+  let currentSection = null;
+  let currentCols = [];
+
   for (const row of data.rows) {
-    const vals = data.cols.map(c=>row[c]).filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='');
+    // Get all non-null values
+    const vals = data.cols.map(c => row[c]).filter(v => v !== null && v !== undefined && String(v).trim() !== '');
     if (!vals.length) continue;
-    const first = String(data.cols.map(c=>row[c]).find(v=>v!==null&&v!==undefined&&String(v).trim()!=='')||'').trim();
-    const others = data.cols.slice(1).map(c=>row[c]).filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='');
-    const secKey = Object.keys(WK_DEFS).find(k=>WK_DEFS[k].ar===first);
-    if (secKey && others.length===0) { cur=secKey; continue; }
-    if (cur && vals.length>=1) {
-      const expCols = WK_DEFS[cur].cols;
-      const isHdr = expCols.filter(ec=>vals.map(v=>String(v)).includes(ec)).length>=2;
-      if (isHdr) continue;
-      const obj={};
-      let ci=0;
-      data.cols.forEach(col=>{
-        const v=row[col];
-        const sv=v!==null&&v!==undefined?String(v).trim():'';
-        if(ci<expCols.length){obj[expCols[ci]]=sv;}
-        ci++;
+
+    const firstVal = String(data.cols.map(c => row[c]).find(v => v !== null && v !== undefined && String(v).trim() !== '') || '').trim();
+    const nonFirstVals = data.cols.slice(1).map(c => row[c]).filter(v => v !== null && v !== undefined && String(v).trim() !== '');
+
+    // Section header detection: first cell matches a known section, rest empty
+    const sectionKey = Object.keys(WK_SECTIONS).find(k => WK_SECTIONS[k].ar === firstVal);
+    if (sectionKey && nonFirstVals.length === 0) {
+      currentSection = sectionKey;
+      currentCols = WK_SECTIONS[sectionKey].cols;
+      continue;
+    }
+
+    // If first row of a section looks like a column header row, skip it
+    if (currentSection && vals.length >= 2) {
+      const expectedCols = WK_SECTIONS[currentSection].cols;
+      const matchCount = expectedCols.filter(ec => vals.some(v => String(v).includes(ec.slice(0,4)))).length;
+      if (matchCount >= 2 && nonFirstVals.length >= 1) {
+        // This might be a sub-header row — check if values match our expected column names
+        const isHeaderRow = expectedCols.filter(ec => vals.map(v=>String(v)).includes(ec)).length >= 2;
+        if (isHeaderRow) continue; // skip header row
+      }
+    }
+
+    // Data row
+    if (currentSection && vals.length >= 1) {
+      const obj = {};
+      // Map row values to expected columns by position
+      const expectedCols = WK_SECTIONS[currentSection].cols;
+      const allCols = data.cols;
+      let colIdx = 0;
+      allCols.forEach((col, i) => {
+        const v = row[col];
+        if (v !== null && v !== undefined && String(v).trim() !== '') {
+          if (colIdx < expectedCols.length) {
+            obj[expectedCols[colIdx]] = String(v).trim();
+          }
+          colIdx++;
+        } else {
+          obj[expectedCols[colIdx]] = '';
+          colIdx++;
+        }
       });
-      if(Object.values(obj).some(v=>v)) result[cur].push(obj);
+      // Only add if has at least one real value
+      if (Object.values(obj).some(v => v)) {
+        result[currentSection].push(obj);
+      }
     }
   }
   return result;
 }
 
-// ════════════════════════════════════════════════════
-// LOAD & REFRESH
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// LOAD ALL & REFRESH
+// ══════════════════════════════════════════════════
 async function loadAll() {
   setSyncing('loading');
-  const [adsD,clD,upD,finD,wkD] = await Promise.all([
-    safeLoad('ads'),safeLoad('clients'),safeLoad('upcoming'),safeLoad('finance'),safeLoad('weekly')
+
+  const [adsData, clientsData, upData, finData, weekData] = await Promise.all([
+    safeLoad('ads'), safeLoad('clients'), safeLoad('upcoming'),
+    safeLoad('finance'), safeLoad('weekly'),
   ]);
-  if(!adsD&&!clD&&!upD&&!finD&&!wkD) {
+
+  // Check connectivity
+  if (!adsData && !clientsData && !upData && !finData && !weekData) {
     setSyncing('error');
-    document.getElementById('ov-kpis').innerHTML=
-      '<div class="err-box" style="grid-column:1/-1"><div class="icon">⚠️</div>'+
-      '<h3>تعذر الاتصال بـ Google Sheets</h3>'+
-      '<p>تأكد أن الملف مضبوط على:<br><b>Share → Anyone with the link → Viewer</b></p>'+
-      '<button onclick="refreshAll()" class="btn-primary" style="margin-top:14px">↻ إعادة المحاولة</button></div>';
+    document.getElementById('ov-kpis').innerHTML = `
+      <div class="err-box" style="grid-column:1/-1">
+        <div class="icon">⚠️</div>
+        <h3>تعذر الاتصال بـ Google Sheets</h3>
+        <p>تأكد أن الملف مضبوط على:<br><b>Share → Anyone with the link → Viewer</b></p>
+        <button onclick="refreshAll()" style="margin-top:12px;background:var(--g1);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;cursor:pointer">↻ إعادة المحاولة</button>
+      </div>`;
     return;
   }
-  rawAds = parseAds(adsD);
-  const csMap={};
-  if(clD) clD.rows.forEach(r=>{
-    const n=String(r['اسم العميل / البراند']||r['اسم العميل']||'').trim();
-    const s=String(r['حالة العميل']||r['الحالة']||'').trim();
-    if(n&&!isJunk(n)) csMap[n]=s||'نشط';
-  });
-  clientMap={};
-  rawAds.forEach(a=>{
-    if(!clientMap[a.brand]) clientMap[a.brand]={name:a.brand,ads:[],status:csMap[a.brand]||'نشط'};
+
+  // Parse Ads
+  rawAds = parseAds(adsData);
+
+  // Parse Client statuses from clients sheet
+  const clientStatusMap = {};
+  if (clientsData) {
+    clientsData.rows.forEach(r => {
+      const name = String(r['اسم العميل / البراند'] || r['اسم العميل'] || '').trim();
+      const status = String(r['حالة العميل'] || r['الحالة'] || '').trim();
+      if (name && !isJunk(name)) clientStatusMap[name] = status || 'نشط';
+    });
+  }
+
+  // Build client map from ads
+  clientMap = {};
+  rawAds.forEach(a => {
+    if (!clientMap[a.brand]) {
+      clientMap[a.brand] = {
+        name: a.brand,
+        ads: [],
+        status: clientStatusMap[a.brand] || 'نشط',
+      };
+    }
     clientMap[a.brand].ads.push(a);
   });
-  rawUpcoming = upD ? upD.rows.filter(r=>{
-    const n=String(r['اسم العميل']||r[upD.cols[0]]||'').trim();
-    return n&&!isJunk(n)&&n!=='اسم العميل';
-  }).map(r=>({
-    name:String(r['اسم العميل']||r[upD.cols[0]]||'').trim(),
-    platform:String(r['المنصة']||'').trim(),
-    city:String(r['المدينة']||'').trim(),
-    adDate:r['__r__تاريخ الاتفاق']||r['تاريخ الاتفاق']||r['__r__تاريخ الإعلان']||r['تاريخ الإعلان']||null,
-    pubDate:r['__r__تاريخ النشر المتوقع']||r['تاريخ النشر المتوقع']||r['__r__تاريخ النشر']||r['تاريخ النشر']||null,
-    stage:String(r['المرحلة']||'').trim()||'غير معتمد',
-    assigned:String(r['المسؤول']||'').trim(),
-    amount:parseNum(r['المبلغ المتوقع']||r['المبلغ']||0),
-    notes:String(r['ملاحظات']||'').trim(),
-  })) : [];
-  rawExpenses=[];
-  if(finD) finD.rows.forEach(r=>{
-    const n=String(r['البند']||'').trim();
-    const aRaw=r['__r__المبلغ (ر.س)']??r['__r__المبلغ'];
-    const amt=(typeof aRaw==='number')?aRaw:parseNum(r['المبلغ (ر.س)']||r['المبلغ']||0);
-    if(n&&!isJunk(n)&&amt>0) rawExpenses.push({date:r['__r__التاريخ']||r['التاريخ']||null,name:n,amount:amt,cat:String(r['الفئة']||'').trim(),notes:String(r['ملاحظات']||'').trim()});
-  });
-  weeklyData = parseWeekly(wkD);
+
+  // Parse Upcoming
+  rawUpcoming = parseUpcoming(upData);
+
+  // Parse Expenses from finance sheet
+  rawExpenses = [];
+  if (finData) {
+    finData.rows.forEach(r => {
+      const name = String(r['البند'] || '').trim();
+      const amtRaw = r['__raw__المبلغ (ر.س)'] ?? r['__raw__المبلغ'];
+      const amt = (typeof amtRaw === 'number') ? amtRaw : parseNum(r['المبلغ (ر.س)'] || r['المبلغ'] || 0);
+      if (name && !isJunk(name) && amt > 0) {
+        rawExpenses.push({
+          date:   r['__raw__التاريخ'] || r['التاريخ'] || null,
+          name,
+          amount: amt,
+          cat:    String(r['الفئة'] || '').trim(),
+          notes:  String(r['ملاحظات'] || '').trim(),
+        });
+      }
+    });
+  }
+
+  // Parse Weekly
+  weeklyData = parseWeekly(weekData);
+
+  // Build year options
   buildYears();
-  renderOverview(); renderClients(); renderPipeline(); renderFinance(); renderWeekly();
+
+  // Render everything
+  renderOverview();
+  renderClients();
+  renderPipeline();
+  renderFinance();
+  renderWeekly();
+
   setSyncing('ok');
 }
 
 async function refreshAll() {
-  rawAds=[];clientMap={};rawUpcoming=[];rawExpenses=[];
-  weeklyData={pub:[],ideas:[],wkads:[],tasks:[]};
+  // Clear all state
+  rawAds = []; clientMap = {}; rawUpcoming = []; rawExpenses = [];
+  weeklyData = { pub:[], ideas:[], wkads:[], tasks:[] };
+  // Clear UI
   ['ov-kpis','ov-chart','ov-types','ov-active','ov-repeats','ov-top',
-   'pipeline','clients-grid','fin-kpis','fin-chart','exp-tbody','weekly-content'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.innerHTML='';
+   'pipeline','clients-grid','fin-kpis','fin-chart','exp-tbody','weekly-content'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
   });
   await loadAll();
-  showToast('✅ تم تحديث البيانات بنجاح');
+  toast('✅ تم تحديث البيانات بنجاح');
 }
 
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // YEAR OPTIONS
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 function buildYears() {
-  const years=[...new Set(rawAds.map(a=>{
-    const mk=monthKey(a.adDate||a.pubDate);
-    return mk?parseInt(mk.split('|')[1]):null;
+  const years = [...new Set(rawAds.map(a => {
+    const mk = monthKey(a.adDate || a.pubDate);
+    return mk ? parseInt(mk.split(' ')[1]) : null;
   }).filter(Boolean))].sort();
-  const min=Math.min(2025,...(years.length?years:[2025]));
-  const opts='<option value="all">كل السنوات</option>'+
-    Array.from({length:2030-min+1},(_,i)=>min+i).map(y=>'<option value="'+y+'">'+y+'</option>').join('');
-  ['ov-year','fin-year'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
+  const min = Math.min(2025, ...(years.length ? years : [2025]));
+  const opts = '<option value="all">كل السنوات</option>' +
+    Array.from({length: 2030-min+1}, (_,i) => min+i)
+      .map(y => '<option value="'+y+'">'+y+'</option>').join('');
+  ['ov-year','fin-year'].forEach(id => { const el = document.getElementById(id); if(el) el.innerHTML = opts; });
 }
 
-// ════════════════════════════════════════════════════
-// BAR CHART — Arabic short month names, tooltip on hover
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// BAR CHART — monthly income with trend arrows
+// ══════════════════════════════════════════════════
 function renderBarChart(elId, yearFilter) {
-  const bm={};
-  rawAds.filter(a=>a.status==='تمت'||a.status==='تم').forEach(a=>{
-    const mk=monthKey(a.adDate||a.pubDate);
-    if(!mk) return;
-    const [mo,yr]=[parseInt(mk.split('|')[0]),parseInt(mk.split('|')[1])];
-    if(yearFilter!=='all'&&yr!==+yearFilter) return;
-    const key=mo+'|'+yr;
-    bm[key]=(bm[key]||0)+a.amount;
+  const bm = {};
+  rawAds.filter(a => a.status === 'تمت' || a.status === 'تم').forEach(a => {
+    const mk = monthKey(a.adDate || a.pubDate);
+    if (!mk) return;
+    const yr = parseInt(mk.split(' ')[1]);
+    if (yearFilter !== 'all' && yr !== +yearFilter) return;
+    bm[mk] = (bm[mk]||0) + a.amount;
   });
-  const keys=Object.keys(bm);
-  if(!keys.length){
-    document.getElementById(elId).innerHTML='<div style="color:var(--ink3);font-size:12px;padding:20px 0;text-align:center;direction:rtl;width:100%">لا توجد إيرادات لهذه السنة</div>';
+
+  const keys = Object.keys(bm);
+  if (!keys.length) {
+    document.getElementById(elId).innerHTML = '<div style="color:var(--ink3);font-size:12px;padding:20px 0;text-align:center;direction:rtl">لا توجد بيانات للسنة المختارة</div>';
     return;
   }
-  // Sort by date
-  const sorted=keys.map(k=>{
-    const [mo,yr]=k.split('|').map(Number);
-    return {key:k,mo,yr,date:new Date(yr,mo,1),val:bm[k]};
-  }).sort((a,b)=>a.date-b.date);
 
-  const mx=Math.max(...sorted.map(s=>s.val),1);
-  const el=document.getElementById(elId);
-  el.innerHTML=sorted.map((s,i)=>{
-    const prev=i>0?sorted[i-1].val:null;
-    let trend='',trendTip='';
-    if(prev!==null){
-      const diff=s.val-prev;
-      const pct=prev>0?Math.round(Math.abs(diff)/prev*100):0;
-      if(diff>0){trend='<div class="bar-trend" style="color:#2E7D32">↑'+pct+'%</div>';trendTip='ارتفاع '+pct+'%';}
-      else if(diff<0){trend='<div class="bar-trend" style="color:var(--red)">↓'+pct+'%</div>';trendTip='انخفاض '+pct+'%';}
-      else{trend='<div class="bar-trend" style="color:var(--ink3)">•</div>';trendTip='لا تغيير';}
+  const sorted = keys.map(k => {
+    const [mo, yr] = k.split(' ');
+    return { key:k, date: new Date(yr, MEN.indexOf(mo), 1), val: bm[k] };
+  }).sort((a,b) => a.date - b.date);
+
+  const mx = Math.max(...sorted.map(s => s.val), 1);
+
+  document.getElementById(elId).innerHTML = sorted.map((s,i) => {
+    const prev = i > 0 ? sorted[i-1].val : null;
+    let trend = '';
+    if (prev !== null) {
+      const diff = s.val - prev;
+      const pct = prev > 0 ? Math.round(Math.abs(diff)/prev*100) : 0;
+      if (diff > 0) trend = '<div class="bar-trend" style="color:#1A7A4A">↑'+pct+'%</div>';
+      else if (diff < 0) trend = '<div class="bar-trend" style="color:var(--red)">↓'+pct+'%</div>';
+      else trend = '<div class="bar-trend" style="color:var(--ink3)">—</div>';
     } else {
-      trend='<div class="bar-trend" style="color:var(--ink3);font-size:8px"> </div>';
-      trendTip='أول شهر';
+      trend = '<div class="bar-trend" style="color:var(--ink3);font-size:8px">أول شهر</div>';
     }
-    const isLast=i===sorted.length-1;
-    const shortName=ARM_SHORT[s.mo];
-    const fullName=ARM_FULL[s.mo]+' '+s.yr;
-    const amtStr=s.val.toLocaleString('en-US')+' ر.س';
-    const tipText=fullName+'\n'+amtStr+(trendTip?'\n'+trendTip:'');
-    const h=Math.max(4,Math.round(s.val/mx*110));
-    const color=isLast?'var(--g1)':'var(--g3)';
-    return '<div class="bar-col">'+
-      '<div class="bar-tooltip">'+fullName+'<br><b>'+amtStr+'</b>'+(trendTip?'<br>'+trendTip:'')+'</div>'+
-      trend+
+    const isLast = i === sorted.length-1;
+    return '<div class="bar-col">'+trend+
       '<div class="bar-v">'+s.val.toLocaleString('en-US')+'</div>'+
-      '<div class="bar-body" style="height:'+h+'px;background:'+color+'"></div>'+
-      '<div class="bar-lbl">'+MEN[s.mo]+'</div>'+
+      '<div class="bar-body" style="height:'+Math.max(3,Math.round(s.val/mx*100))+'px;background:'+(isLast?'var(--g1)':'var(--g3)')+'"></div>'+
+      '<div class="bar-lbl">'+s.key.split(' ')[0]+'</div>'+
       '</div>';
   }).join('');
 }
 
-// ════════════════════════════════════════════════════
-// KPI HELPER
-// ════════════════════════════════════════════════════
-function kpi(icon,label,val,sub,accent){
-  return '<div class="kpi"><span class="kpi-icon">'+icon+'</span><div class="kpi-label">'+label+'</div><div class="kpi-val">'+val+'</div><div class="kpi-sub">'+sub+'</div><div class="kpi-accent" style="background:'+accent+'"></div></div>';
-}
-
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // OVERVIEW
-// ════════════════════════════════════════════════════
-function renderOverview(){
-  const cl=Object.values(clientMap);
-  const doneAds=rawAds.filter(a=>a.status==='تمت'||a.status==='تم');
-  const totalIn=doneAds.reduce((s,a)=>s+a.amount,0);
-  const activeC=cl.filter(c=>c.ads.some(a=>a.status==='قيد العمل')).length;
-  const repeatC=cl.filter(c=>c.ads.length>1).length;
-  const contractCnt=rawAds.filter(a=>a.type&&a.type.includes('عقد')).length;
-  const onceCnt=rawAds.filter(a=>a.type==='مرة واحدة').length;
-  document.getElementById('ov-kpis').innerHTML=
-    kpi('📣','إجمالي الإعلانات',rawAds.length,activeC+' قيد العمل','var(--g2)')+
-    kpi('💵','إجمالي الدخل',totalIn.toLocaleString('en-US')+' ر.س','الإيرادات المؤكدة','var(--g1)')+
-    kpi('👤','عدد العملاء',cl.length,repeatC+' متكرر','var(--g3)')+
-    kpi('📄','عقود',contractCnt,'مقابل '+onceCnt+' مرة واحدة','var(--g4)');
-  renderBarChart('ov-chart',document.getElementById('ov-year').value);
+// ══════════════════════════════════════════════════
+function renderOverview() {
+  const cl = Object.values(clientMap);
+  const doneAds = rawAds.filter(a => a.status === 'تمت' || a.status === 'تم');
+  const totalIn = doneAds.reduce((s,a) => s+a.amount, 0);
+  const activeC = cl.filter(c => c.ads.some(a => a.status==='قيد العمل')).length;
+  const repeatC = cl.filter(c => c.ads.length > 1).length;
+  // Contracts: type contains 'عقد'
+  const contractAds = rawAds.filter(a => a.type && a.type.includes('عقد'));
+  const onceCnt = rawAds.filter(a => a.type === 'مرة واحدة').length;
+
+  document.getElementById('ov-kpis').innerHTML =
+    kpi('إجمالي الإعلانات', rawAds.length, activeC+' قيد العمل', 'var(--g2)') +
+    kpi('إجمالي الدخل', totalIn.toLocaleString('en-US')+' ر.س', 'ريال سعودي', 'var(--g1)') +
+    kpi('عدد العملاء', cl.length, repeatC+' متكرر', 'var(--g3)') +
+    kpi('عقود', contractAds.length, 'مقابل '+onceCnt+' مرة واحدة', 'var(--g4)');
+
+  const yf = document.getElementById('ov-year').value;
+  renderBarChart('ov-chart', yf);
+
   // Top clients
-  const top=[...cl].sort((a,b)=>b.ads.reduce((s,x)=>s+x.amount,0)-a.ads.reduce((s,x)=>s+x.amount,0)).slice(0,5);
-  const mxT=(top[0]?.ads.reduce((s,a)=>s+a.amount,0))||1;
-  document.getElementById('ov-top').innerHTML=top.map(c=>{
-    const t=c.ads.reduce((s,a)=>s+a.amount,0);
-    return '<div style="margin-bottom:14px">'+
-      '<div style="display:flex;justify-content:space-between;margin-bottom:5px;align-items:center">'+
-      '<span style="font-size:13px;font-weight:700">'+c.name+'</span>'+
-      '<span style="font-size:13px;font-weight:800;color:var(--g1)">'+t.toLocaleString('en-US')+' ر.س</span>'+
+  const top = [...cl].sort((a,b) => {
+    return b.ads.reduce((s,x)=>s+x.amount,0) - a.ads.reduce((s,x)=>s+x.amount,0);
+  }).slice(0,5);
+  const mxT = (top[0]?.ads.reduce((s,a)=>s+a.amount,0)) || 1;
+  document.getElementById('ov-top').innerHTML = top.map(c => {
+    const t = c.ads.reduce((s,a)=>s+a.amount,0);
+    return '<div style="margin-bottom:12px">'+
+      '<div style="display:flex;justify-content:space-between;margin-bottom:4px">'+
+      '<span style="font-size:13px;font-weight:600">'+c.name+'</span>'+
+      '<span style="font-size:12px;font-weight:700;color:var(--g1)">'+t.toLocaleString('en-US')+' ر.س</span>'+
       '</div><div class="progress-bar"><div class="progress-fill" style="width:'+Math.round(t/mxT*100)+'%"></div></div></div>';
-  }).join('')||'<div style="color:var(--ink3);font-size:13px">لا توجد بيانات</div>';
+  }).join('') || '<div style="color:var(--ink3);font-size:13px">لا توجد بيانات</div>';
+
   // Types
-  const types={};rawAds.forEach(a=>{const k=a.type||'غير محدد';types[k]=(types[k]||0)+1;});
-  const tC={'مرة واحدة':'var(--blue)','عقد':'var(--g1)','عقد + نسبة':'var(--g3)','غير محدد':'var(--ink3)'};
-  document.getElementById('ov-types').innerHTML=Object.entries(types).map(([k,v])=>
-    '<div class="legend-row"><div class="legend-dot" style="background:'+(tC[k]||'var(--g3)')+'"></div>'+
-    '<span style="flex:1;font-size:13px">'+k+'</span><b>'+v+'</b>'+
-    '<span style="color:var(--ink3);font-size:11px;margin-right:8px">'+(rawAds.length?Math.round(v/rawAds.length*100):0)+'%</span></div>'
-  ).join('')||'<div style="color:var(--ink3)">لا توجد بيانات</div>';
-  // Active
-  const activeCl=cl.filter(c=>c.ads.some(a=>a.status==='قيد العمل'));
-  document.getElementById('ov-active').innerHTML=activeCl.length?activeCl.map(c=>{
-    const aAds=c.ads.filter(a=>a.status==='قيد العمل');
-    const t=aAds.reduce((s,a)=>s+a.amount,0);
-    return '<div class="fin-row"><div><div style="font-weight:700;font-size:13px">'+c.name+'</div>'+
+  const types = {};
+  rawAds.forEach(a => { const k = a.type || 'غير محدد'; types[k]=(types[k]||0)+1; });
+  const tColors = {'مرة واحدة':'var(--blue)','عقد':'var(--g1)','عقد + نسبة':'var(--g3)','غير محدد':'var(--ink3)'};
+  document.getElementById('ov-types').innerHTML = Object.entries(types).map(([k,v]) =>
+    '<div class="legend-row">'+
+    '<div style="width:10px;height:10px;border-radius:50%;background:'+(tColors[k]||'var(--g3)')+';flex-shrink:0"></div>'+
+    '<span style="flex:1;font-size:13px">'+k+'</span>'+
+    '<b style="font-size:13px">'+v+'</b>'+
+    '<span style="color:var(--ink3);font-size:11px;margin-right:6px">'+(rawAds.length?Math.round(v/rawAds.length*100):0)+'%</span></div>'
+  ).join('') || '<div style="color:var(--ink3);font-size:13px">لا توجد بيانات</div>';
+
+  // Active contracts
+  const activeCl = cl.filter(c => c.ads.some(a=>a.status==='قيد العمل'));
+  document.getElementById('ov-active').innerHTML = activeCl.length ? activeCl.map(c => {
+    const aAds = c.ads.filter(a=>a.status==='قيد العمل');
+    const t = aAds.reduce((s,a)=>s+a.amount,0);
+    return '<div class="fin-row">'+
+      '<div><div style="font-weight:600;font-size:13px">'+c.name+'</div>'+
       '<div style="font-size:11px;color:var(--ink3)">'+aAds.map(a=>a.type||'إعلان').join('، ')+'</div></div>'+
-      '<span style="font-weight:800;color:var(--g1);font-size:13px">'+(t>0?t.toLocaleString('en-US')+' ر.س':'نسبة')+'</span></div>';
-  }).join(''):'<div style="color:var(--ink3);font-size:13px;padding:8px 0">لا توجد عقود نشطة</div>';
-  // Repeats
-  const reps=[...cl].filter(c=>c.ads.length>1).sort((a,b)=>b.ads.length-a.ads.length).slice(0,5);
-  document.getElementById('ov-repeats').innerHTML=reps.length?reps.map(c=>{
-    const t=c.ads.reduce((s,a)=>s+a.amount,0);
-    return '<div class="fin-row"><span style="font-weight:700;font-size:13px">'+c.name+'</span>'+
-      '<div style="display:flex;align-items:center;gap:8px"><span class="badge b-olive">'+c.ads.length+' إعلان</span>'+
-      '<span style="font-size:12px;font-weight:700;color:var(--g1)">'+t.toLocaleString('en-US')+' ر.س</span></div></div>';
-  }).join(''):'<div style="color:var(--ink3);font-size:13px;padding:8px 0">—</div>';
+      '<span style="font-weight:700;color:var(--g1);font-size:13px">'+(t>0?t.toLocaleString('en-US')+' ر.س':'نسبة')+'</span></div>';
+  }).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">لا توجد عقود نشطة</div>';
+
+  // Repeat clients
+  const reps = [...cl].filter(c=>c.ads.length>1).sort((a,b)=>b.ads.length-a.ads.length).slice(0,5);
+  document.getElementById('ov-repeats').innerHTML = reps.length ? reps.map(c => {
+    const t = c.ads.reduce((s,a)=>s+a.amount,0);
+    return '<div class="fin-row">'+
+      '<span style="font-weight:600;font-size:13px">'+c.name+'</span>'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
+      '<span class="badge b-olive">'+c.ads.length+' إعلان</span>'+
+      '<span style="font-size:12px;font-weight:600;color:var(--g1)">'+t.toLocaleString('en-US')+' ر.س</span></div></div>';
+  }).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">—</div>';
 }
 
-// ════════════════════════════════════════════════════
+function kpi(label, val, sub, accent) {
+  return '<div class="kpi"><div class="kpi-label">'+label+'</div><div class="kpi-val">'+val+'</div><div class="kpi-sub">'+sub+'</div><div class="kpi-accent" style="background:'+accent+'"></div></div>';
+}
+
+// ══════════════════════════════════════════════════
 // CLIENTS
-// ════════════════════════════════════════════════════
-function filterClients(f,btn){
-  clientFilter=f;
+// ══════════════════════════════════════════════════
+function filterClients(f, btn) {
+  clientFilter = f;
   document.querySelectorAll('#page-clients .fb').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderClients();
 }
-function renderClients(){
-  let list=Object.values(clientMap);
-  if(clientFilter==='active') list=list.filter(c=>c.ads.some(a=>a.status==='قيد العمل'));
-  else if(clientFilter==='repeat') list=list.filter(c=>c.ads.length>1);
-  else if(clientFilter==='contract') list=list.filter(c=>c.ads.some(a=>a.type&&a.type.includes('عقد')));
-  list=[...list];
-  const tot=c=>c.ads.reduce((s,a)=>s+a.amount,0);
-  const sort=document.getElementById('cl-sort').value;
-  if(sort==='amount') list.sort((a,b)=>tot(b)-tot(a));
-  else if(sort==='latest') list.sort((a,b)=>{
+
+function renderClients() {
+  let list = Object.values(clientMap);
+  if (clientFilter==='active') list=list.filter(c=>c.ads.some(a=>a.status==='قيد العمل'));
+  else if (clientFilter==='repeat') list=list.filter(c=>c.ads.length>1);
+  else if (clientFilter==='contract') list=list.filter(c=>c.ads.some(a=>a.type&&a.type.includes('عقد')));
+  list = [...list];
+  const sort = document.getElementById('cl-sort').value;
+  const tot = c => c.ads.reduce((s,a)=>s+a.amount,0);
+  if (sort==='amount') list.sort((a,b)=>tot(b)-tot(a));
+  else if (sort==='latest') list.sort((a,b)=>{
     const la=a.ads.map(x=>x.adDate||'').filter(Boolean).sort().reverse()[0]||'';
     const lb=b.ads.map(x=>x.adDate||'').filter(Boolean).sort().reverse()[0]||'';
     return String(lb).localeCompare(String(la));
   });
-  else if(sort==='repeat') list.sort((a,b)=>b.ads.length-a.ads.length);
-  else if(sort==='s-active'){list=list.filter(c=>c.status==='نشط');list.sort((a,b)=>tot(b)-tot(a));}
-  else if(sort==='s-ended'){list=list.filter(c=>c.status==='منتهي');list.sort((a,b)=>tot(b)-tot(a));}
-  document.getElementById('cl-cnt').textContent=list.length;
-  document.getElementById('clients-grid').innerHTML=list.map(c=>clientCard(c)).join('')||
+  else if (sort==='repeat') list.sort((a,b)=>b.ads.length-a.ads.length);
+  else if (sort==='s-active') { list=list.filter(c=>c.status==='نشط'); list.sort((a,b)=>tot(b)-tot(a)); }
+  else if (sort==='s-ended') { list=list.filter(c=>c.status==='منتهي'); list.sort((a,b)=>tot(b)-tot(a)); }
+  document.getElementById('cl-cnt').textContent = list.length;
+  document.getElementById('clients-grid').innerHTML = list.map(c=>clientCard(c)).join('') ||
     '<div class="empty-state"><div class="icon">👥</div><p>لا توجد بيانات</p></div>';
 }
-function clientCard(c){
-  const total=c.ads.reduce((s,a)=>s+a.amount,0);
-  const isRepeat=c.ads.length>1;
-  const hasActive=c.ads.some(a=>a.status==='قيد العمل');
-  const cs=c.status||'نشط';
-  const sColor={'نشط':'#1565C0','منتهي':'#2E7D32','متوقف':'#757575'}[cs]||'#757575';
-  const border=hasActive?'3px solid var(--g2)':isRepeat?'3px solid var(--g3)':'none';
-  let badges='';
-  if(hasActive) badges+='<span class="badge b-gold">⏳ قيد العمل</span> ';
-  if(isRepeat) badges+='<span class="badge b-sand">🔄 متكرر · '+c.ads.length+'</span> ';
-  if(c.ads.some(a=>a.type&&a.type.includes('عقد'))) badges+='<span class="badge b-blue">📄 عقد</span>';
-  const adsHtml=c.ads.map((a,i)=>{
-    const amt=a.amount>0?a.amount.toLocaleString('en-US')+' ر.س':(a.pct>0?'نسبة '+a.pct+'%':'');
-    const fields=[];
-    if(a.type) fields.push('<div class="cc-ad-field"><span class="lbl">نوع الإعلان</span><span class="val">'+a.type+'</span></div>');
-    if(a.status) fields.push('<div class="cc-ad-field"><span class="lbl">الحالة</span><span class="val">'+sbadge(a.status)+'</span></div>');
-    if(amt) fields.push('<div class="cc-ad-field"><span class="lbl">القيمة</span><span class="val amount-val">'+amt+'</span></div>');
-    if(a.adDate&&fmtDate(a.adDate)) fields.push('<div class="cc-ad-field"><span class="lbl">التاريخ</span><span class="val">'+fmtDate(a.adDate)+'</span></div>');
-    if(a.platform) fields.push('<div class="cc-ad-field"><span class="lbl">المنصة</span><span class="val">'+ptag(a.platform)+'</span></div>');
-    if(a.city) fields.push('<div class="cc-ad-field"><span class="lbl">المدينة</span><span class="val">'+a.city+'</span></div>');
-    if(a.notes) fields.push('<div class="cc-ad-field" style="grid-column:1/-1"><span class="lbl">ملاحظات</span><span class="val">'+a.notes+'</span></div>');
-    return '<div class="cc-ad-item">'+
-      '<div class="cc-ad-header"><span class="cc-ad-num">'+(i+1)+'</span>الإعلان '+(i+1)+'</div>'+
-      '<div class="cc-ad-grid">'+fields.join('')+'</div></div>';
+
+function clientCard(c) {
+  const total = c.ads.reduce((s,a)=>s+a.amount,0);
+  const isRepeat = c.ads.length > 1;
+  const hasActive = c.ads.some(a=>a.status==='قيد العمل');
+  const cs = c.status || 'نشط';
+  const sColors = {'نشط':'#1F618D','منتهي':'#7FCBA4','متوقف':'#9A9A80'};
+  const border = hasActive ? '3px solid var(--g2)' : isRepeat ? '3px solid var(--g3)' : 'none';
+
+  let badges = '';
+  if (hasActive) badges += '<span class="badge b-gold">قيد العمل</span> ';
+  if (isRepeat) badges += '<span class="badge b-sand">متكرر · '+c.ads.length+'</span> ';
+  if (c.ads.some(a=>a.type&&a.type.includes('عقد'))) badges += '<span class="badge b-blue">عقد</span>';
+
+  const adsHtml = c.ads.map((a,i) => {
+    const amt = a.amount > 0 ? a.amount.toLocaleString('en-US')+' ر.س' : (a.pct>0 ? 'نسبة '+a.pct+'%' : '');
+    const adDate = fmtDate(a.adDate);
+    const fields = [];
+    if (a.type) fields.push('<div class="cc-ad-field"><span class="lbl">نوع الإعلان</span><span class="val">'+a.type+'</span></div>');
+    if (a.status) fields.push('<div class="cc-ad-field"><span class="lbl">الحالة</span><span class="val">'+sbadge(a.status)+'</span></div>');
+    if (amt) fields.push('<div class="cc-ad-field"><span class="lbl">القيمة</span><span class="val amount-val">'+amt+'</span></div>');
+    if (adDate) fields.push('<div class="cc-ad-field"><span class="lbl">التاريخ</span><span class="val">'+adDate+'</span></div>');
+    if (a.platform) fields.push('<div class="cc-ad-field"><span class="lbl">المنصة</span><span class="val">'+ptag(a.platform)+'</span></div>');
+    if (a.city) fields.push('<div class="cc-ad-field"><span class="lbl">المدينة</span><span class="val">'+a.city+'</span></div>');
+    if (a.notes) fields.push('<div class="cc-ad-field" style="grid-column:1/-1"><span class="lbl">ملاحظات</span><span class="val">'+a.notes+'</span></div>');
+    return '<div class="cc-ad-item"><div class="cc-ad-header">الإعلان '+(i+1)+'</div><div class="cc-ad-grid">'+fields.join('')+'</div></div>';
   }).join('');
+
   return '<div class="client-card" style="border-top:'+border+'">'+
     '<div class="cc-head">'+
     '<div class="cc-name">'+c.name+'</div>'+
     '<div class="cc-meta-row">'+
-    '<span class="cc-meta-item">الحالة: <strong style="color:'+sColor+'">'+cs+'</strong></span>'+
-    '<span class="cc-meta-item">الإعلانات: <strong>'+c.ads.length+'</strong></span>'+
-    (total>0?'<span class="cc-meta-item">الإجمالي: <strong style="color:var(--g1)">'+total.toLocaleString('en-US')+' ر.س</strong></span>':'')+
-    '</div>'+(badges?'<div class="cc-badges">'+badges+'</div>':'')+
+    '<span>الحالة: <strong style="color:'+sColors[cs]+'">'+cs+'</strong></span>'+
+    '<span>الإعلانات: <strong>'+c.ads.length+'</strong></span>'+
+    (total>0?'<span>الإجمالي: <strong style="color:var(--g1)">'+total.toLocaleString('en-US')+' ر.س</strong></span>':'')+
     '</div>'+
-    '<div class="cc-stats">'+
-    '<div class="cc-stat"><div class="cc-stat-val">'+c.ads.length+'</div><div class="cc-stat-lbl">إعلان</div></div>'+
-    '<div class="cc-stat"><div class="cc-stat-val" style="color:var(--g1)">'+(total>0?total.toLocaleString('en-US'):'-')+'</div><div class="cc-stat-lbl">ر.س إجمالي</div></div>'+
-    '<div class="cc-stat"><div class="cc-stat-val" style="color:'+sColor+'">'+cs+'</div><div class="cc-stat-lbl">الحالة</div></div>'+
+    (badges?'<div class="cc-badges">'+badges+'</div>':'')+
     '</div>'+
     '<div class="cc-ads">'+adsHtml+'</div>'+
     '</div>';
 }
 
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // PIPELINE
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 const STAGES=['غير معتمد','معتمد','التصوير','المونتاج','النشر'];
 const SCOL={'غير معتمد':'#C0392B','معتمد':'#6C3483','التصوير':'#D35400','المونتاج':'#1F618D','النشر':'#1A7A4A'};
-function renderPipeline(){
-  document.getElementById('up-cnt').textContent=rawUpcoming.length;
-  if(!rawUpcoming.length){
+
+function renderPipeline() {
+  document.getElementById('up-cnt').textContent = rawUpcoming.length;
+  if (!rawUpcoming.length) {
     document.getElementById('pipeline').innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="icon">📋</div><p>لا توجد إعلانات قادمة</p></div>';
     return;
   }
-  document.getElementById('pipeline').innerHTML=STAGES.map(stage=>{
-    const items=rawUpcoming.filter(u=>u.stage===stage);
+  document.getElementById('pipeline').innerHTML = STAGES.map(stage => {
+    const items = rawUpcoming.filter(u=>u.stage===stage);
     return '<div class="pl-col">'+
-      '<div class="pl-head" style="border-bottom-color:'+SCOL[stage]+';background:'+SCOL[stage]+'10">'+
-      '<span>'+stage+'</span><span class="cnt" style="background:'+SCOL[stage]+'20;color:'+SCOL[stage]+'">'+items.length+'</span></div>'+
-      '<div class="pl-body">'+(items.length?items.map(u=>
+      '<div class="pl-head" style="border-bottom-color:'+SCOL[stage]+'"><span>'+stage+'</span><span class="cnt">'+items.length+'</span></div>'+
+      '<div class="pl-body">'+
+      (items.length ? items.map(u =>
         '<div class="pl-card">'+
         '<div style="font-size:13px;font-weight:700;color:var(--ink)">'+u.name+'</div>'+
-        (u.city?'<div style="font-size:10px;color:var(--ink3);margin-top:3px">📍 '+u.city+'</div>':'')+
+        (u.city?'<div style="font-size:10px;color:var(--ink3);margin-top:2px">'+u.city+'</div>':'')+
         '<div class="pl-dates">'+
         '<div class="pl-date-box"><div class="pl-date-lbl" style="color:var(--g1)">الإعلان</div><div class="pl-date-val">'+(fmtDate(u.adDate)||'—')+'</div></div>'+
         '<div class="pl-date-box"><div class="pl-date-lbl" style="color:#1A7A4A">النشر</div><div class="pl-date-val">'+(fmtDate(u.pubDate)||'—')+'</div></div>'+
@@ -840,80 +932,92 @@ function renderPipeline(){
         ptag(u.platform)+
         (u.assigned?'<span style="font-size:10px;color:var(--ink3)">'+u.assigned+'</span>':'')+
         '</div>'+
-        (u.amount>0?'<div style="font-size:12px;font-weight:800;color:var(--g1);margin-top:6px">'+u.amount.toLocaleString('en-US')+' ر.س</div>':'')+
+        (u.amount>0?'<div style="font-size:12px;font-weight:700;color:var(--g1);margin-top:6px">'+u.amount.toLocaleString('en-US')+' ر.س</div>':'')+
         '</div>'
-      ).join(''):'<div style="color:var(--ink3);font-size:12px;text-align:center;padding:24px 0">لا يوجد</div>')+
+      ).join('') : '<div style="color:var(--ink3);font-size:12px;text-align:center;padding:20px 0">لا يوجد</div>')+
       '</div></div>';
   }).join('');
 }
 
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // FINANCE
-// ════════════════════════════════════════════════════
-function renderFinance(){
-  const doneAds=rawAds.filter(a=>a.status==='تمت'||a.status==='تم');
-  const totalIn=doneAds.reduce((s,a)=>s+a.amount,0);
-  const inProg=rawAds.filter(a=>a.status==='قيد العمل').reduce((s,a)=>s+a.amount,0);
-  const totalExp=rawExpenses.reduce((s,e)=>s+e.amount,0);
-  const net=totalIn-totalExp;
-  document.getElementById('fin-kpis').innerHTML=
-    kpi('📥','إجمالي الدخل',totalIn.toLocaleString('en-US')+' ر.س','الإيرادات المؤكدة','var(--g1)')+
-    kpi('⏳','قيد العمل',inProg.toLocaleString('en-US')+' ر.س','إيرادات متوقعة','var(--gold)')+
-    kpi('📤','المصروفات',totalExp.toLocaleString('en-US')+' ر.س','إجمالي المصروفات','var(--red)')+
-    kpi('💰','صافي الربح',net.toLocaleString('en-US')+' ر.س','الربح الصافي',net>=0?'var(--g2)':'var(--red)');
-  renderBarChart('fin-chart',document.getElementById('fin-year').value);
-  document.getElementById('exp-tbody').innerHTML=rawExpenses.length?rawExpenses.map(e=>
-    '<tr><td style="font-size:12px;color:var(--ink3)">'+fmtDate(e.date)+'</td>'+
-    '<td style="font-weight:700">'+e.name+'</td>'+
-    '<td style="font-weight:800;color:var(--red)">'+e.amount.toLocaleString('en-US')+' ر.س</td>'+
+// ══════════════════════════════════════════════════
+function renderFinance() {
+  const doneAds = rawAds.filter(a=>a.status==='تمت'||a.status==='تم');
+  const totalIn = doneAds.reduce((s,a)=>s+a.amount,0);
+  const inProg = rawAds.filter(a=>a.status==='قيد العمل').reduce((s,a)=>s+a.amount,0);
+  const totalExp = rawExpenses.reduce((s,e)=>s+e.amount,0);
+  const net = totalIn - totalExp;
+
+  document.getElementById('fin-kpis').innerHTML =
+    kpi('إجمالي الدخل', totalIn.toLocaleString('en-US'), 'ريال سعودي', 'var(--g1)') +
+    kpi('قيد العمل', inProg.toLocaleString('en-US'), 'ريال سعودي', 'var(--gold)') +
+    kpi('المصروفات', totalExp.toLocaleString('en-US'), 'ريال سعودي', 'var(--red)') +
+    kpi('صافي الربح', net.toLocaleString('en-US'), 'ريال سعودي', net>=0?'var(--g2)':'var(--red)');
+
+  renderBarChart('fin-chart', document.getElementById('fin-year').value);
+
+  document.getElementById('exp-tbody').innerHTML = rawExpenses.length ? rawExpenses.map(e =>
+    '<tr>'+
+    '<td style="font-size:12px;color:var(--ink3)">'+fmtDate(e.date)+'</td>'+
+    '<td style="font-weight:600">'+e.name+'</td>'+
+    '<td style="font-weight:700;color:var(--red)">'+e.amount.toLocaleString('en-US')+' ر.س</td>'+
     '<td>'+(e.cat?'<span class="badge b-gray">'+e.cat+'</span>':'')+'</td>'+
-    '<td style="font-size:11px;color:var(--ink3)">'+e.notes+'</td></tr>'
-  ).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:28px">لا توجد مصروفات مسجلة</td></tr>';
+    '<td style="font-size:11px;color:var(--ink3)">'+e.notes+'</td>'+
+    '</tr>'
+  ).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:24px">لا توجد مصروفات مسجلة في الشيت</td></tr>';
 }
 
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // WEEKLY PLAN
-// ════════════════════════════════════════════════════
-const WK_COLORS={pub:'#8A9A72',ideas:'#1F618D',wkads:'#2C2C2C',tasks:'#5F6F52'};
-const WK_HEADS={pub:'📅 خطة النشر',ideas:'💡 أفكار المحتوى',wkads:'📢 الإعلانات',tasks:'✅ مهام الفريق'};
-const STATUS_COLS=new Set(['الحالة','حالة البريف','حالة السكريبت','الحالة العامة']);
-const DATE_COLS=new Set(['تاريخ النشر','تاريخ التصوير','الموعد النهائي']);
-function renderWeekly(){
-  const el=document.getElementById('weekly-content');
-  const sections=Object.keys(WK_DEFS);
-  const hasData=sections.some(k=>weeklyData[k]&&weeklyData[k].length>0);
-  if(!hasData){
+// ══════════════════════════════════════════════════
+const WK_COLORS = {pub:'#8A9A72', ideas:'#1F618D', wkads:'#2C2C2C', tasks:'#5F6F52'};
+const WK_HEADS  = {pub:'خطة النشر', ideas:'أفكار المحتوى', wkads:'الإعلانات', tasks:'مهام الفريق'};
+const STATUS_COLS = new Set(['الحالة','حالة البريف','حالة السكريبت','الحالة العامة','حالة الكتابة']);
+const DATE_COLS = new Set(['تاريخ النشر','تاريخ التصوير','الموعد النهائي']);
+
+function renderWeekly() {
+  const el = document.getElementById('weekly-content');
+  const sections = Object.keys(WK_SECTIONS);
+  const hasData = sections.some(k => weeklyData[k] && weeklyData[k].length > 0);
+
+  if (!hasData) {
     el.innerHTML='<div class="empty-state"><div class="icon">📅</div><p>لا توجد بيانات في ورقة خطة الأسبوع<br><small>أضف بيانات في Google Sheets وأعد التحميل</small></p></div>';
     return;
   }
-  el.innerHTML=sections.map(key=>{
-    const rows=weeklyData[key]||[];
-    const colDefs=WK_DEFS[key].cols;
-    const bg=WK_COLORS[key];
+
+  el.innerHTML = sections.map(key => {
+    const rows = weeklyData[key] || [];
+    const colDefs = WK_SECTIONS[key].cols;
+    const bg = WK_COLORS[key];
+    const textColor = key==='tasks' ? '#fff' : '#fff';
+
     return '<div class="wk-section">'+
-      '<div class="wk-head" style="background:'+bg+'"><h3>'+WK_HEADS[key]+'</h3></div>'+
+      '<div class="wk-head" style="background:'+bg+'"><h3 style="color:'+textColor+'">'+WK_HEADS[key]+'</h3></div>'+
       '<div style="overflow-x:auto">'+
       '<table class="tbl">'+
       '<thead><tr>'+colDefs.map(c=>'<th>'+c+'</th>').join('')+'</tr></thead>'+
-      '<tbody>'+(rows.length?rows.map((r,ri)=>
+      '<tbody>'+
+      (rows.length ? rows.map((r,ri)=>
         '<tr style="background:'+(ri%2===0?'var(--white)':'var(--surface)')+'">'+
-        colDefs.map(col=>{
-          const v=r[col]||'';
-          if(!v) return '<td></td>';
-          if(STATUS_COLS.has(col)) return '<td>'+sbadge(v)+'</td>';
-          if(DATE_COLS.has(col)) return '<td>'+fmtDate(v)+'</td>';
+        colDefs.map(col => {
+          const v = r[col] || '';
+          if (!v) return '<td></td>';
+          if (STATUS_COLS.has(col)) return '<td>'+sbadge(v)+'</td>';
+          if (DATE_COLS.has(col)) return '<td>'+fmtDate(v)+'</td>';
           return '<td>'+v+'</td>';
-        }).join('')+'</tr>'
-      ).join(''):'<tr><td colspan="'+colDefs.length+'" style="text-align:center;color:var(--ink3);padding:18px">لا توجد بيانات</td></tr>')+
+        }).join('')+
+        '</tr>'
+      ).join('') : '<tr><td colspan="'+colDefs.length+'" style="text-align:center;color:var(--ink3);padding:16px">لا توجد بيانات</td></tr>')+
       '</tbody></table></div></div>';
   }).join('');
 }
 
-// ════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// INIT — load on start, auto-refresh every 5 min
+// ══════════════════════════════════════════════════
 loadAll();
-setInterval(()=>loadAll(),5*60*1000);
+setInterval(() => loadAll(), 5 * 60 * 1000);
 </script>
 </body>
 </html>
